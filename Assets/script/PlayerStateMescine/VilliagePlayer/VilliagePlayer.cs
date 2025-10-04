@@ -51,7 +51,7 @@ namespace GJ
 
         private bool DetectNPC()
         {
-            if (Vector2.Distance(this.transform.position, NPC.transform.position) < NPCDetectRate)
+            if (NPC != null && Vector2.Distance(this.transform.position, NPC.transform.position) < NPCDetectRate)
             {
                 return true;
             }

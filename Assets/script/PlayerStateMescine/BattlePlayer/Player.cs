@@ -25,6 +25,8 @@ namespace GJ
         [Header("跳跃相关")]
         [SerializeField] private float PlayerJumpForce;
         [SerializeField] private float PlayerGroundDetectDistence;
+        [HideInInspector] public bool isAttacking = false;
+        [HideInInspector] public bool isJumping = false;
 
         #region 状态机相关
 
@@ -65,13 +67,24 @@ namespace GJ
         void Update()
         {
             StateMachine.CurrentState.Update();
+
+            Debug.Log(StateMachine.CurrentState);
         }
 
         public bool GroundDetect()
         {
-            var Raycastall = Physics2D.RaycastAll(this.transform.position, this.transform.position - new Vector3(0, PlayerGroundDetectDistence));
-            if (Raycastall.Length > 1) return true;
-            else return false;
+            RaycastHit2D[] Raycastall = Physics2D.RaycastAll(this.transform.position, this.transform.position - new Vector3(0, PlayerGroundDetectDistence));
+            foreach (RaycastHit2D i in Raycastall)
+            {
+                if (i.collider.gameObject.CompareTag("Ground") == true)
+                {
+                    Debug.Log("Detected");
+                    return true;
+                }
+
+            }
+
+            return false;
         }
 
         public void PlayerGetHurt(float _Damage)

@@ -12,6 +12,8 @@ namespace GJ
         private Rigidbody2D playerRd;
         private bool IsGroundDetectStart = false;
 
+        private float JumpDetectTime = 1f;
+
         public PlayerJumpState(PlayerStateMescine stateMachine, Player player, string animatonName) : base(stateMachine, player, animatonName)
         {
         }
@@ -21,6 +23,9 @@ namespace GJ
             base.Enter();
             PlayerJumpForce = player.GetJumpForce_Player();
             playerRd = player.rd;
+            player.isJumping = true;
+
+            JumpDetectTime = 1f;
 
             //给予向上的力
             playerRd.AddForce(new Vector2(0, PlayerJumpForce));
@@ -30,21 +35,20 @@ namespace GJ
         {
             base.Update();
 
+            JumpDetectTime -= Time.deltaTime;
+
+
             //进行地面检测
-            if (player.GroundDetect() == false)
+            if (JumpDetectTime <= 0)
             {
                 IsGroundDetectStart = true;
-                Debug.Log("Check Start");
-
             }
-            else if (player.GroundDetect() == true && IsGroundDetectStart)
+
+            if (player.GroundDetect() == true && IsGroundDetectStart)
             {
                 stateMachine.ChangeState(player.IdleState);
                 IsGroundDetectStart = false;
-                Debug.Log("Exit Jump");
             }
-
-            //允许左右移动
 
             
         }
@@ -52,6 +56,8 @@ namespace GJ
         public override void Exit()
         {
             base.Exit();
+
+            player.isJumping = false;
         }
     }
 

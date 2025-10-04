@@ -8,7 +8,6 @@ namespace GJ
     public class PlayerMoveState : PlayerState
     {
         private float Horizontal;
-        private float Vitural;
         private float MoveSpeed;
 
         public PlayerMoveState(PlayerStateMescine stateMachine, Player player, string animatonName) : base(stateMachine, player, animatonName)
@@ -35,16 +34,17 @@ namespace GJ
             }
 
             //攻击操作
-            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J) && stateMachine.CurrentState != player.AttackState)
+            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J) && player.isAttacking == false)
             {
                 stateMachine.ChangeState(player.AttackState);
                 //TODO 为攻击添加冷却时间
             }
 
             //空格点击操作
-            if (Input.GetKeyDown(KeyCode.Space) && stateMachine.CurrentState != player.JumpState)
+            if (Input.GetKeyDown(KeyCode.Space) && player.isJumping == false)
             {
                 stateMachine.ChangeState(player.JumpState);
+                
             }
         }
 

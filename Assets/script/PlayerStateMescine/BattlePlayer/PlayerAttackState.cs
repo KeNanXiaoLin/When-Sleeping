@@ -16,6 +16,7 @@ namespace GJ
         {
             base.Enter();
             AttackTime = player.GetAttackTime_Player();
+            player.isAttacking = true;
             
             EventListener.PlayerDamage();
         }
@@ -31,6 +32,8 @@ namespace GJ
         public override void Exit()
         {
             base.Exit();
+
+            player.isAttacking = false;
         }
 
     }

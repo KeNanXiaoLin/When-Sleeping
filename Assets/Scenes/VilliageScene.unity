@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 1252629676}
   - component: {fileID: 1252629677}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: VilliageNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 1659499861}
   - component: {fileID: 1659499860}
   m_Layer: 0
-  m_Name: 9-Sliced
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 5
-  NPCDetectRate: 3.51
+  NPCDetectRate: 2.29
 --- !u!212 &1659499861
 SpriteRenderer:
   m_ObjectHideFlags: 0

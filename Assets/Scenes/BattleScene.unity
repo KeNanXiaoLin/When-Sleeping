@@ -289,7 +289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 303052384}
-  - component: {fileID: 303052383}
+  - component: {fileID: 303052385}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -297,18 +297,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &303052383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 303052382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df47a6abae075ca499aafa6c4c463493, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &303052384
 Transform:
   m_ObjectHideFlags: 0
@@ -324,6 +312,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &303052385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303052382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc83fec97a0d21b48b1810d03d170232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+  Enemy: []
 --- !u!1 &525271205
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eaffe1ed9fd96f46a413c7f650a7b2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerMaxHealth: 0
   MoveSpeed: 5
   PlayerDamage: 1
   PlayerAttackTime: 0
@@ -605,7 +608,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UISlot_Backpack:
-  - {fileID: 1664437151}
+  - {fileID: 0}
+  BackPack_UI: {fileID: 0}
 --- !u!114 &1032918095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1181,7 +1185,7 @@ GameObject:
   - component: {fileID: 1859391209}
   - component: {fileID: 1859391211}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1280,7 +1284,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!61 &1859391210
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1340,8 +1344,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyMaxHealth: 30
   EnemyDamage: 1
-  EnemyMoveSpeed: 0
-  EnemyDetectRate: 0
+  EnemyMoveSpeed: 3
+  EnemyChaseRate: 6.83
+  EnemyAttackDistence: 2.08
 --- !u!1 &1958517096
 GameObject:
   m_ObjectHideFlags: 0

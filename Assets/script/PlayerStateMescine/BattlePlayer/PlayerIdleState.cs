@@ -25,14 +25,18 @@ namespace GJ
                 stateMachine.ChangeState(player.MoveState);
             }
 
-            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J))
+            //攻击操作
+            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J) && player.isAttacking == false)
             {
-                EventListener.PlayerDamage();
+                stateMachine.ChangeState(player.AttackState);
+                //TODO 为攻击添加冷却时间
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            //空格点击操作
+            if (Input.GetKeyDown(KeyCode.Space) && player.isJumping == false)
             {
                 stateMachine.ChangeState(player.JumpState);
+                
             }
         }
 
