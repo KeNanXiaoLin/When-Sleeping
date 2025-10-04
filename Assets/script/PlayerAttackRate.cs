@@ -8,9 +8,17 @@ namespace GJ
     public class PlayerAttackRate : MonoBehaviour
     {
 
-        List<Collision2D> EnteredEnemys;
+        List<Collider2D> EnteredEnemys = new List<Collider2D>();
+        private float PlayerDamage;
 
-        void OnCollisionEnter2D(Collision2D collision)
+        private void Start()
+        {
+            PlayerDamage = this.GetComponentInParent<Player>().GetAttackRate_Player();
+
+            EventListener.OnPlayerDamage += OnPlayerAttack;
+        }
+
+        void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Enemy") == true)
             {
@@ -18,7 +26,7 @@ namespace GJ
             }
         }
 
-        void OnCollisionExit2D(Collision2D collision)
+        void OnTriggerExit2D(Collider2D collision)
         {
             if (collision.gameObject.CompareTag("Enemy") == true)
             {
@@ -26,11 +34,12 @@ namespace GJ
             }
         }
 
+
         void OnPlayerAttack()
         {
-            foreach (Collision2D enemy in EnteredEnemys)
+            foreach (Collider2D enemy in EnteredEnemys)
             {
-                Debug.Log("Emeny Get Attack");
+                enemy.gameObject.GetComponent<Enemy>().EnemyGetDamage(PlayerDamage);              
             }
         }
 

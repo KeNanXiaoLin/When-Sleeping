@@ -16,6 +16,8 @@ namespace GJ
 
 
         [SerializeField] private float MoveSpeed;
+        [SerializeField] private float PlayerDamage;
+        [SerializeField] private float PlayerAttackTime;
 
         public PlayerStateMescine StateMachine { get; private set; }
 
@@ -50,5 +52,7 @@ namespace GJ
         }
 
         public float GetMoveSpeed_Player() => MoveSpeed;
+        public float GetAttackRate_Player() => PlayerDamage;
+        public float GetAttackTime_Player() => PlayerAttackTime;
     }
 }

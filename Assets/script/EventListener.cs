@@ -13,4 +13,14 @@ public class EventListener
     public static event GameStatsChange GameStop;
     public static event GameStatsChange GameRestart;
     #endregion
+
+
+    #region 数值变换相关事件
+    public delegate void Damage();
+    public static event Damage OnPlayerDamage;
+    public static event Damage OnEnemyDamage;
+
+    public static void PlayerDamage() => OnPlayerDamage?.Invoke();
+    public static void EnemyDamage() => OnEnemyDamage?.Invoke();
+    #endregion
 }

@@ -24,6 +24,11 @@ namespace GJ
             {
                 stateMachine.ChangeState(player.MoveState);
             }
+
+            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J))
+            {
+                EventListener.PlayerDamage();
+            }
         }
 
         public override void Exit()

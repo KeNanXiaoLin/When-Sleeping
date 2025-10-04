@@ -34,9 +34,10 @@ namespace GJ
                 stateMachine.ChangeState(player.IdleState);
             }
 
-            if (Input.GetKeyDown(KeyCode.Z) && Input.GetKeyDown(KeyCode.J))
+            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J))
             {
-                stateMachine.ChangeState(player.AttackState);
+                EventListener.PlayerDamage();
+                //TODO 为攻击添加冷却时间
             }
 
             if (Input.GetKeyDown(KeyCode.Space))
