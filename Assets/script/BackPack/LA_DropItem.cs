@@ -24,7 +24,7 @@ namespace Unuse
         {
             Render = this.GetComponent<SpriteRenderer>();
             Render.sprite = ItemOS.ItemPicture;
-            player_Tran = GameManager.instence.player_Trans;
+            
         }
 
         // 物理更新函数，每帧调用，处理道具被玩家吸附的逻辑
@@ -38,7 +38,7 @@ namespace Unuse
                     // 冲向玩家
                     Vector3.MoveTowards(transform.position, player_Tran.position, AttactSpeed * Time.deltaTime);
                     // 旋转朝向玩家
-                    GameManager.RotateToDirection(player_Tran.position, transform.position, transform);
+                    //GameManager.RotateToDirection(player_Tran.position, transform.position, transform);
                 }
             }
         }

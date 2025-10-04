@@ -15,12 +15,23 @@ public class EventListener
     #endregion
 
 
-    #region 数值变换相关事件
+    #region 玩家和敌人伤害相关事件
     public delegate void Damage();
     public static event Damage OnPlayerDamage;
+
+    //TODO 完成敌人对玩家造成伤害的逻辑
     public static event Damage OnEnemyDamage;
 
     public static void PlayerDamage() => OnPlayerDamage?.Invoke();
     public static void EnemyDamage() => OnEnemyDamage?.Invoke();
+    #endregion
+
+    #region 村民对话相关事件
+    public delegate void Dialogue();
+    public static event Dialogue OnDialogueStart;
+    public static event Dialogue OnDialogueEnd;
+
+    public static void DialogueStart() => OnDialogueStart?.Invoke();
+    public static void DialogueEnd() => OnDialogueEnd?.Invoke();
     #endregion
 }
