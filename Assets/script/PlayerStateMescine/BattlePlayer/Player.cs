@@ -13,8 +13,10 @@ namespace GJ
         public Rigidbody2D rd { get; private set; }
         public Animator anim { get; private set; }
 
-
+        [Header("基本数值")]
+        [SerializeField] private float PlayerMaxHealth;
         [SerializeField] private float MoveSpeed;
+        private float CC_PlayerHealth;
 
         [Header("攻击相关")]
         [SerializeField] private float PlayerDamage;
@@ -24,6 +26,7 @@ namespace GJ
         [SerializeField] private float PlayerJumpForce;
         [SerializeField] private float PlayerGroundDetectDistence;
 
+        #region 状态机相关
 
         public PlayerStateMescine StateMachine { get; private set; }
 
@@ -32,6 +35,7 @@ namespace GJ
         public PlayerJumpState JumpState { get; private set; }
         public PlayerAttackState AttackState { get; private set; }
         public PlayerInsteractState InsteractState { get; private set; }
+        #endregion
 
         private void Awake()
         {
@@ -42,6 +46,10 @@ namespace GJ
             JumpState = new PlayerJumpState(StateMachine, this, "Jump");
             AttackState = new PlayerAttackState(StateMachine, this, "Attack");
             InsteractState = new PlayerInsteractState(StateMachine, this, "Insteract");
+
+            CC_PlayerHealth = PlayerMaxHealth;
+
+            BattleSceneManager.instence.Player = this.gameObject;
         }
 
         void Start()
@@ -50,6 +58,8 @@ namespace GJ
             rd = GetComponent<Rigidbody2D>();
 
             StateMachine.Initialize(IdleState);
+
+            EventListener.OnEnemyDamage += PlayerGetHurt;
         }
 
         void Update()
@@ -64,11 +74,21 @@ namespace GJ
             else return false;
         }
 
+        public void PlayerGetHurt(float _Damage)
+        {
+            CC_PlayerHealth -= _Damage;
+        }
+
+        #region 回传Player相关参数
+
+        public float GetCCPlayerHealth_Player() => CC_PlayerHealth;
         public float GetMoveSpeed_Player() => MoveSpeed;
         public float GetAttackRate_Player() => PlayerDamage;
         public float GetAttackTime_Player() => PlayerAttackTime;
         public float GetJumpForce_Player() => PlayerJumpForce;
         public float GetGroundDetectDistence_Player() => PlayerGroundDetectDistence;
+
+        #endregion
 
         void OnDrawGizmos()
         {

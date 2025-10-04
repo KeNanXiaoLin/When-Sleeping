@@ -19,11 +19,13 @@ public class EventListener
     public delegate void Damage();
     public static event Damage OnPlayerDamage;
 
+    public delegate void Damage_Enemy(float _Damage);
+
     //TODO 完成敌人对玩家造成伤害的逻辑
-    public static event Damage OnEnemyDamage;
+    public static event Damage_Enemy OnEnemyDamage;
 
     public static void PlayerDamage() => OnPlayerDamage?.Invoke();
-    public static void EnemyDamage() => OnEnemyDamage?.Invoke();
+    public static void EnemyDamage(float _damage) => OnEnemyDamage?.Invoke(_damage);
     #endregion
 
     #region 村民对话相关事件
