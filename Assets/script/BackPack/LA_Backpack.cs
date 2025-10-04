@@ -34,7 +34,19 @@ public class LA_Backpack : MonoBehaviour
 
  
     [Header("背包系统UI：物品槽")]
-    public List<Image> UISlot_Backpack = new List<Image>();
+    public List<GameObject> UISlot_Backpack = new List<GameObject>();
+    public GameObject BackPack_UI;
+
+    public void OpenBackpack()
+    {
+        BackPack_UI.SetActive(true);
+        InitUI_Backpack();
+    }
+
+    public void CloseBackpack()
+    {
+        BackPack_UI.SetActive(false);
+    }
 
     /// <summary>
     /// 向背包中添加物品
@@ -94,7 +106,7 @@ public class LA_Backpack : MonoBehaviour
         }
 
         return 0;
-    }
+    } 
 
     /// <summary>
     /// 检查背包中指定物品的数量是否满足目标数量
@@ -117,7 +129,7 @@ public class LA_Backpack : MonoBehaviour
     {
         for (int i = 0; i < Backpack.Count; i++)
         {
-            UISlot_Backpack[i].sprite = Backpack[i].itemOS.ItemPicture;
+            UISlot_Backpack[i].GetComponent<Image>().sprite = Backpack[i].itemOS.ItemPicture;
 
             Text UISlotText = UISlot_Backpack[i].GetComponentInChildren<Text>();
             UISlotText.text = Backpack[i].ItemNum.ToString();

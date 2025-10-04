@@ -15,7 +15,7 @@ public class LA_ItemEditor : Editor
     private SerializedProperty repiteItemNumProp;
     private SerializedProperty AttackRateProp;
     private SerializedProperty DefenceRateProp;
-
+    private SerializedProperty HealthUpRateProp;
     private void OnEnable()
     {
         ItemIDProp = serializedObject.FindProperty("itemID");
@@ -27,6 +27,7 @@ public class LA_ItemEditor : Editor
         repiteItemNumProp = serializedObject.FindProperty("repiteItemNum");
         AttackRateProp = serializedObject.FindProperty("AttackRate");
         DefenceRateProp = serializedObject.FindProperty("DefenceRate");
+        HealthUpRateProp = serializedObject.FindProperty("HealthUpRate");
     }
 
     public override void OnInspectorGUI()
@@ -45,10 +46,13 @@ public class LA_ItemEditor : Editor
         switch (type)
         {
             case LA_Item.ItemType.Weapon:
-                EditorGUILayout.PropertyField(AttackRateProp,new GUIContent("Attack Rate"));
+                EditorGUILayout.PropertyField(AttackRateProp, new GUIContent("Attack Rate"));
                 break;
             case LA_Item.ItemType.armor:
-                EditorGUILayout.PropertyField(DefenceRateProp,new GUIContent("Defence Rate"));
+                EditorGUILayout.PropertyField(DefenceRateProp, new GUIContent("Defence Rate"));
+                break;
+            case LA_Item.ItemType.medcine:
+                EditorGUILayout.PropertyField(HealthUpRateProp, new GUIContent("Health Rate"));
                 break;
         }
 

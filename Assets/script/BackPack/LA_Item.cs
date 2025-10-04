@@ -12,6 +12,7 @@ public class LA_Item : ScriptableObject
         Material,   //材料
         Weapon,     //武器
         armor,      //防具
+        medcine,    //药瓶
         Block,      //方块
     }
 
@@ -32,5 +33,8 @@ public class LA_Item : ScriptableObject
 
     //防具：防御力
     public int DefenceRate;
+
+    //药品：生命值增加量
+    public int HealthUpRate;
 
 }
