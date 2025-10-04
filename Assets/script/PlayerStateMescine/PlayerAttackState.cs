@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GJ
 {
-    public class PlayerAttackState : PlayerState
+    public class PlayerAttackState : PlayerMoveState    //攻击时可移动
     {
         public float AttackTime;
 
@@ -23,6 +23,9 @@ namespace GJ
         public override void Update()
         {
             base.Update();
+
+            AttackTime -= Time.deltaTime;
+            if (AttackTime <= 0) stateMachine.ChangeState(player.IdleState);
         }
 
         public override void Exit()

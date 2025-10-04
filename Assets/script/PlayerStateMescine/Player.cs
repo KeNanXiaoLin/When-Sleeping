@@ -12,12 +12,18 @@ namespace GJ
     {
         public Rigidbody2D rd { get; private set; }
         public Animator anim { get; private set; }
-        public Collider2D AttackRate;
 
 
         [SerializeField] private float MoveSpeed;
+
+        [Header("攻击相关")]
         [SerializeField] private float PlayerDamage;
         [SerializeField] private float PlayerAttackTime;
+
+        [Header("跳跃相关")]
+        [SerializeField] private float PlayerJumpForce;
+        [SerializeField] private float PlayerGroundDetectDistence;
+
 
         public PlayerStateMescine StateMachine { get; private set; }
 
@@ -51,8 +57,24 @@ namespace GJ
             StateMachine.CurrentState.Update();
         }
 
+        public bool GroundDetect()
+        {
+            var Raycastall = Physics2D.RaycastAll(this.transform.position, this.transform.position - new Vector3(0, PlayerGroundDetectDistence));
+            if (Raycastall.Length > 1) return true;
+            else return false;
+        }
+
         public float GetMoveSpeed_Player() => MoveSpeed;
         public float GetAttackRate_Player() => PlayerDamage;
         public float GetAttackTime_Player() => PlayerAttackTime;
+        public float GetJumpForce_Player() => PlayerJumpForce;
+        public float GetGroundDetectDistence_Player() => PlayerGroundDetectDistence;
+
+        void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawLine(this.transform.position, this.transform.position - new Vector3(0, PlayerGroundDetectDistence));
+        }
     }
 }

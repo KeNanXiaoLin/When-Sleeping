@@ -25,22 +25,24 @@ namespace GJ
         {
             base.Update();
             Horizontal = Input.GetAxisRaw("Horizontal");
-            Vitural = Input.GetAxisRaw("Vertical");
 
-            player.transform.Translate(new Vector2(Horizontal, Vitural)* MoveSpeed * Time.deltaTime);
+            player.transform.Translate(new Vector2(Horizontal, 0)* MoveSpeed * Time.deltaTime);
 
-            if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+            //左右移动
+            if (Input.GetAxisRaw("Horizontal") == 0)
             {
                 stateMachine.ChangeState(player.IdleState);
             }
 
-            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J))
+            //攻击操作
+            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J) && stateMachine.CurrentState != player.AttackState)
             {
-                EventListener.PlayerDamage();
+                stateMachine.ChangeState(player.AttackState);
                 //TODO 为攻击添加冷却时间
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            //空格点击操作
+            if (Input.GetKeyDown(KeyCode.Space) && stateMachine.CurrentState != player.JumpState)
             {
                 stateMachine.ChangeState(player.JumpState);
             }

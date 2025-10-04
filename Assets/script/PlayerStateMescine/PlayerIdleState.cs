@@ -29,6 +29,11 @@ namespace GJ
             {
                 EventListener.PlayerDamage();
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                stateMachine.ChangeState(player.JumpState);
+            }
         }
 
         public override void Exit()
