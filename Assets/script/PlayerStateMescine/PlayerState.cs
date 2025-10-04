@@ -12,11 +12,11 @@ namespace GJ
         public Player player;
         public string AnimatonName;
 
-        public PlayerState(PlayerStateMescine stateMachine, Player player, string animatonName)
+        public PlayerState(PlayerStateMescine _stateMachine, Player _player, string _animatonName)
         {
-            this.stateMachine = stateMachine;
-            this.player = player;
-            this.AnimatonName = animatonName;
+            this.stateMachine = _stateMachine;
+            this.player = _player;
+            this.AnimatonName = _animatonName;
         }
 
         public virtual void Enter()

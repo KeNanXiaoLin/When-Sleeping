@@ -5,9 +5,9 @@ using UnityEngine;
 namespace GJ
 {
 
-    public class PlayerIdleState : PlayerState
+    public class PlayerJumpState : PlayerState
     {
-        public PlayerIdleState(PlayerStateMescine stateMachine, Player player, string animatonName) : base(stateMachine, player, animatonName)
+        public PlayerJumpState(PlayerStateMescine stateMachine, Player player, string animatonName) : base(stateMachine, player, animatonName)
         {
         }
 
@@ -19,17 +19,12 @@ namespace GJ
         public override void Update()
         {
             base.Update();
-
-            if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-            {
-                stateMachine.ChangeState(player.MoveState);
-            }
         }
 
         public override void Exit()
         {
             base.Exit();
         }
-
     }
+
 }
