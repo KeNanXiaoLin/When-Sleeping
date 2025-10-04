@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 177607708}
   m_Layer: 0
   m_Name: 9-Sliced
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -433,6 +433,8 @@ MonoBehaviour:
   PlayerAttackTime: 0
   PlayerJumpForce: 400
   PlayerGroundDetectDistence: 0.89
+  isAttacking: 0
+  isJumping: 0
 --- !u!212 &970220372
 SpriteRenderer:
   m_ObjectHideFlags: 0
