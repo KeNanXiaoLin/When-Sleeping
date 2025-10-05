@@ -95,6 +95,7 @@ public class DialogSystem
             Debug.Log("对话已经触发完毕");
             //关闭对话面板，做一些其他事情
             UIManager.Instance.HidePanel<DialogPanel>();
+            EventListener.DialogueEnd();
         }
         else
         {
