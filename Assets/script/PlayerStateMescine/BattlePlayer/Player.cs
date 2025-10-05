@@ -63,7 +63,7 @@ namespace GJ
             CC_PlayerHealth = PlayerMaxHealth;
             AttackRateDistance_ToPlayer = PlayerAttackRange.transform.localPosition.x;
 
-            BattleSceneManager.instence.Player = this.gameObject;
+            BattleSceneManager.Instance.Player = this.gameObject;
         }
 
         void Start()

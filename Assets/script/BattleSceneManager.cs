@@ -5,25 +5,21 @@ using UnityEngine;
 namespace GJ
 {
 
-    public class BattleSceneManager : MonoBehaviour
+    public class BattleSceneManager : MonoBase<BattleSceneManager>
     {
-
-        public static BattleSceneManager instence;
-
-
-        private void Awake()
+        protected override void Awake()
         {
-            if (instence == null) instence = this;
-            else Destroy(instence);
-
+            base.Awake();
+            
             WinScene.SetActive(false);
             LoseScene.SetActive(false);
 
             EventListener.OnGameWin += ShowWinUI;
             EventListener.OnGameLose += ShowLoseUI;
+    }
 
-        }
 
+        
         [HideInInspector] public GameObject Player;
         [HideInInspector] public List<GameObject> Enemy = new List<GameObject>();
 

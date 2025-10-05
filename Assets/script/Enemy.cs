@@ -39,8 +39,8 @@ namespace GJ
             CC_EnemyHealth = EnemyMaxHealth;
             EnemyAttackRateDistence_ToEnemy = EnemyAttackRate.transform.localPosition.x;
 
-            BattleSceneManager.instence.Enemy.Add(this.gameObject);
-            Player = BattleSceneManager.instence.Player;
+            BattleSceneManager.Instance.Enemy.Add(this.gameObject);
+            Player = BattleSceneManager.Instance.Player;
 
             EventListener.OnGameLose += EnemyMotionStop;
         }
@@ -60,7 +60,7 @@ namespace GJ
 
         public void EnemyDead()
         {
-            BattleSceneManager.instence.Enemy.Remove(this.gameObject);
+            BattleSceneManager.Instance.Enemy.Remove(this.gameObject);
 
             Destroy(this.gameObject);
         }

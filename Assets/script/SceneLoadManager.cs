@@ -20,10 +20,14 @@ public class SceneLoadManager : MonoBehaviour
         }
     }
 
+    [SerializeField] public GameObject WinScene;
+    [SerializeField] public GameObject LoseScene;
+
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
         EventListener.OnVilliageSceneChange += LoadScene;
+        EventListener.OnBattleSceneChange += LoadScene;
     }
 
 
