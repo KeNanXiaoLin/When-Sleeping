@@ -26,6 +26,9 @@ namespace GJ
             Horizontal = Input.GetAxisRaw("Horizontal");
 
             player.transform.Translate(new Vector2(Horizontal, 0)* MoveSpeed * Time.deltaTime);
+            Debug.Log(Horizontal);
+
+            player.PlayerFlip(new Vector2(Horizontal,0));
 
             //左右移动
             if (Input.GetAxisRaw("Horizontal") == 0)
@@ -37,6 +40,7 @@ namespace GJ
             if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J) && player.isAttacking == false)
             {
                 stateMachine.ChangeState(player.AttackState);
+
                 //TODO 为攻击添加冷却时间
             }
 

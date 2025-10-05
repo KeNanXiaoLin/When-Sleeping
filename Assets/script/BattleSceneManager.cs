@@ -13,10 +13,22 @@ namespace GJ
         {
             if (instence == null) instence = this;
             else Destroy(instence);
+
+            WinScene.SetActive(false);
         }
 
-        public GameObject Player;
-        public List<GameObject> Enemy = new List<GameObject>();
+        [HideInInspector] public GameObject Player;
+        [HideInInspector] public List<GameObject> Enemy = new List<GameObject>();
+
+        public GameObject WinScene;
+
+        void FixedUpdate()
+        {
+            if (Enemy.Count <= 0)
+            {
+                WinScene.SetActive(true);
+            }
+        }
     }
 
 }

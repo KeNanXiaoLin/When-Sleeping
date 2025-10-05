@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 11
   ItemName: Test
-  itemType: 0
-  ItemPicture: {fileID: 0}
+  itemType: 4
+  ItemPicture: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   ItemInto: "\u7528\u6765\u6D4B\u8BD5\u7528\u7684\u9053\u5177"
   repiteItem: []
   repiteItemNum: 
