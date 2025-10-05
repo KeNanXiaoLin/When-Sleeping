@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
 namespace GJ
@@ -18,6 +19,7 @@ namespace GJ
         public GameObject EnemyAttackRate;
 
         private bool FlipToRight = false;
+        private bool CanMove = true;
         private float EnemyAttackRateDistence_ToEnemy;
 
         public Animator EnemyAnim;
@@ -37,10 +39,10 @@ namespace GJ
             CC_EnemyHealth = EnemyMaxHealth;
             EnemyAttackRateDistence_ToEnemy = EnemyAttackRate.transform.localPosition.x;
 
-            BattleSceneManager.instence.Enemy.Add(this.gameObject);
-            Player = BattleSceneManager.instence.Player;
+            BattleSceneManager.Instance.Enemy.Add(this.gameObject);
+            Player = BattleSceneManager.Instance.Player;
 
-            
+            EventListener.OnGameLose += EnemyMotionStop;
         }
 
         private void Update()
@@ -58,13 +60,21 @@ namespace GJ
 
         public void EnemyDead()
         {
-            BattleSceneManager.instence.Enemy.Remove(this.gameObject);
+            BattleSceneManager.Instance.Enemy.Remove(this.gameObject);
 
             Destroy(this.gameObject);
         }
 
+        private void EnemyMotionStop()
+        {
+            EnemyAttAnim.speed = 0;
+            CanMove = false;
+        }
+
+        //敌人追逐
         private void EnemyChasePlayer()
         {
+            if (CanMove == false) return;
 
             if (Vector2.Distance(this.transform.position, Player.transform.position) < EnemyChaseRate)
             {
@@ -92,6 +102,7 @@ namespace GJ
             }
         }
 
+        //敌人左右反转
         public void EnemyFlip(Vector2 _FilpDirection)
         {
             if (_FilpDirection.normalized.x == 0) return;
@@ -99,7 +110,7 @@ namespace GJ
             if (FlipToRight == true && _FilpDirection.normalized.x > 0) return;
 
             //求出战斗区域和玩家的相对距离
-            
+
             //向左反转
             if (FlipToRight == true)
             {

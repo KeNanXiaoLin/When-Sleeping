@@ -26,7 +26,6 @@ namespace GJ
             Horizontal = Input.GetAxisRaw("Horizontal");
 
             player.transform.Translate(new Vector2(Horizontal, 0)* MoveSpeed * Time.deltaTime);
-            Debug.Log(Horizontal);
 
             player.PlayerFlip(new Vector2(Horizontal,0));
 
