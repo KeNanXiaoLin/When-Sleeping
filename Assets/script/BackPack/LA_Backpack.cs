@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,10 @@ public class LA_Backpack : MonoBehaviour
     {
         if (instence != null) Destroy(instence);
         else instence = this;
+
+        DontDestroyOnLoad(this.gameObject);
+
+        GotItemUI.SetActive(false);
     }
 
     public List<ItemSlot> Backpack = new List<ItemSlot>();
@@ -36,6 +41,11 @@ public class LA_Backpack : MonoBehaviour
     [Header("背包系统UI：物品槽")]
     public List<GameObject> UISlot_Backpack = new List<GameObject>();
     public GameObject BackPack_UI;
+
+    [Header("背包系统UI：得到道具UI")]
+    public GameObject GotItemUI;
+    public Image GotItemUI_Image;
+    public TMP_Text GotItemUI_ItemIntroduction;
 
     public void OpenBackpack()
     {
@@ -46,6 +56,22 @@ public class LA_Backpack : MonoBehaviour
     public void CloseBackpack()
     {
         BackPack_UI.SetActive(false);
+    }
+
+    //显示得到道具的页面
+    public void ShowGotItemUI_Backpack(LA_Item _item)
+    {
+        GotItemUI_Image.sprite = _item.ItemPicture;
+        GotItemUI_ItemIntroduction.text = _item.ItemInto;
+        GotItemUI.GetComponentInChildren<Button>().onClick.AddListener(Hide_GotItemUI_BackPack);
+
+        GotItemUI.SetActive(true);
+    }
+
+    //收起得到道具的页面（用Button和确认键调用）
+    public void Hide_GotItemUI_BackPack()
+    {
+        GotItemUI.SetActive(false);
     }
 
     /// <summary>

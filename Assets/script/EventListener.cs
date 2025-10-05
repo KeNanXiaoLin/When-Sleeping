@@ -20,8 +20,6 @@ public class EventListener
     public static event Damage OnPlayerDamage;
 
     public delegate void Damage_Enemy(float _Damage);
-
-    //TODO 完成敌人对玩家造成伤害的逻辑
     public static event Damage_Enemy OnEnemyDamage;
 
     public static void PlayerDamage() => OnPlayerDamage?.Invoke();

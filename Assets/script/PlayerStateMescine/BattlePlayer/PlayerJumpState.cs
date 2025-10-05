@@ -7,7 +7,6 @@ namespace GJ
 
     public class PlayerJumpState : PlayerMoveState
     {
-        //FIXME 修复连跳问题
         private float PlayerJumpForce;
         private Rigidbody2D playerRd;
         private bool IsGroundDetectStart = false;

@@ -13,7 +13,7 @@ public class LA_Item : ScriptableObject
         Weapon,     //武器
         armor,      //防具
         medcine,    //药瓶
-        Block,      //方块
+        Mission,    //任务物品
     }
 
     //基本属性
