@@ -563,7 +563,7 @@ GameObject:
   - component: {fileID: 4841746225983962011}
   - component: {fileID: 255932425851607503}
   m_Layer: 5
-  m_Name: '[Slider]Music'
+  m_Name: '[Slider]MusicSli'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -729,7 +729,7 @@ GameObject:
   - component: {fileID: 2564668910510296211}
   - component: {fileID: 7784409232116188861}
   m_Layer: 5
-  m_Name: '[Slider]Sound'
+  m_Name: '[Slider]SoundSli'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1341,7 +1341,7 @@ GameObject:
   - component: {fileID: 8099443659457364399}
   - component: {fileID: 5401025296710874667}
   m_Layer: 5
-  m_Name: '[Toggle]Sound'
+  m_Name: '[Toggle]SoundTog'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1636,7 +1636,7 @@ GameObject:
   - component: {fileID: 5045539582614932321}
   - component: {fileID: 1434527966805372250}
   m_Layer: 5
-  m_Name: '[Toggle]Music'
+  m_Name: '[Toggle]MusicTog'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
