@@ -27,12 +27,12 @@ public class EventListener
     #endregion
 
     #region 村民对话相关事件
-    public delegate void Dialogue(DialogData data);
+    public delegate void Dialogue();
     public static event Dialogue OnDialogueStart;
     public static event Dialogue OnDialogueEnd;
 
-    public static void DialogueStart(DialogData data) => OnDialogueStart?.Invoke(data);
-    public static void DialogueEnd(DialogData data) => OnDialogueEnd?.Invoke(data);
+    public static void DialogueStart() => OnDialogueStart?.Invoke();
+    public static void DialogueEnd() => OnDialogueEnd?.Invoke();
     #endregion
 
     #region 场景切换相关事件 
