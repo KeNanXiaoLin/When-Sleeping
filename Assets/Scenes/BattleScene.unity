@@ -382,6 +382,7 @@ GameObject:
   m_Component:
   - component: {fileID: 303052384}
   - component: {fileID: 303052385}
+  - component: {fileID: 303052386}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -418,6 +419,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   Enemy: []
+  WinScene: {fileID: 1722723200}
+  LoseScene: {fileID: 1946784107}
+--- !u!114 &303052386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 303052382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1675dcaae875e7469b3ba2ebf5e0425, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   WinScene: {fileID: 1722723200}
   LoseScene: {fileID: 1946784107}
 --- !u!1 &837390847

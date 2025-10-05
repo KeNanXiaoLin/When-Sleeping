@@ -20,9 +20,6 @@ public class SceneLoadManager : MonoBehaviour
         }
     }
 
-    [SerializeField] public GameObject WinScene;
-    [SerializeField] public GameObject LoseScene;
-
     void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
