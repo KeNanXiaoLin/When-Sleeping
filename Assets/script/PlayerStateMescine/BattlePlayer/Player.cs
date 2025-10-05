@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Animations;
@@ -43,6 +44,7 @@ namespace GJ
         public PlayerJumpState JumpState { get; private set; }
         public PlayerAttackState AttackState { get; private set; }
         public PlayerInsteractState InsteractState { get; private set; }
+        public PlayerStopState StopState{ get; private set; }
         #endregion
 
         private void Awake()
@@ -54,6 +56,7 @@ namespace GJ
             JumpState = new PlayerJumpState(StateMachine, this, "Jump");
             AttackState = new PlayerAttackState(StateMachine, this, "Attack");
             InsteractState = new PlayerInsteractState(StateMachine, this, "Insteract");
+            StopState = new PlayerStopState(StateMachine, this, "");
 
             isAttacking = false;
             isJumping = false;
@@ -76,8 +79,14 @@ namespace GJ
         void Update()
         {
             StateMachine.CurrentState.Update();
+
+            if (CC_PlayerHealth <= 0)
+            {
+                StateMachine.ChangeState(StopState);
+            }
         }
 
+        //玩家地面检测
         public bool GroundDetect()
         {
             RaycastHit2D[] Raycastall = Physics2D.RaycastAll(this.transform.position, this.transform.position - new Vector3(0, PlayerGroundDetectDistence));
@@ -93,6 +102,7 @@ namespace GJ
             return false;
         }
 
+        //反转玩家的函数
         public void PlayerFlip(Vector2 _FilpDirection)
         {
             if (_FilpDirection.normalized.x == 0) return;
@@ -100,7 +110,7 @@ namespace GJ
             if (FlipToRight == true && _FilpDirection.normalized.x > 0) return;
 
             //求出战斗区域和玩家的相对距离
-            
+
             //向左反转
             if (FlipToRight == true)
             {
@@ -120,6 +130,7 @@ namespace GJ
 
         }
 
+        //玩家受到伤害时调用
         public void PlayerGetHurt(float _Damage)
         {
             CC_PlayerHealth -= _Damage;

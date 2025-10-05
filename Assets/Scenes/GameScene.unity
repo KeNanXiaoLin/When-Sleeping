@@ -640,7 +640,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.90763277, y: -1.4570414, z: -10}
+  m_LocalPosition: {x: -0.91372865, y: -1.4571949, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -940,6 +940,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 349364422343630507, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 32552aec759ea9d499a4b83c42f5c19e, type: 3}
     - target: {fileID: 1942880304456711268, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
       propertyPath: Item
       value: 
@@ -951,6 +955,34 @@ PrefabInstance:
     - target: {fileID: 5764718435966083940, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
       propertyPath: m_Name
       value: VilliageNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 7275715914189417780, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: m_Size.x
+      value: 1.7568142
+      objectReference: {fileID: 0}
+    - target: {fileID: 7275715914189417780, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: m_Size.y
+      value: 3.7082367
+      objectReference: {fileID: 0}
+    - target: {fileID: 7275715914189417780, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.03243481
+      objectReference: {fileID: 0}
+    - target: {fileID: 7275715914189417780, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.032435548
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978989608869069233, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.64645
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978989608869069233, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.64645
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978989608869069233, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.64645
       objectReference: {fileID: 0}
     - target: {fileID: 7978989608869069233, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
       propertyPath: m_LocalPosition.x
