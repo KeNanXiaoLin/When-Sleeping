@@ -25,7 +25,7 @@ namespace GJ
 
         void Start()
         {
-            EventListener.OnDialogueEnd += OnDialogueEnd;
+            // EventListener.OnDialogueEnd += OnDialogueEnd;
         }
 
         void Update()
@@ -57,7 +57,7 @@ namespace GJ
             if (Input.GetKeyDown(KeyCode.F) && NPC != null)
             {
                 IsMoving = false;
-                EventListener.DialogueStart();
+                EventListener.DialogueStart(NPC.data);
             }
         }
 

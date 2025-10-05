@@ -8,6 +8,7 @@ namespace GJ
 
     public class VilliageNPC : MonoBehaviour
     {
+        public DialogData data;
         public LA_Item Item;
         
         public void PlayerGotItem()
