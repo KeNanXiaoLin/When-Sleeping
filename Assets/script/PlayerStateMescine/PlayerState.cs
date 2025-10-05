@@ -21,7 +21,7 @@ namespace GJ
 
         public virtual void Enter()
         {
-            
+            player.anim.SetBool(AnimatonName, true);
         }
 
         public virtual void Update()
@@ -30,7 +30,7 @@ namespace GJ
         }
         public virtual void Exit()
         {
-
+            player.anim.SetBool(AnimatonName, false);
         }
     }
 }

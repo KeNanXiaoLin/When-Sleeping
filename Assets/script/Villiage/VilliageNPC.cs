@@ -11,22 +11,23 @@ namespace GJ
         public LA_Item Item;
         public DialogData data;
         public GameObject NPCNotice;
-        
+
 
         public bool IsDialogued = false;
 
-        void Awake()
+        void Start()
         {
             EventListener.OnDialogueStart += StartDialogue;
 
             EventListener.OnDialogueEnd += LetPlayerGotItem;
+            EventListener.OnDialogueEnd += EndDialogue;
         }
 
         private void StartDialogue()
         {
             if (IsDialogued == false)
             {
-                IsDialogued = true;
+
                 DialogSystem.Instance.TriggerStartDialog(data);
                 NPCNotice.SetActive(false);
             }
@@ -40,8 +41,13 @@ namespace GJ
         {
             if (IsDialogued == true) return;
 
-            LA_Backpack.instence.AddItm_Backpack(Item);
-            LA_Backpack.instence.ShowGotItemUI_Backpack(Item);
+            LA_Backpack.Instance.AddItm_Backpack(Item);
+            LA_Backpack.Instance.ShowGotItemUI_Backpack(Item);
+        }
+
+        private void EndDialogue()
+        {
+            IsDialogued = true;
         }
     }
 

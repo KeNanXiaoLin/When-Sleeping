@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
+using UnityEngine.SceneManagement;
 
 namespace GJ
 {
 
     public class BattleSceneManager : MonoBase<BattleSceneManager>
     {
+        private bool CheckingEnemy = false;
+
         protected override void Awake()
         {
             base.Awake();
-            
+
             WinScene.SetActive(false);
             LoseScene.SetActive(false);
 
             EventListener.OnGameWin += ShowWinUI;
             EventListener.OnGameLose += ShowLoseUI;
-    }
-
+        }
 
         
         [HideInInspector] public GameObject Player;
@@ -28,15 +31,29 @@ namespace GJ
 
         void FixedUpdate()
         {
-            if (Enemy.Count <= 0)
+            if (SceneManager.GetActiveScene().name == "BattleScene")
             {
-                WinScene.SetActive(true);
+                CheckingEnemy = true;
             }
+            if (Enemy.Count <= 0 && CheckingEnemy == true)
+            {
+                EventListener.GameWin();
+            }
+
         }
 
-        private void ShowWinUI() => WinScene.SetActive(true);
+        private void ShowWinUI()
+        {
+            WinScene.SetActive(true);
+        }
 
-        private void ShowLoseUI() => LoseScene.SetActive(true);
+
+        private void ShowLoseUI()
+        {
+            LoseScene.SetActive(true);
+            LoseScene.GetComponentInChildren<Animator>().Play("ShowSlowly");
+        }
+            
     }
 
 }
