@@ -18,12 +18,12 @@ namespace GJ
         public override void Enter()
         {
             base.Enter();
-            LA_Backpack.instence.OpenBackpack();
+            LA_Backpack.Instance.OpenBackpack();
 
-            for (int i = 0; i < LA_Backpack.instence.Backpack.Count; i++)
+            for (int i = 0; i < LA_Backpack.Instance.Backpack.Count; i++)
             {
-                UISlot.Add(LA_Backpack.instence.UISlot_Backpack[i].GetComponent<Button>());
-                //TODO 完成背包系统
+                UISlot.Add(LA_Backpack.Instance.UISlot_Backpack[i].GetComponent<Button>());
+                //TODO 完成战斗背包系统
             }
         }
 

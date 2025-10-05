@@ -30,13 +30,13 @@ namespace GJ
             player.PlayerFlip(new Vector2(Horizontal,0));
 
             //左右移动
-            if (Input.GetAxisRaw("Horizontal") == 0)
+            if (Input.GetAxisRaw("Horizontal") == 0 && player.isAttacking == false && player.isJumping == false)
             {
                 stateMachine.ChangeState(player.IdleState);
             }
 
             //攻击操作
-            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.J) && player.isAttacking == false)
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J) )
             {
                 stateMachine.ChangeState(player.AttackState);
 
@@ -44,7 +44,7 @@ namespace GJ
             }
 
             //空格点击操作
-            if (Input.GetKeyDown(KeyCode.Space) && player.isJumping == false)
+            if (Input.GetKeyDown(KeyCode.Space) )
             {
                 stateMachine.ChangeState(player.JumpState);
                 

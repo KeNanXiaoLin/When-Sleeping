@@ -116,7 +116,7 @@ namespace GJ
             {
 
                 this.GetComponent<SpriteRenderer>().flipX = true;
-                PlayerAttackRange.transform.localPosition = new Vector3(-AttackRateDistance_ToPlayer, 0, 0);
+                PlayerAttackRange.transform.localPosition = new Vector3(-AttackRateDistance_ToPlayer, 0.604f, 0);
                 FlipToRight = false;
             }
 
@@ -124,7 +124,7 @@ namespace GJ
             {
                 //向右反转
                 this.GetComponent<SpriteRenderer>().flipX = false;
-                PlayerAttackRange.transform.localPosition = new Vector3(AttackRateDistance_ToPlayer, 0, 0);
+                PlayerAttackRange.transform.localPosition = new Vector3(AttackRateDistance_ToPlayer, 0.604f, 0);
                 FlipToRight = true;
             }
 
@@ -143,7 +143,7 @@ namespace GJ
         public float GetAttackRate_Player() => PlayerDamage;
         public float GetAttackTime_Player() => PlayerAttackTime;
         public float GetJumpForce_Player() => PlayerJumpForce;
-        public float GetGroundDetectDistence_Player() => PlayerGroundDetectDistence;
+        public float GetHealthPer_Player() => CC_PlayerHealth / PlayerMaxHealth;
 
         #endregion
 
