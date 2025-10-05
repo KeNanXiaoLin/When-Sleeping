@@ -57,7 +57,7 @@ namespace GJ
             if (Input.GetKeyDown(KeyCode.F) && NPC != null)
             {
                 IsMoving = false;
-                EventListener.DialogueStart(NPC.data);
+                EventListener.DialogueStart();
             }
         }
 
