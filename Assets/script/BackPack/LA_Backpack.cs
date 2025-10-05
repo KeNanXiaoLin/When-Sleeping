@@ -22,15 +22,13 @@ public class ItemSlot
 
 public class LA_Backpack : MonoBase<LA_Backpack>
 {
-    //单例模式
-    public static LA_Backpack instence;
+
 
     protected override void Awake()
     {
         base.Awake();
 
         GotItemUI.SetActive(false);
-        BackPack_UI.SetActive(false);
     }
 
     public List<ItemSlot> Backpack = new List<ItemSlot>();
@@ -43,6 +41,7 @@ public class LA_Backpack : MonoBase<LA_Backpack>
     [Header("背包系统UI：得到道具UI")]
     public GameObject GotItemUI;
     public Image GotItemUI_Image;
+    public TMP_Text GotItemUI_ItemName;
     public TMP_Text GotItemUI_ItemIntroduction;
 
     public void OpenBackpack()
@@ -59,11 +58,12 @@ public class LA_Backpack : MonoBase<LA_Backpack>
     //显示得到道具的页面
     public void ShowGotItemUI_Backpack(LA_Item _item)
     {
+        GotItemUI.SetActive(true);
+
         GotItemUI_Image.sprite = _item.ItemPicture;
+        GotItemUI_ItemName.text = _item.ItemName;
         GotItemUI_ItemIntroduction.text = _item.ItemInto;
         GotItemUI.GetComponentInChildren<Button>().onClick.AddListener(Hide_GotItemUI_BackPack);
-
-        GotItemUI.SetActive(true);
     }
 
     //收起得到道具的页面（用Button和确认键调用）
@@ -151,13 +151,16 @@ public class LA_Backpack : MonoBase<LA_Backpack>
     /// </summary>
     private void InitUI_Backpack()
     {
-        for (int i = 0; i < Backpack.Count; i++)
+        for (int i = 0; i < UISlot_Backpack.Count; i++)
         {
-            UISlot_Backpack[i].GetComponent<Image>().sprite = Backpack[i].itemOS.ItemPicture;
-
-            Text UISlotText = UISlot_Backpack[i].GetComponentInChildren<Text>();
-            UISlotText.text = Backpack[i].ItemNum.ToString();
+            UISlot_Backpack[i].transform.GetChild(0).GetComponent<Image>().color = new Color(255,255,255, 0);
         }
+
+        for (int i = 0; i < Backpack.Count; i++)
+            {
+                 UISlot_Backpack[i].transform.GetChild(0).GetComponent<Image>().color = new Color(255,255,255, 255);
+                UISlot_Backpack[i].transform.GetChild(0).GetComponent<Image>().sprite = Backpack[i].itemOS.ItemPicture;
+            }
 
     }
     

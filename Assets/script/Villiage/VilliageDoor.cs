@@ -20,7 +20,7 @@ public class VilliageDoor : MonoBehaviour
         colliders.Add(collision);
     }
 
-    private void CheckIfSceneChangeChange()
+    public virtual void CheckIfSceneChangeChange()
     {
         foreach (Collider2D i in colliders)
         {
@@ -30,4 +30,5 @@ public class VilliageDoor : MonoBehaviour
             }
         }
     }
+    
 }
