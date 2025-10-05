@@ -67,8 +67,6 @@ namespace GJ
         void Update()
         {
             StateMachine.CurrentState.Update();
-
-            Debug.Log(StateMachine.CurrentState);
         }
 
         public bool GroundDetect()
@@ -78,7 +76,6 @@ namespace GJ
             {
                 if (i.collider.gameObject.CompareTag("Ground") == true)
                 {
-                    Debug.Log("Detected");
                     return true;
                 }
 

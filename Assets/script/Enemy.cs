@@ -16,6 +16,9 @@ namespace GJ
         public float EnemyChaseRate;
         public float EnemyAttackDistence;
 
+        public Animator EnemyAnim;
+        public Animator EnemyAttAnim;
+
 
         private float CC_EnemyHealth;
         private GameObject Player;
@@ -31,11 +34,16 @@ namespace GJ
 
             BattleSceneManager.instence.Enemy.Add(this.gameObject);
             Player = BattleSceneManager.instence.Player;
+
+            
         }
 
         private void Update()
         {
             EnemyChasePlayer();
+
+            if (CC_EnemyHealth <= 0)
+                EnemyDead();
         }
 
         public void EnemyGetDamage(float _Damage)
@@ -60,16 +68,18 @@ namespace GJ
                 if (Vector2.Distance(this.transform.position, Player.transform.position) < EnemyAttackDistence)
                 {
                     //TODO enemyAttack"开始攻击动画“
-
+                    EnemyAnim.speed = 1;
+                    EnemyAttAnim.Play("EnemyRate", 0);
                 }
                 else
                 {
-                //检查玩家位置在左边还是右边
-                Vector2 ChaseDirection = (Player.transform.position - this.transform.position).normalized;
-                ChaseDirection.y = 0;
+                    EnemyAttAnim.Play("New State", 0, 1);
+                    //检查玩家位置在左边还是右边
+                    Vector2 ChaseDirection = (Player.transform.position - this.transform.position).normalized;
+                    ChaseDirection.y = 0;
 
-                //敌人朝向玩家位置移动
-                this.transform.Translate(ChaseDirection * EnemyMoveSpeed * Time.deltaTime);
+                    //敌人朝向玩家位置移动
+                    this.transform.Translate(ChaseDirection * EnemyMoveSpeed * Time.deltaTime);
                 }
 
                 //TODO 增加“前方可移动位置”检测，防止敌人坠机
@@ -77,11 +87,7 @@ namespace GJ
         }
 
         //用于动画的攻击函数
-        public void Anim_EnemyAttack()
-        {
-            EventListener.EnemyDamage(EnemyDamage);
-        }
-
+        
         public void Anim_EnemyReWork()
         {
             //敌人动画重新播放
