@@ -18,7 +18,7 @@ namespace GJ
         public float EnemyAttackDistence;
         public GameObject EnemyAttackRate;
 
-        private bool FlipToRight = false;
+     
         private bool CanMove = true;
         private float EnemyAttackRateDistence_ToEnemy;
 
@@ -85,17 +85,25 @@ namespace GJ
                     //TODO enemyAttack"开始攻击动画“
                     EnemyAnim.speed = 1;
                     EnemyAttAnim.Play("EnemyRate", 0);
+                    EnemyAnim.SetBool("IsMoving", false);
+                    EnemyAnim.SetBool("IsAttacking", true);
                 }
                 else
                 {
-                    EnemyAttAnim.Play("New State", 0, 1);
                     //检查玩家位置在左边还是右边
                     Vector2 ChaseDirection = (Player.transform.position - this.transform.position).normalized;
                     ChaseDirection.y = 0;
                     EnemyFlip(ChaseDirection);
 
+                    Debug.Log(ChaseDirection);
+
                     //敌人朝向玩家位置移动
                     this.transform.Translate(ChaseDirection * EnemyMoveSpeed * Time.deltaTime);
+
+                    EnemyAttAnim.Play("New State", 0, 1);
+                    EnemyAnim.SetBool("IsMoving", true);
+                    EnemyAnim.SetBool("IsAttacking", false);
+
                 }
 
                 //TODO 增加“前方可移动位置”检测，防止敌人坠机
@@ -106,26 +114,22 @@ namespace GJ
         public void EnemyFlip(Vector2 _FilpDirection)
         {
             if (_FilpDirection.normalized.x == 0) return;
-            if (FlipToRight == false && _FilpDirection.normalized.x < 0) return;
-            if (FlipToRight == true && _FilpDirection.normalized.x > 0) return;
+            
 
             //求出战斗区域和玩家的相对距离
 
             //向左反转
-            if (FlipToRight == true)
+            if (_FilpDirection.normalized.x < 0)
             {
-
-                this.GetComponent<SpriteRenderer>().flipX = true;
+                this.GetComponent<SpriteRenderer>().flipX = false;
                 EnemyAttackRate.transform.localPosition = new Vector3(EnemyAttackRateDistence_ToEnemy, 0, 0);
-                FlipToRight = false;
             }
 
-            else if (FlipToRight == false)
+            else if (_FilpDirection.normalized.x > 0)
             {
                 //向右反转
-                this.GetComponent<SpriteRenderer>().flipX = false;
+                this.GetComponent<SpriteRenderer>().flipX = true;
                 EnemyAttackRate.transform.localPosition = new Vector3(-EnemyAttackRateDistence_ToEnemy, 0, 0);
-                FlipToRight = true;
             }
 
         }

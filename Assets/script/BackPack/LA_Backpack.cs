@@ -20,19 +20,17 @@ public class ItemSlot
     }
 }
 
-public class LA_Backpack : MonoBehaviour
+public class LA_Backpack : MonoBase<LA_Backpack>
 {
     //单例模式
     public static LA_Backpack instence;
 
-    void Awake()
+    protected override void Awake()
     {
-        if (instence != null) Destroy(instence);
-        else instence = this;
-
-        DontDestroyOnLoad(this.gameObject);
+        base.Awake();
 
         GotItemUI.SetActive(false);
+        BackPack_UI.SetActive(false);
     }
 
     public List<ItemSlot> Backpack = new List<ItemSlot>();
