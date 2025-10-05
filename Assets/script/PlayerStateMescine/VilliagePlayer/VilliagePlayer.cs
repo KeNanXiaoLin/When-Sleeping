@@ -25,7 +25,7 @@ namespace GJ
 
         void Start()
         {
-            // EventListener.OnDialogueEnd += OnDialogueEnd;
+            EventListener.OnDialogueEnd += OnDialogueEnd;
         }
 
         void Update()
