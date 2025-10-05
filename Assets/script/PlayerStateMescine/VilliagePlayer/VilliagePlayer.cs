@@ -16,13 +16,11 @@ namespace GJ
         private bool IsMoving = true;
 
         private VilliageNPC NPC;
-
-
-        public PlayerStateMescine StateMachine { get; private set; }
+        private Animator anim;
 
         void Awake()
         {
-            StateMachine = GetComponent<PlayerStateMescine>();
+            anim = this.GetComponent<Animator>();
         }
 
         void Start()
@@ -39,7 +37,21 @@ namespace GJ
             {
                 Horizonal = Input.GetAxisRaw("Horizontal");
                 vertual = Input.GetAxisRaw("Vertical");
+
                 this.transform.Translate(new Vector2(Horizonal, vertual) * MoveSpeed * Time.deltaTime);
+
+
+                anim.SetFloat("XMove", Horizonal );
+                anim.SetFloat("YMove", vertual );
+
+                if (Horizonal != 0 || vertual != 0)
+                {
+                    anim.SetBool("Moving", true);
+                    anim.SetFloat("XIdle", Horizonal);
+                    anim.SetFloat("YIdle", vertual);
+                }
+                else anim.SetBool("Moving", false);
+                
             }
 
             if (Input.GetKeyDown(KeyCode.F) && NPC != null)

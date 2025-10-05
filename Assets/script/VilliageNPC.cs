@@ -6,19 +6,14 @@ using UnityEngine;
 namespace GJ
 {
 
-public class VilliageNPC : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
+    public class VilliageNPC : MonoBehaviour
     {
-
+        public LA_Item Item;
+        
+        public void PlayerGotItem()
+        {
+            LA_Backpack.instence.ShowGotItemUI_Backpack(Item);
+        }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-}
 
 }
