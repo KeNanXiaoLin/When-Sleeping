@@ -21,12 +21,18 @@ namespace GJ
         [Header("攻击相关")]
         [SerializeField] private float PlayerDamage;
         [SerializeField] private float PlayerAttackTime;
+        [SerializeField] private GameObject PlayerAttackRange;
 
         [Header("跳跃相关")]
         [SerializeField] private float PlayerJumpForce;
         [SerializeField] private float PlayerGroundDetectDistence;
-        [HideInInspector] public bool isAttacking = false;
-        [HideInInspector] public bool isJumping = false;
+        [HideInInspector] public bool isAttacking;
+        [HideInInspector] public bool isJumping;
+
+        private bool FlipToRight = false;
+        private float AttackRateDistance_ToPlayer;
+
+
 
         #region 状态机相关
 
@@ -49,7 +55,10 @@ namespace GJ
             AttackState = new PlayerAttackState(StateMachine, this, "Attack");
             InsteractState = new PlayerInsteractState(StateMachine, this, "Insteract");
 
+            isAttacking = false;
+            isJumping = false;
             CC_PlayerHealth = PlayerMaxHealth;
+            AttackRateDistance_ToPlayer = PlayerAttackRange.transform.localPosition.x;
 
             BattleSceneManager.instence.Player = this.gameObject;
         }
@@ -82,6 +91,33 @@ namespace GJ
             }
 
             return false;
+        }
+
+        public void PlayerFlip(Vector2 _FilpDirection)
+        {
+            if (_FilpDirection.normalized.x == 0) return;
+            if (FlipToRight == false && _FilpDirection.normalized.x < 0) return;
+            if (FlipToRight == true && _FilpDirection.normalized.x > 0) return;
+
+            //求出战斗区域和玩家的相对距离
+            
+            //向左反转
+            if (FlipToRight == true)
+            {
+
+                this.GetComponent<SpriteRenderer>().flipX = true;
+                PlayerAttackRange.transform.localPosition = new Vector3(-AttackRateDistance_ToPlayer, 0, 0);
+                FlipToRight = false;
+            }
+
+            else if (FlipToRight == false)
+            {
+                //向右反转
+                this.GetComponent<SpriteRenderer>().flipX = false;
+                PlayerAttackRange.transform.localPosition = new Vector3(AttackRateDistance_ToPlayer, 0, 0);
+                FlipToRight = true;
+            }
+
         }
 
         public void PlayerGetHurt(float _Damage)

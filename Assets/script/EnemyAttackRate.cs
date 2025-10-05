@@ -28,10 +28,8 @@ namespace GJ
 
         public void Anim_EnemyAttack()
         {
-            Debug.Log("Anim");
             foreach (Collider2D i in colliders)
             {
-                Debug.Log(i);
                 if (i.GetComponent<Player>() == true)
                     EventListener.EnemyDamage(enemy.EnemyDamage);
             }
