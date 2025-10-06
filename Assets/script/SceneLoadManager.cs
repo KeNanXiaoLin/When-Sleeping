@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,8 +16,9 @@ public enum E_SceneLoadType
 
 public class SceneLoadManager : MonoBase<SceneLoadManager>
 {
-
     public float DayIndex = 0;
+    public bool DayOneDia = false;
+    public bool DayTwoDia = false;
     public bool MilkDrinked = false;
 
     /// <summary>
@@ -35,6 +34,8 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     /// </summary>
     private CanvasGroup faderCanvasGroup = null;
 
+    public string CurrentScene;
+
     protected override void Awake()
     {
         base.Awake();
@@ -43,7 +44,16 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     void OnEnable()
     {
         EventListener.OnVilliageSceneChange += LoadScene;
+
         EventListener.OnBattleSceneChange += LoadScene;
+        EventListener.OnBattleSceneChange += DayUp;
+
+        EventListener.OnSceneReload += ReLoadScene;
+    }
+
+    private void DayUp(string name, E_SceneLoadType type)
+    {
+        DayIndex++;
     }
 
     void OnDisable()
@@ -108,11 +118,12 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
         // 开始淡入到黑屏，并等待淡入完成
         yield return StartCoroutine(Fade(1f));
 
+        //在场景加载完成后，做一些额外处理，时钟动画
+        yield return DoSomethingAfterLoadScene(type);
+
         // 开始加载指定场景，并等待加载完成
         yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
 
-        //在场景加载完成后，做一些额外处理，时钟动画
-        yield return DoSomethingAfterLoadScene(type);
 
         // 开始淡出黑屏，并等待淡出完成
         yield return StartCoroutine(Fade(0f));
@@ -160,7 +171,7 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
             clockSprites.Remove(clockSprites[i]);
             yield return new WaitForSeconds(time);
         }
-        
+        UIManager.Instance.HidePanel<CGPanel>();
 
     }
 

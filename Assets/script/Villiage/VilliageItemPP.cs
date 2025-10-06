@@ -25,24 +25,24 @@ namespace GJ
 
         private void GotItem()
         {
-            if (Ischecked == true) return;
+        
+                LA_Backpack.Instance.AddItm_Backpack(item);
+                LA_Backpack.Instance.ShowGotItemUI_Backpack(item);
 
-            LA_Backpack.Instance.AddItm_Backpack(item);
-            LA_Backpack.Instance.ShowGotItemUI_Backpack(item);
+                EventListener.OnCheckedItemGot += CheckedItemGot;
         }
 
         private void CheckedItemGot()
         {
-            Debug.Log("Checking");
+            EventListener.OnCheckedItemGot -= CheckedItemGot;
 
-            if (ItemImage == null)
-            {
-                ItemImage = this.GetComponent<SpriteRenderer>();
-                ItemImage.color = new Color(0, 0, 0, 0);
-            }
-            Ischecked = true;
+            this.gameObject.SetActive(false);
         }
 
+        void OnDisable()
+        {
+            EventListener.OnItemGot -= GotItem;
+        }
 
     }
 

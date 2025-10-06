@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 226f13d617cddee4bbd2c46bdbd7f298, type: 3}
-  m_Name: Day2Morning 0
+  m_Name: Day2Morning 3b
   m_EditorClassIdentifier: 
-  id: 200
+  id: 203
   type: 0
-  content: 'I actually had this kind of dream again.  '
-  nextData: {fileID: 11400000, guid: da6577ec13cdb614e90d339fa3b257b3, type: 2}
+  content: 'Hey Bob, let me tell you, I''ve been dreaming that I''m playing monster
+    hunting. '
+  nextData: {fileID: 11400000, guid: dbba184987253e44790a0f81dfb92dae, type: 2}
   isEnd: 0
   isStart: 1

@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 201
   type: 0
   content: "Later, Bob will come to play with me, I\u2019ll talk to him. "
-  nextData: {fileID: 11400000, guid: f23efcc44830c8b42bc87f8d2ed4b7eb, type: 2}
-  isEnd: 0
+  nextData: {fileID: 0}
+  isEnd: 1
   isStart: 0

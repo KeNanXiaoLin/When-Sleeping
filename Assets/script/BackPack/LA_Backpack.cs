@@ -113,6 +113,7 @@ public class LA_Backpack : MonoBase<LA_Backpack>
                 item.ItemNum -= _deceleNum;
             }
         }
+        InitUI_Backpack();
     }
 
     /// <summary>

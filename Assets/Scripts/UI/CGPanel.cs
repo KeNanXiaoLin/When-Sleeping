@@ -21,6 +21,7 @@ public class CGPanel : UIPanelBase
     public void UpdateImage(Sprite sprite)
     {
         img.sprite = sprite;
+        
     }
 
     public void UpdateTips(string str)

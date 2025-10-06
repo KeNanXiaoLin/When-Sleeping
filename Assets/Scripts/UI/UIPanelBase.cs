@@ -70,7 +70,6 @@ public abstract class UIPanelBase : MonoBehaviour
 
     private void FindChildrenControl()
     {
-        Debug.Log(gameObject.GetInstanceID());
         UIBehaviour[] controls = this.GetComponentsInChildren<UIBehaviour>(true);
         for (int i = 0; i < controls.Length; i++)
         {
@@ -90,7 +89,6 @@ public abstract class UIPanelBase : MonoBehaviour
                         ClickBtn(name);
                     });
                     controlDic.Add(name, controls[i]);
-                    Debug.Log($"类型是{type},名字是{name},加入字典");
                 }
                 else if (controls[i] is Toggle tog && !controlDic.ContainsKey(name))
                 {
@@ -99,12 +97,10 @@ public abstract class UIPanelBase : MonoBehaviour
                         ToggleValueChange(name, value);
                     });
                     controlDic.Add(name, controls[i]);
-                    Debug.Log($"类型是{type},名字是{name},加入字典");
                 }
                 else if (controls[i] is InputField ipd && !controlDic.ContainsKey(name))
                 {
                     controlDic.Add(name, controls[i]);
-                    Debug.Log($"类型是{type},名字是{name},加入字典");
                 }
                 else if (controls[i] is Slider sld && !controlDic.ContainsKey(name))
                 {
@@ -113,7 +109,6 @@ public abstract class UIPanelBase : MonoBehaviour
                         SliderValueChange(name, value);
                     });
                     controlDic.Add(name, controls[i]);
-                    Debug.Log($"类型是{type},名字是{name},加入字典");
                 }
             }
         }
