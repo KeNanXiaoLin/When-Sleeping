@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Day2Morning 3b
   m_EditorClassIdentifier: 
   id: 203
-  type: 0
+  type: 3
   content: 'Hey Bob, let me tell you, I''ve been dreaming that I''m playing monster
     hunting. '
   nextData: {fileID: 11400000, guid: dbba184987253e44790a0f81dfb92dae, type: 2}

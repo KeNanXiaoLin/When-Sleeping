@@ -947,6 +947,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1204748515}
     - target: {fileID: 1942880304456711268, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: CheckeingItem
+      value: 
+      objectReference: {fileID: 11400000, guid: a305c9e67c0c2bf429f787545b78a525, type: 2}
+    - target: {fileID: 1942880304456711268, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
       propertyPath: OnlyAvaInDayTwo
       value: 1
       objectReference: {fileID: 0}

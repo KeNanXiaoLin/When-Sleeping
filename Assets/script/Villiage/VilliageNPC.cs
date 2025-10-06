@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace GJ
 
         [SerializeField] private bool OnlyAvaInDayTwo = false;
         [SerializeField] private bool Mom = false;
+        [SerializeField] private LA_Item CheckeingItem;
 
 
         public bool IsDialogued = false;
@@ -27,13 +29,14 @@ namespace GJ
 
                 EventListener.OnDialogueEnd += LetPlayerGotItem;
                 EventListener.OnDialogueEnd += EndDialogue;
+                IsDialogued = false;
             }
             else
                 this.gameObject.SetActive(false);
 
 
             //Mom专用判断条件
-            if (Mom == true && SceneLoadManager.Instance.LoadScene3Index < 2)
+            if (Mom == true && LA_Backpack.Instance.CheckItemNum_Backpack(CheckeingItem,1) == false)
             {
                 EventListener.OnDialogueStart -= StartDialogue;
 

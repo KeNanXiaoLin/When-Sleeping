@@ -2194,7 +2194,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.9370086, y: 0.27250612, z: -10}
+  m_LocalPosition: {x: -0.9362953, y: 0.27250516, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2270,6 +2270,10 @@ PrefabInstance:
       propertyPath: NPCNotice
       value: 
       objectReference: {fileID: 1550223258}
+    - target: {fileID: 1942880304456711268, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
+      propertyPath: CheckeingItem
+      value: 
+      objectReference: {fileID: 11400000, guid: f5509a9de41cc2b49b06a2832161747a, type: 2}
     - target: {fileID: 5764718435966083940, guid: 40ba594f46c62ed45a552afba95cbb26, type: 3}
       propertyPath: m_Name
       value: VilliageNPC

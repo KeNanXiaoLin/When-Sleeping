@@ -40,7 +40,7 @@ public class CGManager : MonoBase<CGManager>
         CGPlaying = false;
 
         //额外变量
-        SceneLoadManager.Instance.LoadScene("GameScene3", E_SceneLoadType.Clock);
+        SceneLoadManager.Instance.LoadScene("GameScene3", E_SceneLoadType.None);
         MusicManager.Instance.PlayBKMusic("轻松小曲2");
 
     }

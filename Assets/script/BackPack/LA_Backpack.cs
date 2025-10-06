@@ -33,7 +33,7 @@ public class LA_Backpack : MonoBase<LA_Backpack>
 
     public List<ItemSlot> Backpack = new List<ItemSlot>();
 
- 
+
     [Header("背包系统UI：物品槽")]
     public List<GameObject> UISlot_Backpack = new List<GameObject>();
     public GameObject BackPack_UI;
@@ -71,6 +71,11 @@ public class LA_Backpack : MonoBase<LA_Backpack>
     {
         GotItemUI.SetActive(false);
         EventListener.CheckedItemGot();
+    }
+
+    void Update()
+    {
+        InitUI_Backpack();
     }
 
     /// <summary>
@@ -132,7 +137,7 @@ public class LA_Backpack : MonoBase<LA_Backpack>
         }
 
         return 0;
-    } 
+    }
 
     /// <summary>
     /// 检查背包中指定物品的数量是否满足目标数量
@@ -143,7 +148,7 @@ public class LA_Backpack : MonoBase<LA_Backpack>
     public bool CheckItemNum_Backpack(LA_Item _Item, int _AimNum)
     {
         int A = ReadItemNum_Backpack(_Item);
-        
+
         if (A >= _AimNum) return true;
         else return false;
     }
@@ -155,16 +160,19 @@ public class LA_Backpack : MonoBase<LA_Backpack>
     {
         for (int i = 0; i < UISlot_Backpack.Count; i++)
         {
-            UISlot_Backpack[i].transform.GetChild(0).GetComponent<Image>().color = new Color(255,255,255, 0);
+            UISlot_Backpack[i].transform.GetChild(0).GetComponent<Image>().color = new Color(255, 255, 255, 0);
         }
 
         for (int i = 0; i < Backpack.Count; i++)
+        {
+            if (Backpack[i].ItemNum >= 0)
             {
-                 UISlot_Backpack[i].transform.GetChild(0).GetComponent<Image>().color = new Color(255,255,255, 255);
+                UISlot_Backpack[i].transform.GetChild(0).GetComponent<Image>().color = new Color(255, 255, 255, 255);
                 UISlot_Backpack[i].transform.GetChild(0).GetComponent<Image>().sprite = Backpack[i].itemOS.ItemPicture;
             }
+        }
 
     }
-    
+
 
 }
