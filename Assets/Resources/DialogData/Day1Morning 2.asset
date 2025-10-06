@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   type: 0
-  content: 'sparkling crystal :The sparkling crystal badge shines brightly in the
-    sunlight. '
+  content: 'Let me go for a walk outside. '
   nextData: {fileID: 0}
   isEnd: 1
   isStart: 0

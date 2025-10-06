@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 102
   type: 0
-  content: 
-  nextData: {fileID: 0}
+  content: 'I''m tired of drinking it. '
+  nextData: {fileID: 11400000, guid: b8a411916a0598341b12da75c64961ec, type: 2}
   isEnd: 0
   isStart: 0

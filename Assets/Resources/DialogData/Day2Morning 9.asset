@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 226f13d617cddee4bbd2c46bdbd7f298, type: 3}
-  m_Name: Day1Night 1
+  m_Name: Day2Morning 9
   m_EditorClassIdentifier: 
-  id: 101
-  type: 1
-  content: 'Honey,drink milk and go to bed early. '
-  nextData: {fileID: 11400000, guid: cda80cda15672464597ff2d741de4ed6, type: 2}
+  id: 209
+  type: 0
+  content: 'Not necessarily. But maybe tonight you can dream that we are fighting
+    monsters together and protecting the world. '
+  nextData: {fileID: 11400000, guid: 608ffd84e3de4d14f930f6ef81213c59, type: 2}
   isEnd: 0
-  isStart: 1
+  isStart: 0
