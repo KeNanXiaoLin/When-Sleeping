@@ -9,9 +9,11 @@ namespace GJ
     {
         private float PlayerJumpForce;
         private Rigidbody2D playerRd;
-        private bool IsGroundDetectStart = false;
 
+        private bool IsGroundDetectStart = false;
         private float JumpDetectTime = 1f;
+        private bool Counting = false;
+        private float CC_Time;
 
         public PlayerJumpState(PlayerStateMescine stateMachine, Player player, string animatonName) : base(stateMachine, player, animatonName)
         {
@@ -25,6 +27,8 @@ namespace GJ
             player.isJumping = true;
 
             JumpDetectTime = 1f;
+            CC_Time = JumpDetectTime;
+            Counting = true;
 
             //给予向上的力
             playerRd.AddForce(new Vector2(0, PlayerJumpForce));
@@ -34,11 +38,13 @@ namespace GJ
         {
             base.Update();
 
-            JumpDetectTime -= Time.deltaTime;
-
+            if (Counting == true)
+            {
+                CC_Time -= Time.deltaTime;
+            }
 
             //进行地面检测
-            if (JumpDetectTime <= 0)
+            if (CC_Time <= 0)
             {
                 IsGroundDetectStart = true;
             }

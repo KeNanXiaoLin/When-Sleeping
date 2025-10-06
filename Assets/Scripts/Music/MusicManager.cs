@@ -51,15 +51,19 @@ public class MusicManager:MonoBase<MusicManager>
 
         //不停的遍历容器 检测有没有音效播放完毕 播放完了 就移除销毁它
         //为了避免边遍历边移除出问题 我们采用逆向遍历
-        for (int i = soundList.Count - 1; i >= 0; --i)
-        {
-            if (!soundList[i].isPlaying)
-            {
-                //音效播放完毕了 不再使用了 我们将这个音效切片置空
-                soundList[i].clip = null;
-                soundList.RemoveAt(i);
-            }
-        }
+        // for (int i = soundList.Count - 1; i >= 0; --i)
+        // {
+        //     if (!soundList[i].isPlaying || soundList[i] == null)
+        //     {
+        //         //音效播放完毕了 不再使用了 我们将这个音效切片置空
+        //         soundList[i].clip = null;
+        //         Destroy(soundList[i]);
+        //         soundList.RemoveAt(i);
+        //     }
+
+        // }
+
+        soundList.TrimExcess();
     }
 
 

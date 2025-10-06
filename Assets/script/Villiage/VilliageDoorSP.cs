@@ -13,9 +13,6 @@ namespace GJ
         public Button ConformToBattleScene_Button;
         public Button ReventPlayer_Button;
 
-
-
-
         void Awake()
         {
             ConformToBattleScene_Button.onClick.AddListener(ConformDrink);
@@ -34,10 +31,6 @@ namespace GJ
             }
         }
 
-        void Update()
-        {
-            
-        }
 
         public override void CheckIfSceneChangeChange()
         {
@@ -57,13 +50,13 @@ namespace GJ
         private void ConformDrink()
         {
             SceneLoadManager.Instance.MilkDrinked = true;
-            EventListener.BattleSceneChange(AimScene,E_SceneLoadType.None);
+            EventListener.BattleSceneChange(AimScene,E_SceneLoadType.Clock);
         }
 
         private void UnDrink()
         {
             SceneLoadManager.Instance.MilkDrinked = false;
-            EventListener.BattleSceneChange(AimScene,E_SceneLoadType.None);
+            EventListener.BattleSceneChange(AimScene,E_SceneLoadType.Clock);
         }
 }
 

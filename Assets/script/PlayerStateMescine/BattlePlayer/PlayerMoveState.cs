@@ -43,12 +43,8 @@ namespace GJ
             else if (Input.GetKeyDown(KeyCode.Space)&& player.isJumping == false)
             {
                 stateMachine.ChangeState(player.JumpState);
-
             }
-            else if (Input.GetAxisRaw("Horizontal") == 0 && player.isAttacking == false )
-            {
-                stateMachine.ChangeState(player.IdleState);
-            }
+            
         }
 
         public override void Exit()

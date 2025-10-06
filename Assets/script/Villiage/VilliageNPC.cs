@@ -13,6 +13,7 @@ namespace GJ
         public GameObject NPCNotice;
 
         [SerializeField] private bool OnlyAvaInDayTwo = false;
+        [SerializeField] private bool Mom = false;
 
 
         public bool IsDialogued = false;
@@ -22,7 +23,6 @@ namespace GJ
             if (OnlyAvaInDayTwo == false && SceneLoadManager.Instance.DayIndex == 0
             || OnlyAvaInDayTwo == true && SceneLoadManager.Instance.DayIndex == 1)
             {
-
                 EventListener.OnDialogueStart += StartDialogue;
 
                 EventListener.OnDialogueEnd += LetPlayerGotItem;
@@ -30,6 +30,17 @@ namespace GJ
             }
             else
                 this.gameObject.SetActive(false);
+
+
+            //Mom专用判断条件
+            if (Mom == true && SceneLoadManager.Instance.LoadScene3Index < 2)
+            {
+                EventListener.OnDialogueStart -= StartDialogue;
+
+                EventListener.OnDialogueEnd -= LetPlayerGotItem;
+                EventListener.OnDialogueEnd -= EndDialogue;
+                this.gameObject.SetActive(false);
+            }
         }
 
         private void StartDialogue()

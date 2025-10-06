@@ -20,6 +20,7 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     public bool DayOneDia = false;
     public bool DayTwoDia = false;
     public bool MilkDrinked = false;
+    public int LoadScene3Index = 0;
 
     /// <summary>
     /// 标识是否正在进行淡入淡出操作
@@ -34,12 +35,17 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     /// </summary>
     private CanvasGroup faderCanvasGroup = null;
 
-    public string CurrentScene;
-    public string CurrentMusic;
+    [HideInInspector]public string CurrentScene;
+    [HideInInspector]public string CurrentMusic;
 
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    void Start()
+    {
+        PlayeStartMusic();
     }
 
     void OnEnable()
@@ -81,6 +87,14 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     private void BattleBackGroundMusic(string name, E_SceneLoadType type)
     {
         MusicManager.Instance.PlayBKMusic("阴森的小曲1");
+
+        CurrentScene = "阴森的小曲1";
+    }
+
+    private void PlayeStartMusic()
+    {
+        MusicManager.Instance.PlayBKMusic("阴森的小曲1");
+        CurrentScene = "阴森的小曲1";
     }
     #endregion
 
@@ -96,6 +110,8 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
         FadeAndLoadScene(name, type);
         MusicManager.Instance.PlaySound("时钟的音效2", false, false);
         CurrentScene = name;
+
+        if (name == "GameScene3") LoadScene3Index++;
     }
 
     public void ReLoadScene(string name, E_SceneLoadType type = E_SceneLoadType.None)

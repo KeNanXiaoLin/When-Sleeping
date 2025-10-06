@@ -6,7 +6,7 @@ namespace GJ
 {
     public class PlayerAttackState : PlayerMoveState    //攻击时可移动
     {
-        public float AttackTime;
+        public float AttackTime = 1f;
 
         public PlayerAttackState(PlayerStateMescine stateMachine, Player player, string animatonName) : base(stateMachine, player, animatonName)
         {
@@ -15,7 +15,6 @@ namespace GJ
         public override void Enter()
         {
             base.Enter();
-            AttackTime = player.GetAttackTime_Player();
             player.isAttacking = true;
             
             EventListener.PlayerDamage();
@@ -25,8 +24,9 @@ namespace GJ
         {
             base.Update();
 
-            // AttackTime -= Time.deltaTime;
-            // if (AttackTime <= 0) stateMachine.ChangeState(player.IdleState);
+            AttackTime -= Time.deltaTime;
+            if (AttackTime <= 0)
+                stateMachine.ChangeState(player.IdleState);
         }
 
         public override void Exit()
