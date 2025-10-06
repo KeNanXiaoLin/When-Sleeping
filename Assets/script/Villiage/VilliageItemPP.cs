@@ -20,8 +20,6 @@ namespace GJ
         void Start()
         {
             EventListener.OnItemGot += GotItem;
-            EventListener.OnCheckedItemGot += CheckedItemGot;
-
         }
 
         private void GotItem()
@@ -30,6 +28,8 @@ namespace GJ
 
             LA_Backpack.Instance.AddItm_Backpack(item);
             LA_Backpack.Instance.ShowGotItemUI_Backpack(item);
+            
+            EventListener.OnCheckedItemGot += CheckedItemGot;
         }
 
         private void CheckedItemGot()

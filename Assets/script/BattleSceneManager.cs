@@ -24,10 +24,12 @@ namespace GJ
 
         
         [HideInInspector] public GameObject Player;
-        [HideInInspector] public List<GameObject> Enemy = new List<GameObject>();
+        public List<GameObject> Enemy = new List<GameObject>();
 
         public GameObject WinScene;
         public GameObject LoseScene;
+
+        public bool CheckInput = false;
 
         void FixedUpdate()
         {
@@ -42,9 +44,21 @@ namespace GJ
 
         }
 
+        void Update()
+        {
+            if (CheckInput == true && Input.GetMouseButtonDown(0))
+            {
+                EventListener.VilliageSceneChange("GameScene3");    
+            }
+
+        }
+
         private void ShowWinUI()
         {
             WinScene.SetActive(true);
+            WinScene.GetComponentInChildren<Animator>().Play("ShowSlowly");
+
+            CheckInput = true;
         }
 
 
