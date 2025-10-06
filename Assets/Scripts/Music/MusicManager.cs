@@ -41,7 +41,6 @@ public class MusicManager:MonoBase<MusicManager>
         bkMusicMute = PlayerPrefs.GetInt(bkMusicMuteStr, 0) == 1 ? true : false;
         soundValue = PlayerPrefs.GetFloat(soundValueStr, 1.0f);
         soundMute = PlayerPrefs.GetInt(soundMuteStr, 0) == 1 ? true : false;
-        Debug.LogFormat("读取到的音乐数据{0}，音效数据{1}，音乐静音{2}，音效静音{3}", bkMusicValue, soundValue, bkMusicMute, soundMute);
         
     }
 

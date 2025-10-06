@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PopUpPanel : UIPanelBase
 {
     public TextMeshProUGUI tmpDetails;
+    public Image icon;
     public override void HideMe()
     {
 
@@ -19,7 +20,6 @@ public class PopUpPanel : UIPanelBase
 
     public void UpdateInfo(Sprite sprite, string content)
     {
-        Image icon = GetControl<Image>("Icon");
         icon.sprite = sprite;
         tmpDetails.text = content;
     }

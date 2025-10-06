@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.Playables;
 
 namespace GJ
 {
@@ -30,8 +24,8 @@ namespace GJ
         [HideInInspector] public bool isAttacking;
         [HideInInspector] public bool isJumping;
 
-        [Header("特殊变量")]
-        private bool FlipToRight = false;
+
+        public bool FlipToRight { get; private set; }
         private float AttackRateDistance_ToPlayer;
 
 
@@ -60,6 +54,7 @@ namespace GJ
 
             isAttacking = false;
             isJumping = false;
+            FlipToRight = false;
             CC_PlayerHealth = PlayerMaxHealth;
             AttackRateDistance_ToPlayer = PlayerAttackRange.transform.localPosition.x;
 
@@ -75,7 +70,11 @@ namespace GJ
 
             EventListener.OnEnemyDamage += PlayerGetHurt;
 
-            if (SceneLoadManager.Instance.MilkDrinked == false) PlayerMaxHealth = 1;
+            if (SceneLoadManager.Instance.MilkDrinked == false)
+            {
+                CC_PlayerHealth = 1;
+            }
+                
         }
 
         void Update()

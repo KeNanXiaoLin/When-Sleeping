@@ -1,15 +1,24 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// 动画转场类型
+/// </summary>
+public enum E_SceneLoadType
+{
+    Clock,
+    None,
+}
+
 public class SceneLoadManager : MonoBase<SceneLoadManager>
 {
-
     public float DayIndex = 0;
+    public bool DayOneDia = false;
+    public bool DayTwoDia = false;
     public bool MilkDrinked = false;
 
     /// <summary>
@@ -25,6 +34,8 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     /// </summary>
     private CanvasGroup faderCanvasGroup = null;
 
+    public string CurrentScene;
+
     protected override void Awake()
     {
         base.Awake();
@@ -33,7 +44,16 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     void OnEnable()
     {
         EventListener.OnVilliageSceneChange += LoadScene;
+
         EventListener.OnBattleSceneChange += LoadScene;
+        EventListener.OnBattleSceneChange += DayUp;
+
+        EventListener.OnSceneReload += ReLoadScene;
+    }
+
+    private void DayUp(string name, E_SceneLoadType type)
+    {
+        DayIndex++;
     }
 
     void OnDisable()
@@ -43,14 +63,14 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     }
 
 
-    public void LoadScene(string name)
+    public void LoadScene(string name,E_SceneLoadType type = E_SceneLoadType.None)
     {
-        FadeAndLoadScene(name);
+        FadeAndLoadScene(name,type);
     }
 
-    public void ReLoadScene(string name)
+    public void ReLoadScene(string name,E_SceneLoadType type = E_SceneLoadType.None)
     {
-        FadeAndLoadScene(name);
+        FadeAndLoadScene(name,type);
     }
 
     /// <summary>
@@ -93,19 +113,65 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     /// <param name="sceneName">要切换到的场景名称</param>
     /// <param name="spawnPosition">玩家在新场景中的生成位置</param>
     /// <returns>协程迭代器</returns>
-    private IEnumerator FadeAndSwitchScenes(string sceneName)
+    private IEnumerator FadeAndSwitchScenes(string sceneName,E_SceneLoadType type)
     {
         // 开始淡入到黑屏，并等待淡入完成
         yield return StartCoroutine(Fade(1f));
 
+        //在场景加载完成后，做一些额外处理，时钟动画
+        yield return DoSomethingAfterLoadScene(type);
+
         // 开始加载指定场景，并等待加载完成
         yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
+
 
         // 开始淡出黑屏，并等待淡出完成
         yield return StartCoroutine(Fade(0f));
 
         //销毁淡入面板
         UIManager.Instance.HidePanel<FaderPanel>();
+
+    }
+
+    /// <summary>
+    /// 在场景加载完成后，做一些额外处理，时钟动画
+    /// </summary>
+    private IEnumerator DoSomethingAfterLoadScene(E_SceneLoadType type)
+    {
+        switch (type)
+        {
+            case E_SceneLoadType.Clock:
+                yield return PlayClockAnim(0.3f);
+                break;
+            case E_SceneLoadType.None:
+                yield return null;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 播放时钟动画
+    /// </summary>
+    /// <param name="time">播放每张图片的时间间隔</param>
+    /// <returns></returns>
+    private IEnumerator PlayClockAnim(float time)
+    {
+
+        List<Sprite> clockSprites = new();
+        for (int i = 5; i >= 1; i--)
+        {
+            clockSprites.Add(Resources.Load<Sprite>("Sprites/Clock" + i));
+        }
+        UIManager.Instance.ShowPanel<CGPanel>();
+        CGPanel gPanel = UIManager.Instance.GetPanel<CGPanel>();
+        //从后往前移除列表
+        for (int i = clockSprites.Count - 1; i >= 0; i--)
+        {
+            gPanel.UpdateImage(clockSprites[i]);
+            clockSprites.Remove(clockSprites[i]);
+            yield return new WaitForSeconds(time);
+        }
+        UIManager.Instance.HidePanel<CGPanel>();
 
     }
 
@@ -120,24 +186,24 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
         // 允许指定场景分多帧加载，并将其添加到已加载的场景中（此时只有持久化场景）
         yield return SceneManager.LoadSceneAsync(sceneName);
     }
-    
+
     /// <summary>
     /// 外部调用的主要接口，用于触发场景切换和淡入淡出效果
     /// </summary>
     /// <param name="sceneName">要切换到的场景名称</param>
     /// <param name="spawnPosition">玩家在新场景中的生成位置</param>
-    public void FadeAndLoadScene(string sceneName)
+    public void FadeAndLoadScene(string sceneName,E_SceneLoadType type)
     {
         // 如果当前没有进行淡入淡出操作，则开始淡入淡出并切换场景
         if (!isFading)
         {
-            UIManager.Instance.ShowPanel<FaderPanel>((panel)=>
+            UIManager.Instance.ShowPanel<FaderPanel>((panel) =>
             {
                 faderCanvasGroup = panel.gameObject.GetComponent<CanvasGroup>();
                 faderCanvasGroup.alpha = 0;
                 faderCanvasGroup.blocksRaycasts = true;
             });
-            StartCoroutine(FadeAndSwitchScenes(sceneName));
+            StartCoroutine(FadeAndSwitchScenes(sceneName,type));
         }
     }
 }

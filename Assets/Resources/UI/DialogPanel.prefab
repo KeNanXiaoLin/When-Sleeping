@@ -330,6 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contentTMP: {fileID: 2951258994694920627}
   nameTMP: {fileID: 0}
+  headIcon: {fileID: 6899055022591456176}
 --- !u!1 &4642812101545511544
 GameObject:
   m_ObjectHideFlags: 0

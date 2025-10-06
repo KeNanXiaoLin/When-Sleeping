@@ -39,10 +39,14 @@ namespace GJ
             CC_EnemyHealth = EnemyMaxHealth;
             EnemyAttackRateDistence_ToEnemy = EnemyAttackRate.transform.localPosition.x;
 
-            BattleSceneManager.Instance.Enemy.Add(this.gameObject);
-            Player = BattleSceneManager.Instance.Player;
 
             EventListener.OnGameLose += EnemyMotionStop;
+        }
+
+        void Start()
+        {
+            Player = BattleSceneManager.Instance.Player;
+            BattleSceneManager.Instance.Enemy.Add(this.gameObject);
         }
 
         private void Update()
@@ -75,6 +79,8 @@ namespace GJ
         private void EnemyChasePlayer()
         {
             if (CanMove == false) return;
+
+             Player = BattleSceneManager.Instance.Player;
 
             if (Vector2.Distance(this.transform.position, Player.transform.position) < EnemyChaseRate)
             {

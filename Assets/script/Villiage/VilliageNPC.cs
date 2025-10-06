@@ -12,15 +12,24 @@ namespace GJ
         public DialogData data;
         public GameObject NPCNotice;
 
+        [SerializeField] private bool OnlyAvaInDayTwo = false;
+
 
         public bool IsDialogued = false;
 
         void Start()
         {
-            EventListener.OnDialogueStart += StartDialogue;
+            if (OnlyAvaInDayTwo == false && SceneLoadManager.Instance.DayIndex == 0
+            || OnlyAvaInDayTwo == true && SceneLoadManager.Instance.DayIndex == 1)
+            {
 
-            EventListener.OnDialogueEnd += LetPlayerGotItem;
-            EventListener.OnDialogueEnd += EndDialogue;
+                EventListener.OnDialogueStart += StartDialogue;
+
+                EventListener.OnDialogueEnd += LetPlayerGotItem;
+                EventListener.OnDialogueEnd += EndDialogue;
+            }
+            else
+                this.gameObject.SetActive(false);
         }
 
         private void StartDialogue()
@@ -28,6 +37,7 @@ namespace GJ
             if (IsDialogued == false)
             {
                 DialogSystem.Instance.TriggerStartDialog(data);
+                NPCNotice = this.transform.GetChild(0).gameObject;
                 NPCNotice.SetActive(false);
             }
             else
@@ -40,8 +50,11 @@ namespace GJ
         {
             if (IsDialogued == true) return;
 
-            LA_Backpack.Instance.AddItm_Backpack(Item);
-            LA_Backpack.Instance.ShowGotItemUI_Backpack(Item);
+            if (Item != null)
+            {
+                LA_Backpack.Instance.AddItm_Backpack(Item);
+                LA_Backpack.Instance.ShowGotItemUI_Backpack(Item);
+            }
         }
 
         private void EndDialogue()

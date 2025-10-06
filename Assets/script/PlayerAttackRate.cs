@@ -9,12 +9,19 @@ namespace GJ
     {
 
         List<Collider2D> EnteredEnemys = new List<Collider2D>();
+        private Player player;
         private float PlayerDamage;
         private Animator anim;
 
+        void Awake()
+        {
+            
+            player = this.GetComponentInParent<Player>();
+        }
+
         private void Start()
         {
-            PlayerDamage = this.GetComponentInParent<Player>().GetAttackRate_Player();
+            PlayerDamage = player.GetAttackRate_Player();
 
             EventListener.OnPlayerDamage += OnPlayerAttack;
         }
@@ -38,19 +45,28 @@ namespace GJ
 
         void OnPlayerAttack_Anim()
         {
-            anim.Play("");
+            anim = this.GetComponent<Animator>();
+            
+            if (player.FlipToRight == true)
+                anim.Play("Attack");
+            else
+            {
+                anim.Play("AttackLeft");
+            }
         }
 
         void AnimEnd()
         {
-            anim.Play(")");
+            anim.Play("AttackIdle");
         }
+
         void OnPlayerAttack()
         {
             foreach (Collider2D enemy in EnteredEnemys)
             {
-                enemy.gameObject.GetComponent<Enemy>().EnemyGetDamage(PlayerDamage);              
+                enemy.gameObject.GetComponent<Enemy>().EnemyGetDamage(PlayerDamage);
             }
+            OnPlayerAttack_Anim();
         }
 
 

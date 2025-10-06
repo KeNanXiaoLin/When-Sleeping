@@ -20,8 +20,10 @@ namespace GJ
         private bool IsMoving = true;
 
         private VilliageNPC NPC;
-        public GameObject ItemPoint;
+        private GameObject ItemPoint;
         private Animator anim;
+
+        public DialogData[] dialog;
 
         void Awake()
         {
@@ -32,6 +34,8 @@ namespace GJ
         {
             EventListener.OnDialogueEnd += OnDialogueEnd;
             EventListener.OnCheckedItemGot += OnDialogueEnd;
+
+            DialogueOnStart();
         }
 
         void Update()
@@ -62,22 +66,22 @@ namespace GJ
 
             }
 
- 
 
-                if (Input.GetKeyDown(KeyCode.F))
+
+            if (Input.GetKeyDown(KeyCode.F))
             {
-                    if (NPC != null)
-                    {
-                        IsMoving = false;
-                        EventListener.DialogueStart();
-                    }
-                    else if (ItemPoint != null)
-                    {
-                        IsMoving = false;
-                        EventListener.ItemGot();
+                if (NPC != null)
+                {
+                    IsMoving = false;
+                    EventListener.DialogueStart();
+                }
+                else if (ItemPoint != null)
+                {
+                    IsMoving = false;
+                    EventListener.ItemGot();
                 }
             }
-            
+
         }
 
         private bool DetectNPC()
@@ -127,6 +131,21 @@ namespace GJ
 
             return false;
 
+        }
+
+        //仅触发一次的开始场景对话
+        private void DialogueOnStart()
+        {
+            if (SceneLoadManager.Instance.CurrentScene == "GameScene3" && SceneLoadManager.Instance.DayIndex == 0 && SceneLoadManager.Instance.DayOneDia == false)
+            {
+                DialogSystem.Instance.TriggerStartDialog(dialog[0]);
+                SceneLoadManager.Instance.DayOneDia = true;
+            }
+            if (SceneLoadManager.Instance.CurrentScene == "GameScene3" && SceneLoadManager.Instance.DayIndex == 1 && SceneLoadManager.Instance.DayTwoDia == false)
+            {
+                DialogSystem.Instance.TriggerStartDialog(dialog[1]);
+                SceneLoadManager.Instance.DayTwoDia = true;
+            }
         }
 
         private void OnDialogueEnd() => IsMoving = true;
