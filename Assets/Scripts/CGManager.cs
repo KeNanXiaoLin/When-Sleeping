@@ -5,6 +5,8 @@ using UnityEngine;
 public class CGManager : MonoBase<CGManager>
 {
 
+    public bool CGPlaying = false;
+
     /// <summary>
     /// 播放开头CG
     /// </summary>
@@ -20,6 +22,7 @@ public class CGManager : MonoBase<CGManager>
     /// <returns></returns>
     private IEnumerator PlayKaiTouCGAnim(float time)
     {
+        CGPlaying = true;
 
         List<Sprite> clockSprites = new();
         clockSprites.Add(Resources.Load<Sprite>("Sprites/kaitouCG"));
@@ -33,6 +36,13 @@ public class CGManager : MonoBase<CGManager>
             yield return new WaitForSeconds(time);
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
+
+        CGPlaying = false;
+
+        //额外变量
+        SceneLoadManager.Instance.LoadScene("GameScene3", E_SceneLoadType.Clock);
+        MusicManager.Instance.PlayBKMusic("轻松小曲2");
+
     }
 
     /// <summary>
@@ -45,6 +55,7 @@ public class CGManager : MonoBase<CGManager>
 
     private IEnumerator PlayChiRenCGAnim(float time)
     {
+        CGPlaying = true;
 
         List<Sprite> clockSprites = new();
         clockSprites.Add(Resources.Load<Sprite>("Sprites/chirenCG"));
@@ -58,6 +69,8 @@ public class CGManager : MonoBase<CGManager>
             yield return new WaitForSeconds(time);
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
+
+        CGPlaying = false;
     }
 
     /// <summary>
@@ -67,9 +80,10 @@ public class CGManager : MonoBase<CGManager>
     {
         StartCoroutine(PlayEndCGAnim(3f));
     }
-    
+
     private IEnumerator PlayEndCGAnim(float time)
     {
+        CGPlaying = true;
 
         List<Sprite> clockSprites = new();
         for (int i = 3; i > 0; i--)
@@ -86,6 +100,8 @@ public class CGManager : MonoBase<CGManager>
             yield return new WaitForSeconds(time);
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
+
+        CGPlaying = false;
     }
 
 }

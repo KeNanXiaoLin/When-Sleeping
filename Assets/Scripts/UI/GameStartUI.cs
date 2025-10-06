@@ -28,7 +28,7 @@ public class GameStartUI : UIPanelBase
             case "Start":
                 //切换场景到游戏场景
                 UIManager.Instance.HidePanel<GameStartUI>();
-                SceneLoadManager.Instance.LoadScene("GameScene3",E_SceneLoadType.Clock);
+                CGManager.Instance.PlayKaiTouCG();
                 break;
             case "Setting":
                 //打开设置面板
@@ -39,5 +39,7 @@ public class GameStartUI : UIPanelBase
                 break;
         }
     }
+
+   
 
 }
