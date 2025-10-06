@@ -25,29 +25,29 @@ namespace GJ
             base.Update();
             Horizontal = Input.GetAxisRaw("Horizontal");
 
-            player.transform.Translate(new Vector2(Horizontal, 0)* MoveSpeed * Time.deltaTime);
+            player.transform.Translate(new Vector2(Horizontal, 0) * MoveSpeed * Time.deltaTime);
 
-            player.PlayerFlip(new Vector2(Horizontal,0));
+            player.PlayerFlip(new Vector2(Horizontal, 0));
 
             //左右移动
-            if (Input.GetAxisRaw("Horizontal") == 0 && player.isAttacking == false && player.isJumping == false)
-            {
-                stateMachine.ChangeState(player.IdleState);
-            }
+
 
             //攻击操作
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J) )
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
             {
                 stateMachine.ChangeState(player.AttackState);
 
                 //TODO 为攻击添加冷却时间
             }
-
             //空格点击操作
-            if (Input.GetKeyDown(KeyCode.Space) )
+            else if (Input.GetKeyDown(KeyCode.Space)&& player.isJumping == false)
             {
                 stateMachine.ChangeState(player.JumpState);
-                
+
+            }
+            else if (Input.GetAxisRaw("Horizontal") == 0 && player.isAttacking == false )
+            {
+                stateMachine.ChangeState(player.IdleState);
             }
         }
 

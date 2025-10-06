@@ -20,8 +20,8 @@ namespace GJ
 
         void Awake()
         {
-            ConformToBattleScene_Button.onClick.AddListener(ToBattleScene);
-            ReventPlayer_Button.onClick.AddListener(WaitingConform);
+            ConformToBattleScene_Button.onClick.AddListener(ConformDrink);
+            ReventPlayer_Button.onClick.AddListener(UnDrink);
         }
 
         void Update()
@@ -52,12 +52,16 @@ namespace GJ
 
         }
 
-        private void ToBattleScene() => EventListener.BattleSceneChange(AimScene);
-
-        private void WaitingConform()
+        private void ConformDrink()
         {
-            CC_WaitingTime = ConformWaitingTime;
-            StartWaitingTime = true;
+            SceneLoadManager.Instance.MilkDrinked = true;
+            EventListener.BattleSceneChange(AimScene);
+        }
+
+        private void UnDrink()
+        {
+            SceneLoadManager.Instance.MilkDrinked = false;
+            EventListener.BattleSceneChange(AimScene);
         }
 }
 

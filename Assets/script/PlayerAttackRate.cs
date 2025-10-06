@@ -10,6 +10,7 @@ namespace GJ
 
         List<Collider2D> EnteredEnemys = new List<Collider2D>();
         private float PlayerDamage;
+        private Animator anim;
 
         private void Start()
         {
@@ -35,6 +36,15 @@ namespace GJ
         }
 
 
+        void OnPlayerAttack_Anim()
+        {
+            anim.Play("");
+        }
+
+        void AnimEnd()
+        {
+            anim.Play(")");
+        }
         void OnPlayerAttack()
         {
             foreach (Collider2D enemy in EnteredEnemys)

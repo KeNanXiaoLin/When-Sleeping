@@ -25,8 +25,8 @@ namespace GJ
         {
             base.Update();
 
-            AttackTime -= Time.deltaTime;
-            if (AttackTime <= 0) stateMachine.ChangeState(player.IdleState);
+            // AttackTime -= Time.deltaTime;
+            // if (AttackTime <= 0) stateMachine.ChangeState(player.IdleState);
         }
 
         public override void Exit()

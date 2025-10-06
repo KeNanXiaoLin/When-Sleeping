@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoadManager : MonoBase<SceneLoadManager>
 {
+
+    public float DayIndex = 0;
+    public bool MilkDrinked = false;
    
     protected override void Awake()
     {
@@ -18,6 +21,11 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
 
 
     public void LoadScene(string name)
+    {
+        AsyncOperation ao = SceneManager.LoadSceneAsync(name);
+    }
+
+    public void ReLoadScene(string name)
     {
         AsyncOperation ao = SceneManager.LoadSceneAsync(name);
     }

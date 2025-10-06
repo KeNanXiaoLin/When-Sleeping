@@ -30,9 +30,9 @@ namespace GJ
         [HideInInspector] public bool isAttacking;
         [HideInInspector] public bool isJumping;
 
+        [Header("特殊变量")]
         private bool FlipToRight = false;
         private float AttackRateDistance_ToPlayer;
-
 
 
         #region 状态机相关
@@ -74,6 +74,8 @@ namespace GJ
             StateMachine.Initialize(IdleState);
 
             EventListener.OnEnemyDamage += PlayerGetHurt;
+
+            if (SceneLoadManager.Instance.MilkDrinked == false) PlayerMaxHealth = 1;
         }
 
         void Update()
@@ -136,6 +138,8 @@ namespace GJ
             CC_PlayerHealth -= _Damage;
         }
 
+
+        
         #region 回传Player相关参数
 
         public float GetCCPlayerHealth_Player() => CC_PlayerHealth;
