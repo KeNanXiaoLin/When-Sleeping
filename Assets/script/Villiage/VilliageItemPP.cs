@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 namespace GJ
@@ -11,6 +12,8 @@ namespace GJ
         public SpriteRenderer ItemImage;
         private bool Ischecked = false;
 
+        public bool OnlyAvaInDayTwo = false;
+
         void Awake()
         {
             ItemImage = GetComponent<SpriteRenderer>();
@@ -20,6 +23,13 @@ namespace GJ
         void Start()
         {
             EventListener.OnItemGot += GotItem;
+
+            //不符合条件判断
+            if (OnlyAvaInDayTwo == true && SceneLoadManager.Instance.DayIndex == 0
+            ||  OnlyAvaInDayTwo == false && SceneLoadManager.Instance.DayIndex == 1)
+            {
+                this.gameObject.SetActive(false);
+            }
         }
 
         private void GotItem()
