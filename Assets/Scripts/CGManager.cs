@@ -70,7 +70,7 @@ public class CGManager : MonoBase<CGManager>
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
 
-        CGPlaying = false;
+        PlayJuqing();
     }
 
     /// <summary>
@@ -101,6 +101,8 @@ public class CGManager : MonoBase<CGManager>
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
 
+        Application.Quit();
+
         CGPlaying = false;
     }
 
@@ -124,7 +126,7 @@ public class CGManager : MonoBase<CGManager>
         RealCGPanel gPanel = UIManager.Instance.GetPanel<RealCGPanel>();
         bool isPlayNext = true;
         //从后往前移除列表
-        while(clockSprites.Count > 0)
+        while (clockSprites.Count > 0)
         {
             //允许播放下一张
             if (isPlayNext)
@@ -141,10 +143,18 @@ public class CGManager : MonoBase<CGManager>
                     isPlayNext = true;
                 }
             }
-            
+
             yield return null;
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
+
+        PlayEndCG();
+    }
+    
+    public void PlayerEnd()
+    {
+    
     }
 
 }
+

@@ -17,6 +17,11 @@ public class BlackShadow : MonoBehaviour
         if (collision.GetComponent<Player>() == true)
         {
             EventListener.GameLose();
+            if (SceneLoadManager.Instance.CurrentScene == "BattleScene 1")
+            {
+                CGManager.Instance.PlayChiRenCG();
+            }
         }
+
     }
 }

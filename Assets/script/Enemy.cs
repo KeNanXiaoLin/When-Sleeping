@@ -71,6 +71,7 @@ namespace GJ
 
         private void EnemyMotionStop()
         {
+            if (EnemyAttAnim == null) return;
             EnemyAttAnim.speed = 0;
             CanMove = false;
         }

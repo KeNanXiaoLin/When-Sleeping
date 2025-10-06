@@ -15,11 +15,12 @@ namespace GJ
 
         [SerializeField] private bool OnlyAvaInDayTwo = false;
         [SerializeField] private bool Mom = false;
+        [SerializeField] private bool Bloe = false;
         [SerializeField] private LA_Item CheckeingItem;
 
 
         public bool IsDialogued = false;
-
+       
         void Start()
         {
             if (OnlyAvaInDayTwo == false && SceneLoadManager.Instance.DayIndex == 0
@@ -48,11 +49,13 @@ namespace GJ
 
         private void StartDialogue()
         {
-            if (IsDialogued == false)
+            if (IsDialogued == false || Bloe == true)
             {
                 DialogSystem.Instance.TriggerStartDialog(data);
                 NPCNotice = this.transform.GetChild(0).gameObject;
                 NPCNotice.SetActive(false);
+
+                Bloe = false;
             }
             else
             {

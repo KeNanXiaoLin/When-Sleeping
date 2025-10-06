@@ -100,17 +100,9 @@ namespace GJ
             }
             if (SceneLoadManager.Instance.CurrentScene == "BattleScene 1")
             {
-                if (CheckInput == true && Input.GetMouseButtonDown(0))
-                {
-                    if (LoseScene.activeSelf == true)
-                    {
-                        //启动CG
-
-                        LoseScene.SetActive(false);
-                    }
-                }
+                
+                
             }
-           
 
         }
 

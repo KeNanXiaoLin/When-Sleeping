@@ -111,6 +111,8 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
         MusicManager.Instance.PlaySound("时钟的音效2", false, false);
         CurrentScene = name;
 
+        LoadDeadScene();
+
         if (name == "GameScene3") LoadScene3Index++;
     }
 
@@ -119,6 +121,14 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
         FadeAndLoadScene(name, type);
         CurrentScene = name;
         
+    }
+
+    public void LoadDeadScene()
+    {
+        if (name == "BattleScene 1")
+        {
+            CGManager.Instance.PlayChiRenCG();
+        }
     }
 
     /// <summary>
