@@ -63,7 +63,7 @@ public class DialogSystem
             //显示对话面板，播放对话
             UIManager.Instance.ShowPanel<DialogPanel>((panel) =>
             {
-                panel.UpdateDialogText(data.content);
+                panel.UpdateInfo(data);
             });
         }
         else
