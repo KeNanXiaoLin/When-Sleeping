@@ -21,7 +21,6 @@ namespace GJ
         {
             EventListener.OnItemGot += GotItem;
             EventListener.OnCheckedItemGot += CheckedItemGot;
-
         }
 
         private void GotItem()
