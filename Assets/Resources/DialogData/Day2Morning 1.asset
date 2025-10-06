@@ -16,5 +16,5 @@ MonoBehaviour:
   type: 0
   content: "Later, Bob will come to play with me, I\u2019ll talk to him. "
   nextData: {fileID: 0}
-  isEnd: 0
-  isStart: 1
+  isEnd: 1
+  isStart: 0

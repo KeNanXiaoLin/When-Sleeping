@@ -195,6 +195,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c471690142cfa140a9188f8e44b400d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DayIndex: 0
+  DayOneDia: 0
+  DayTwoDia: 0
+  MilkDrinked: 0
+  CurrentScene: 
 --- !u!4 &826695430
 Transform:
   m_ObjectHideFlags: 0
@@ -363,12 +368,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3499464025205469945, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4705487757206586291, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
       propertyPath: m_Name
       value: GameObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3499464025205469945, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}

@@ -15,12 +15,12 @@ namespace GJ
 
         void Awake()
         {
+            
+            player = this.GetComponentInParent<Player>();
         }
 
         private void Start()
         {
-            anim = this.GetComponent<Animator>();
-            player = this.GetComponentInParent<Player>();
             PlayerDamage = player.GetAttackRate_Player();
 
             EventListener.OnPlayerDamage += OnPlayerAttack;
@@ -45,6 +45,8 @@ namespace GJ
 
         void OnPlayerAttack_Anim()
         {
+            anim = this.GetComponent<Animator>();
+            
             if (player.FlipToRight == true)
                 anim.Play("Attack");
             else

@@ -13,9 +13,7 @@ namespace GJ
         public Button ConformToBattleScene_Button;
         public Button ReventPlayer_Button;
 
-        [SerializeField] private float ConformWaitingTime;
-        private bool StartWaitingTime = false;
-        private float CC_WaitingTime;
+
 
 
         void Awake()
@@ -24,17 +22,21 @@ namespace GJ
             ReventPlayer_Button.onClick.AddListener(UnDrink);
         }
 
+        void Start()
+        {
+            if (SceneLoadManager.Instance.DayIndex == 0)
+            {
+                AimScene = "BattleScene";
+            }
+            else
+            {
+                AimScene = "BattleScene 1";
+            }
+        }
+
         void Update()
         {
-            if (StartWaitingTime == true)
-            {
-                CC_WaitingTime -= Time.deltaTime;
-            }
-
-            if (CC_WaitingTime <= 0)
-            {
-                StartWaitingTime = false;
-            }
+            
         }
 
         public override void CheckIfSceneChangeChange()
@@ -43,24 +45,26 @@ namespace GJ
             {
                 if (i.GetComponent<VilliagePlayer>() != null)
                 {
-                    if (LA_Backpack.Instance.CheckItemNum_Backpack(_AimItem, 1) == true && StartWaitingTime == false)
+                    if (LA_Backpack.Instance.CheckItemNum_Backpack(_AimItem, 1) == true)
                     {
                         ConformToBattleScene.SetActive(true);
+                        
                     }
                 }
             }
-
         }
 
         private void ConformDrink()
         {
             SceneLoadManager.Instance.MilkDrinked = true;
+            LA_Backpack.Instance.DeceleItem_Backpack(_AimItem, 1);
             EventListener.BattleSceneChange(AimScene);
         }
 
         private void UnDrink()
         {
             SceneLoadManager.Instance.MilkDrinked = false;
+            LA_Backpack.Instance.DeceleItem_Backpack(_AimItem, 1);
             EventListener.BattleSceneChange(AimScene);
         }
 }

@@ -22,6 +22,8 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
 
         EventListener.OnBattleSceneChange += LoadScene;
         EventListener.OnBattleSceneChange += DayUp;
+
+        EventListener.OnSceneReload += ReLoadScene;
     }
 
     private void DayUp(string name)

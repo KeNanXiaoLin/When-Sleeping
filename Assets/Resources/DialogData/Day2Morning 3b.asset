@@ -18,4 +18,4 @@ MonoBehaviour:
     hunting. '
   nextData: {fileID: 11400000, guid: dbba184987253e44790a0f81dfb92dae, type: 2}
   isEnd: 0
-  isStart: 0
+  isStart: 1
