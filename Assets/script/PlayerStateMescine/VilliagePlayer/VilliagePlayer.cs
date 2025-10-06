@@ -20,7 +20,7 @@ namespace GJ
         private bool IsMoving = true;
 
         private VilliageNPC NPC;
-        private VilliageItemPoint ItemPoint;
+        public GameObject ItemPoint;
         private Animator anim;
 
         void Awake()
@@ -106,11 +106,21 @@ namespace GJ
         //检测场景中的道具实体单位
         private bool DetectItemPoint()
         {
+
+            if (ItemPoint != null && Vector2.Distance(this.transform.position, ItemPoint.transform.position) < NPCDetectRate)
+            {
+                return true;
+            }
+            else
+            {
+                ItemPoint = null;
+            }
+
             foreach (var i in colliders)
             {
-                if (i.GetComponent<VilliageItemPoint>() != null)
+                if (i.GetComponent<VilliageItemPP>() != null)
                 {
-                    ItemPoint = i.GetComponent<VilliageItemPoint>();
+                    ItemPoint = i.gameObject;
                     return true;
                 }
             }

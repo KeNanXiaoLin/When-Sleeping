@@ -5,24 +5,13 @@ using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoadManager : MonoBehaviour
+public class SceneLoadManager : MonoBase<SceneLoadManager>
 {
-    private static SceneLoadManager _instance;
-    public static SceneLoadManager Instance
+   
+    protected override void Awake()
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new();
-            }
-            return _instance;
-        }
-    }
+        base.Awake();
 
-    void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
         EventListener.OnVilliageSceneChange += LoadScene;
         EventListener.OnBattleSceneChange += LoadScene;
     }
