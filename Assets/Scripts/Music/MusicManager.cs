@@ -15,33 +15,33 @@ public class MusicManager:MonoBase<MusicManager>
     //背景音乐大小
     private float bkMusicValue = 0.1f;
     public const string bkMusicValueStr = "bkMusicValue";
-    private bool bkMusicIsMute = false;
-    public const string bkMusicIsMuteStr = "bkMusicIsMute";
+    private bool bkMusicMute = false;
+    public const string bkMusicMuteStr = "bkMusicMute";
 
     //管理正在播放的音效
     private List<AudioSource> soundList = new List<AudioSource>();
     //音效音量大小
     private float soundValue = 0.1f;
     public const string soundValueStr = "soundValue";
-    private bool soundIsMute = false;
-    public const string soundIsMuteStr = "soundIsMute";
+    private bool soundMute = false;
+    public const string soundMuteStr = "soundMute";
     //音效是否在播放
     private bool soundIsPlay = true;
 
     public float BkMusicValue { get => bkMusicValue; }
     public float SoundValue { get => soundValue;  }
-    public bool BkMusicIsMute { get => bkMusicIsMute; }
-    public bool SoundIsMute { get => soundIsMute; }
+    public bool BkMusicMute { get => bkMusicMute; }
+    public bool SoundIsMute { get => soundMute; }
 
     protected override void Awake()
     {
         base.Awake();
         //读取本地存储的音量和音效数据
         bkMusicValue = PlayerPrefs.GetFloat(bkMusicValueStr, 1.0f);
-        bkMusicIsMute = PlayerPrefs.GetInt(bkMusicIsMuteStr, 1) == 1 ? true : false;
+        bkMusicMute = PlayerPrefs.GetInt(bkMusicMuteStr, 0) == 1 ? true : false;
         soundValue = PlayerPrefs.GetFloat(soundValueStr, 1.0f);
-        soundIsMute = PlayerPrefs.GetInt(soundIsMuteStr, 1) == 1 ? true : false;
-        Debug.LogFormat("读取到的音乐数据{0}，音效数据{1}，音乐静音{2}，音效静音{3}", bkMusicValue, soundValue, bkMusicIsMute, soundIsMute);
+        soundMute = PlayerPrefs.GetInt(soundMuteStr, 0) == 1 ? true : false;
+        Debug.LogFormat("读取到的音乐数据{0}，音效数据{1}，音乐静音{2}，音效静音{3}", bkMusicValue, soundValue, bkMusicMute, soundMute);
         
     }
 
@@ -118,12 +118,13 @@ public class MusicManager:MonoBase<MusicManager>
     /// <summary>
     /// 调整背景音乐是否静音
     /// </summary>
-    /// <param name="isMute"></param>
-    public void ChangeBKMusicMute(bool isMute)
+    /// <param name="mute"></param>
+    public void ChangeBKMusicMute(bool mute)
     {
+        bkMusicMute = mute;
         if (bkMusic == null)
             return;
-        bkMusic.mute = !isMute;
+        bkMusic.mute = bkMusicMute;
     }
 
     /// <summary>
@@ -189,12 +190,13 @@ public class MusicManager:MonoBase<MusicManager>
     /// <summary>
     /// 调整音效是否禁音
     /// </summary>
-    /// <param name="isMute"></param>
-    public void ChangeSoundMute(bool isMute)
+    /// <param name="mute"></param>
+    public void ChangeSoundMute(bool mute)
     {
+        soundMute = mute;
         for (int i = 0; i < soundList.Count; i++)
         {
-            soundList[i].mute = !isMute;
+            soundList[i].mute = soundMute;
         }
     }
 
@@ -235,11 +237,11 @@ public class MusicManager:MonoBase<MusicManager>
     /// </summary>
     internal void SaveMusicData()
     {
-        Debug.Log("存储音乐数据到本地");
-        PlayerPrefs.SetFloat(bkMusicIsMuteStr, bkMusicValue);
-        PlayerPrefs.SetInt(bkMusicIsMuteStr, bkMusicIsMute ? 1 : 0);
+        Debug.Log("存储音乐数据到本地,背景音乐大小"+bkMusicValue);
+        PlayerPrefs.SetFloat(bkMusicValueStr, bkMusicValue);
+        PlayerPrefs.SetInt(bkMusicMuteStr, bkMusicMute ? 1 : 0);
         PlayerPrefs.SetFloat(soundValueStr, soundValue);
-        PlayerPrefs.SetInt(soundValueStr, soundIsMute ? 1 : 0);
+        PlayerPrefs.SetInt(soundMuteStr, soundMute ? 1 : 0);
         PlayerPrefs.Save();
     }
 }

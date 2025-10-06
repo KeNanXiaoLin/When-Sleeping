@@ -1504,7 +1504,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.9962888, y: 0.35982263, z: -10}
+  m_LocalPosition: {x: -1.0648808, y: 0.26810062, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1929,16 +1929,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -8, y: 6, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 6
-      m_TileSpriteIndex: 4
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 2
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1
   - first: {x: -5, y: 6, z: 0}
     second:
       serializedVersion: 2
@@ -1973,8 +1963,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 0f61bc7e780330249a34c5ab4be7141f, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 775c2d2031487b244a42b71d5898c2f0, type: 2}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: 8160ee127cf250046ada1d42b84495da, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -1984,14 +1974,14 @@ Tilemap:
     m_Data: {fileID: -1793316824, guid: 2efa20f699e5ec04cb6ab7dfe885f62c, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -742903634, guid: a60791b05715f4f4caab03384435457f, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1188607317, guid: 2efa20f699e5ec04cb6ab7dfe885f62c, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -414167678, guid: 2cd8c653e4c3a8140bcf79ca02803ed5, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -231010067, guid: a60791b05715f4f4caab03384435457f, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 6
+  - m_RefCount: 5
     m_Data:
       e00: 1
       e01: 0
@@ -2014,7 +2004,7 @@ Tilemap:
     m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   - m_RefCount: 0
     m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
-  - m_RefCount: 6
+  - m_RefCount: 5
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -5838,10 +5828,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 10.014799, y: 8.011993}
-      - {x: -12.053186, y: 7.9809155}
-      - {x: -11.981481, y: -6.99835}
-      - {x: 9.991194, y: -7.0114393}
+    - - {x: 11.208086, y: 8.657013}
+      - {x: -13.205159, y: 8.836167}
+      - {x: -13.192939, y: -7.7252254}
+      - {x: 11.184481, y: -7.9144673}
   m_UseDelaunayMesh: 0
 --- !u!1 &2121679240
 GameObject:
