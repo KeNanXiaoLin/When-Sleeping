@@ -54,6 +54,8 @@ namespace GJ
             {
                 LA_Backpack.Instance.AddItm_Backpack(Item);
                 LA_Backpack.Instance.ShowGotItemUI_Backpack(Item);
+
+                MusicManager.Instance.PlaySound("发现证物的音效1");
             }
         }
 

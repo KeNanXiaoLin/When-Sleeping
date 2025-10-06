@@ -35,6 +35,7 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     private CanvasGroup faderCanvasGroup = null;
 
     public string CurrentScene;
+    public string CurrentMusic;
 
     protected override void Awake()
     {
@@ -44,9 +45,11 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     void OnEnable()
     {
         EventListener.OnVilliageSceneChange += LoadScene;
+        EventListener.OnVilliageSceneChange += VilliageBackGroundMusic;
 
         EventListener.OnBattleSceneChange += LoadScene;
         EventListener.OnBattleSceneChange += DayUp;
+        EventListener.OnBattleSceneChange += BattleBackGroundMusic;
 
         EventListener.OnSceneReload += ReLoadScene;
     }
@@ -56,6 +59,31 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
         DayIndex++;
     }
 
+    #region music
+    private void VilliageBackGroundMusic(string name, E_SceneLoadType type)
+    {
+        if (CurrentScene == "GameScene3")
+        {
+            if (CurrentMusic == "轻松小曲2")  return;       //检测当前是否正在播放重复歌曲
+
+            MusicManager.Instance.PlayBKMusic("轻松小曲2");
+            CurrentMusic = "轻松小曲2";
+        }
+        else
+        {
+            if (CurrentMusic == "轻松小曲1")  return;
+
+            MusicManager.Instance.PlayBKMusic("轻松小曲1");
+            CurrentMusic = "轻松小曲1";
+        }
+    }
+
+    private void BattleBackGroundMusic(string name, E_SceneLoadType type)
+    {
+        MusicManager.Instance.PlayBKMusic("阴森的小曲1");
+    }
+    #endregion
+
     void OnDisable()
     {
         EventListener.OnVilliageSceneChange -= LoadScene;
@@ -63,14 +91,18 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     }
 
 
-    public void LoadScene(string name,E_SceneLoadType type = E_SceneLoadType.None)
+    public void LoadScene(string name, E_SceneLoadType type = E_SceneLoadType.None)
     {
-        FadeAndLoadScene(name,type);
+        FadeAndLoadScene(name, type);
+        MusicManager.Instance.PlaySound("时钟的音效2", false, false);
+        CurrentScene = name;
     }
 
-    public void ReLoadScene(string name,E_SceneLoadType type = E_SceneLoadType.None)
+    public void ReLoadScene(string name, E_SceneLoadType type = E_SceneLoadType.None)
     {
-        FadeAndLoadScene(name,type);
+        FadeAndLoadScene(name, type);
+        CurrentScene = name;
+        
     }
 
     /// <summary>

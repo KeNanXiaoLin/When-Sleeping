@@ -46,13 +46,15 @@ namespace GJ
         void OnPlayerAttack_Anim()
         {
             anim = this.GetComponent<Animator>();
-            
+
             if (player.FlipToRight == true)
                 anim.Play("Attack");
             else
             {
                 anim.Play("AttackLeft");
             }
+
+            MusicManager.Instance.PlaySound("我左键击打的音效3");
         }
 
         void AnimEnd()
