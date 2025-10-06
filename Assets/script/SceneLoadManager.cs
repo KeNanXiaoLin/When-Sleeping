@@ -1,28 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoadManager : MonoBehaviour
+public class SceneLoadManager:MonoBase<SceneLoadManager>
 {
-    private static SceneLoadManager _instance;
-    public static SceneLoadManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new();
-            }
-            return _instance;
-        }
-    }
 
-    void Awake()
+    protected override void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        base.Awake();
         EventListener.OnVilliageSceneChange += LoadScene;
         EventListener.OnBattleSceneChange += LoadScene;
     }

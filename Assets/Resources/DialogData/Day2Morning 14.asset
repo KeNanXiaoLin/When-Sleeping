@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 226f13d617cddee4bbd2c46bdbd7f298, type: 3}
-  m_Name: Day1Night 1
+  m_Name: Day2Morning 14
   m_EditorClassIdentifier: 
-  id: 101
-  type: 1
-  content: 'Honey,drink milk and go to bed early. '
-  nextData: {fileID: 11400000, guid: cda80cda15672464597ff2d741de4ed6, type: 2}
+  id: 214
+  type: 0
+  content: 'Thank you, I''ll treat you to strawberry milk. '
+  nextData: {fileID: 11400000, guid: 7621ab82c69f6a64d9cb12ca0a125a0e, type: 2}
   isEnd: 0
-  isStart: 1
+  isStart: 0
