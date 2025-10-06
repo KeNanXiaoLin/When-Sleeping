@@ -70,6 +70,7 @@ public class LA_Backpack : MonoBase<LA_Backpack>
     public void Hide_GotItemUI_BackPack()
     {
         GotItemUI.SetActive(false);
+        EventListener.CheckedItemGot();
     }
 
     /// <summary>
@@ -142,7 +143,7 @@ public class LA_Backpack : MonoBase<LA_Backpack>
     {
         int A = ReadItemNum_Backpack(_Item);
         
-        if (A == _AimNum) return true;
+        if (A >= _AimNum) return true;
         else return false;
     }
 

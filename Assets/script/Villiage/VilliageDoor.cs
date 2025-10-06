@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using GJ;
 using UnityEngine;
 
+namespace GJ
+{
+
 public class VilliageDoor : MonoBehaviour
 {
     public string AimScene;
-    private List<Collider2D> colliders = new List<Collider2D>();
+    protected List<Collider2D> colliders = new List<Collider2D>();
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,5 +33,7 @@ public class VilliageDoor : MonoBehaviour
             }
         }
     }
-    
+
+}
+
 }

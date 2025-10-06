@@ -27,7 +27,6 @@ namespace GJ
         {
             if (IsDialogued == false)
             {
-
                 DialogSystem.Instance.TriggerStartDialog(data);
                 NPCNotice.SetActive(false);
             }

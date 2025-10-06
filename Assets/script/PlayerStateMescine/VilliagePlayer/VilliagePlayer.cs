@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using UnityEditor.Experimental;
 using UnityEngine;
 
 namespace GJ
@@ -13,9 +15,12 @@ namespace GJ
 
         private float Horizonal;
         private float vertual;
+        private Collider2D[] colliders;
+
         private bool IsMoving = true;
 
         private VilliageNPC NPC;
+        private VilliageItemPoint ItemPoint;
         private Animator anim;
 
         void Awake()
@@ -26,12 +31,15 @@ namespace GJ
         void Start()
         {
             EventListener.OnDialogueEnd += OnDialogueEnd;
+            EventListener.OnCheckedItemGot += OnDialogueEnd;
         }
 
         void Update()
         {
             //TODO 检测到NPC后，提示玩家按键操作
+            colliders = Physics2D.OverlapCircleAll(this.transform.position, NPCDetectRate);
             DetectNPC();
+            DetectItemPoint();
 
             if (IsMoving == true)
             {
@@ -40,9 +48,9 @@ namespace GJ
 
                 this.transform.Translate(new Vector2(Horizonal, vertual) * MoveSpeed * Time.deltaTime);
 
-
-                anim.SetFloat("XMove", Horizonal );
-                anim.SetFloat("YMove", vertual );
+                //设置动画
+                anim.SetFloat("XMove", Horizonal);
+                anim.SetFloat("YMove", vertual);
 
                 if (Horizonal != 0 || vertual != 0)
                 {
@@ -51,14 +59,25 @@ namespace GJ
                     anim.SetFloat("YIdle", vertual);
                 }
                 else anim.SetBool("Moving", false);
-                
+
             }
 
-            if (Input.GetKeyDown(KeyCode.F) && NPC != null)
+ 
+
+                if (Input.GetKeyDown(KeyCode.F))
             {
-                IsMoving = false;
-                EventListener.DialogueStart();
+                    if (NPC != null)
+                    {
+                        IsMoving = false;
+                        EventListener.DialogueStart();
+                    }
+                    else if (ItemPoint != null)
+                    {
+                        IsMoving = false;
+                        EventListener.ItemGot();
+                }
             }
+            
         }
 
         private bool DetectNPC()
@@ -72,9 +91,7 @@ namespace GJ
                 NPC = null;
             }
 
-            var objCollider = Physics2D.OverlapCircleAll(this.transform.position, NPCDetectRate);
-
-            foreach (var i in objCollider)
+            foreach (var i in colliders)
             {
                 if (i.GetComponent<VilliageNPC>() != null)
                 {
@@ -84,6 +101,22 @@ namespace GJ
             }
 
             return false;
+        }
+
+        //检测场景中的道具实体单位
+        private bool DetectItemPoint()
+        {
+            foreach (var i in colliders)
+            {
+                if (i.GetComponent<VilliageItemPoint>() != null)
+                {
+                    ItemPoint = i.GetComponent<VilliageItemPoint>();
+                    return true;
+                }
+            }
+
+            return false;
+
         }
 
         private void OnDialogueEnd() => IsMoving = true;

@@ -44,4 +44,12 @@ public class EventListener
     public static void BattleSceneChange(string _SceneName) => OnBattleSceneChange?.Invoke(_SceneName);
 
     #endregion
+
+    public delegate void GetItem();
+
+    public static event GetItem OnItemGot;
+    public static event GetItem OnCheckedItemGot;
+
+    public static void ItemGot() => OnItemGot.Invoke();
+    public static void CheckedItemGot() => OnCheckedItemGot.Invoke();
 }
