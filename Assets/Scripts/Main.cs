@@ -10,5 +10,6 @@ public class Main : MonoBehaviour
         // CGManager.Instance.PlayKaiTouCG();
         // CGManager.Instance.PlayChiRenCG();
         // CGManager.Instance.PlayEndCG();
+        // CGManager.Instance.PlayJuqing();
     }
 }

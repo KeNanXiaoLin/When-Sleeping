@@ -67,7 +67,7 @@ public class CGManager : MonoBase<CGManager>
     {
         StartCoroutine(PlayEndCGAnim(3f));
     }
-    
+
     private IEnumerator PlayEndCGAnim(float time)
     {
 
@@ -84,6 +84,49 @@ public class CGManager : MonoBase<CGManager>
             gPanel.UpdateInfo(clockSprites[i]);
             clockSprites.Remove(clockSprites[i]);
             yield return new WaitForSeconds(time);
+        }
+        UIManager.Instance.HidePanel<RealCGPanel>();
+    }
+
+    /// <summary>
+    /// 播放中间剧情
+    /// </summary>
+    public void PlayJuqing()
+    {
+        StartCoroutine(PlayJuqingAnim());
+    }
+
+    private IEnumerator PlayJuqingAnim()
+    {
+
+        List<Sprite> clockSprites = new();
+        for (int i = 6; i > 0; i--)
+        {
+            clockSprites.Add(Resources.Load<Sprite>("Sprites/d" + i));
+        }
+        UIManager.Instance.ShowPanel<RealCGPanel>();
+        RealCGPanel gPanel = UIManager.Instance.GetPanel<RealCGPanel>();
+        bool isPlayNext = true;
+        //从后往前移除列表
+        while(clockSprites.Count > 0)
+        {
+            //允许播放下一张
+            if (isPlayNext)
+            {
+                gPanel.UpdateInfo(clockSprites[clockSprites.Count - 1]);
+                clockSprites.Remove(clockSprites[clockSprites.Count - 1]);
+                isPlayNext = false;
+            }
+            else
+            {
+                //玩家点击鼠标左键允许播放下一张
+                if (Input.GetMouseButtonDown(0))
+                {
+                    isPlayNext = true;
+                }
+            }
+            
+            yield return null;
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
     }
