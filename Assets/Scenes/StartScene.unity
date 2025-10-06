@@ -166,42 +166,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &549891831
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 549891832}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &549891832
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549891831}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 790606151}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &790606151 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1063301844341715003, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
-  m_PrefabInstance: {fileID: 6470565910987961826}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &826695428
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,33 +368,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3499464025205469945, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3681586070283985399, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
-      propertyPath: WinScene
-      value: 
-      objectReference: {fileID: 549891831}
     - target: {fileID: 4705487757206586291, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
       propertyPath: m_Name
       value: GameObject
       objectReference: {fileID: 0}
     - target: {fileID: 4705487757206586291, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8819769957971605736, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
-      propertyPath: WinScene
-      value: 
-      objectReference: {fileID: 549891831}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 3499464025205469945, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1063301844341715003, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 549891832}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1c0197cfebb693429069dd4cc3ccda9, type: 3}
 --- !u!1660057539 &9223372036854775807

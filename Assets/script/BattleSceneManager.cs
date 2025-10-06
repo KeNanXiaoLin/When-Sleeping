@@ -39,16 +39,18 @@ namespace GJ
 
         public bool CheckInputFalse { get; private set; }
 
-        void FixedUpdate()
+        void LateUpdate()
         {
-            if (SceneLoadManager.Instance.CurrentScene == "BattleScene")
-                CheckingEnemy = true;
-            else
-                CheckingEnemy = false;
 
-            if (Enemy.Count <= 0 && CheckingEnemy == true)
+            if (SceneLoadManager.Instance.CurrentScene == "BattleScene" && CheckingEnemy == false && Enemy.Count > 0)
+            {
+                CheckingEnemy = true;
+            }
+
+            if (CheckingEnemy == true && Enemy.Count <= 0)
             {
                 EventListener.GameWin();
+                CheckingEnemy = false;
             }
 
 
@@ -56,9 +58,11 @@ namespace GJ
 
         void Update()
         {
+            
+             //胜利后切换场景
             if (canCheck == true)
             {
-                CC_CheckTime -= Time.deltaTime;   
+                CC_CheckTime -= Time.deltaTime;
             }
             if (CC_CheckTime <= 0)
             {
@@ -94,10 +98,7 @@ namespace GJ
                     }
                 }
             }
-            if (SceneLoadManager.Instance.CurrentScene == "BattleScene 1")
-                {
-
-                }
+           
 
         }
 
