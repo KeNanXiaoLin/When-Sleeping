@@ -7,7 +7,8 @@ public enum E_DialogType
 {
     MainRole,
     Mom,
-    God
+    God,
+    Bob,
 }
 [CreateAssetMenu(fileName = "DialogData", menuName = "DialogData", order = 1)]
 public class DialogData : ScriptableObject

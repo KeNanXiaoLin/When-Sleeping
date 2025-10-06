@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Day1Night 3
   m_EditorClassIdentifier: 
   id: 103
-  type: 0
-  content: 
-  nextData: {fileID: 0}
+  type: 1
+  content: 'If you don''t drink it, a monster will come to get you at night. '
+  nextData: {fileID: 11400000, guid: 7b63b3e17c1f7f440b53499ff6b296e1, type: 2}
   isEnd: 0
   isStart: 0

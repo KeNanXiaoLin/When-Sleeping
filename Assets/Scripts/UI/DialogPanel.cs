@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogPanel : UIPanelBase
 {
     public TextMeshProUGUI contentTMP;
+    public TextMeshProUGUI nameTMP;
 
     public override void HideMe()
     {
@@ -17,19 +19,38 @@ public class DialogPanel : UIPanelBase
 
     }
 
-    protected override void ClickBtn(string btnName)
-    {
-        switch (btnName)
-        {
-            case "Next":
-                //通知对话系统播放下一段对话
-                DialogSystem.Instance.TriggerNextDialog();
-                break;
-        }
-    }
-
     public void UpdateDialogText(string content)
     {
         contentTMP.text = content;
+    }
+
+    public void UpdateInfo(DialogData data)
+    {
+        Image headIcon = GetControl<Image>("HeadIcon");
+        switch (data.type)
+        {
+            case E_DialogType.MainRole:
+                headIcon.sprite = Resources.Load<Sprite>("Sprites/MainRole");
+                nameTMP.text = "Mike";
+                break;
+            case E_DialogType.Mom:
+                headIcon.sprite = Resources.Load<Sprite>("Sprites/Mom");
+                nameTMP.text = "Mom";
+                break;
+            case E_DialogType.Bob:
+                headIcon.sprite = Resources.Load<Sprite>("Sprites/Bob");
+                nameTMP.text = "Bob";
+                break;
+            case E_DialogType.God:
+                headIcon.sprite = Resources.Load<Sprite>("Sprites/God");
+                nameTMP.text = "God";
+                break;
+        }
+        UpdateDialogText(data.content);
+    }
+
+    public void ClickDialogPanel()
+    {
+        DialogSystem.Instance.TriggerNextDialog();
     }
 }

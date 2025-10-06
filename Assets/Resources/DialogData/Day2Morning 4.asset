@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 226f13d617cddee4bbd2c46bdbd7f298, type: 3}
-  m_Name: Day1Morning
+  m_Name: Day2Morning 4
   m_EditorClassIdentifier: 
-  id: 0
+  id: 204
   type: 0
-  content: 'Did I just have a dream? Interesting. '
-  nextData: {fileID: 11400000, guid: 8e6c0bf1712283b459485ff210fa5395, type: 2}
+  content: 'I am really awesome.I knocked down many monsters one by one and even
+    saved passersby. '
+  nextData: {fileID: 11400000, guid: 9a99fc081ee30a24d87ed06b7995e50a, type: 2}
   isEnd: 0
-  isStart: 1
+  isStart: 0
