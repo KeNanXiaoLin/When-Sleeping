@@ -14,6 +14,7 @@ namespace GJ
         void Awake()
         {
             ItemImage = GetComponent<SpriteRenderer>();
+            ItemImage.sprite = item.ItemPicture;
         }
 
         void Start()
@@ -21,7 +22,6 @@ namespace GJ
             EventListener.OnItemGot += GotItem;
             EventListener.OnCheckedItemGot += CheckedItemGot;
 
-            ItemImage.sprite = item.ItemPicture;
         }
 
         private void GotItem()
