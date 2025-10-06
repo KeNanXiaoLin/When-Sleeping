@@ -12,7 +12,7 @@ public class BlackShadow : MonoBehaviour
         this.transform.Translate(new Vector2(1, 0) * MoveSpeed * Time.deltaTime);
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Player>() == true)
         {

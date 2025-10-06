@@ -88,13 +88,13 @@ public class SceneLoadManager : MonoBase<SceneLoadManager>
     {
         MusicManager.Instance.PlayBKMusic("阴森的小曲1");
 
-        CurrentScene = "阴森的小曲1";
+        CurrentMusic = "阴森的小曲1";
     }
 
     private void PlayeStartMusic()
     {
         MusicManager.Instance.PlayBKMusic("阴森的小曲1");
-        CurrentScene = "阴森的小曲1";
+        CurrentMusic = "阴森的小曲1";
     }
     #endregion
 

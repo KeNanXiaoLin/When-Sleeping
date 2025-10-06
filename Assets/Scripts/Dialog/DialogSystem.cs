@@ -55,6 +55,9 @@ public class DialogSystem
     {
         if (!dialogDic.ContainsKey(data.id)) return;
         curData = data;
+
+
+
         if (data.isStart)
         {
             //显示对话面板，播放对话
@@ -67,6 +70,11 @@ public class DialogSystem
         {
             Debug.Log("当前没有办法触发对话，请检查数据是否存在问题");
         }
+    }
+
+    public void CheckDialogueIndex(int _AimIndex,bool _isCG)
+    {
+
     }
 
     public void TriggerDialog(DialogData data)

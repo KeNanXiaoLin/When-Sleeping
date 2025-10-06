@@ -58,8 +58,8 @@ namespace GJ
 
         void Update()
         {
-            
-             //胜利后切换场景
+
+            //胜利后切换场景
             if (canCheck == true)
             {
                 CC_CheckTime -= Time.deltaTime;
@@ -98,6 +98,18 @@ namespace GJ
                     }
                 }
             }
+            if (SceneLoadManager.Instance.CurrentScene == "BattleScene 1")
+            {
+                if (CheckInput == true && Input.GetMouseButtonDown(0))
+                {
+                    if (LoseScene.activeSelf == true)
+                    {
+                        //启动CG
+
+                        LoseScene.SetActive(false);
+                    }
+                }
+            }
            
 
         }
@@ -116,7 +128,7 @@ namespace GJ
             LoseScene.SetActive(true);
             LoseScene.GetComponentInChildren<Animator>().Play("ShowSlowly");
 
-            canCheck = false;
+            canCheck = true;
         }
 
     }
