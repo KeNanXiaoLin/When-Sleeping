@@ -15,7 +15,7 @@ public class SettingPanelUI : UIPanelBase
         //读取MusicManager中的音量信息对UI进行赋值
         GetControl<Slider>("MusicSli").value = MusicManager.Instance.BkMusicValue;
         GetControl<Slider>("SoundSli").value = MusicManager.Instance.SoundValue;
-        GetControl<Toggle>("MusicTog").isOn = MusicManager.Instance.BkMusicIsMute;
+        GetControl<Toggle>("MusicTog").isOn = MusicManager.Instance.BkMusicMute;
         GetControl<Toggle>("SoundTog").isOn = MusicManager.Instance.SoundIsMute;
 
     }
