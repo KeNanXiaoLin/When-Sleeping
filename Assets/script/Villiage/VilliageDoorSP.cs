@@ -55,13 +55,13 @@ namespace GJ
         private void ConformDrink()
         {
             SceneLoadManager.Instance.MilkDrinked = true;
-            EventListener.BattleSceneChange(AimScene);
+            EventListener.BattleSceneChange(AimScene,E_SceneLoadType.None);
         }
 
         private void UnDrink()
         {
             SceneLoadManager.Instance.MilkDrinked = false;
-            EventListener.BattleSceneChange(AimScene);
+            EventListener.BattleSceneChange(AimScene,E_SceneLoadType.None);
         }
 }
 

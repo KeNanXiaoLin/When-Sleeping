@@ -8,6 +8,7 @@ public class DialogPanel : UIPanelBase
 {
     public TextMeshProUGUI contentTMP;
     public TextMeshProUGUI nameTMP;
+    public Image headIcon;
 
     public override void HideMe()
     {
@@ -26,7 +27,6 @@ public class DialogPanel : UIPanelBase
 
     public void UpdateInfo(DialogData data)
     {
-        Image headIcon = GetControl<Image>("HeadIcon");
         switch (data.type)
         {
             case E_DialogType.MainRole:

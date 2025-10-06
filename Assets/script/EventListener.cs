@@ -36,12 +36,12 @@ public class EventListener
     #endregion
 
     #region 场景切换相关事件 
-    public delegate void SceneSwitch(string _SceneName);
+    public delegate void SceneSwitch(string _SceneName,E_SceneLoadType type);
     public static event SceneSwitch OnVilliageSceneChange;
     public static event SceneSwitch OnBattleSceneChange;
 
-    public static void VilliageSceneChange(string _SceneName) => OnVilliageSceneChange?.Invoke(_SceneName);
-    public static void BattleSceneChange(string _SceneName) => OnBattleSceneChange?.Invoke(_SceneName);
+    public static void VilliageSceneChange(string _SceneName,E_SceneLoadType type) => OnVilliageSceneChange?.Invoke(_SceneName,type);
+    public static void BattleSceneChange(string _SceneName,E_SceneLoadType type) => OnBattleSceneChange?.Invoke(_SceneName,type);
 
     #endregion
 

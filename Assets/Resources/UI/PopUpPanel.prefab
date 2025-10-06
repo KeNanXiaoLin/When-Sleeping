@@ -403,6 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tmpDetails: {fileID: 816817632039986899}
+  icon: {fileID: 7436173919877546510}
 --- !u!1 &6976387203547794805
 GameObject:
   m_ObjectHideFlags: 0

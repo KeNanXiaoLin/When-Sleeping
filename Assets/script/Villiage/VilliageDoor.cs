@@ -29,7 +29,7 @@ public class VilliageDoor : MonoBehaviour
         {
             if (i.GetComponent<VilliagePlayer>() == true)
             {
-                EventListener.VilliageSceneChange(AimScene);
+                EventListener.VilliageSceneChange(AimScene,E_SceneLoadType.None);
             }
         }
     }
