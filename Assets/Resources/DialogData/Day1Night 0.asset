@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 100
   type: 1
-  content: 'Honey,drink milk and go to bed early. '
+  content: Honey,drink milk and go to bed early.
   nextData: {fileID: 11400000, guid: 07a97ee88e6d2fc45a9e987db72f671b, type: 2}
   isEnd: 0
   isStart: 1
+  triggerType: 1
+  isTrigger: 0
+  item: {fileID: 0}

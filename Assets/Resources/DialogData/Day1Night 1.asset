@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Day1Night 1
   m_EditorClassIdentifier: 
   id: 101
-  type: 1
-  content: 'Honey,drink milk and go to bed early. '
+  type: 0
+  content: I'm tired of drinking it.
   nextData: {fileID: 11400000, guid: cda80cda15672464597ff2d741de4ed6, type: 2}
   isEnd: 0
   isStart: 1
+  triggerType: 1
+  isTrigger: 0

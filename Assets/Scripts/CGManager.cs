@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CGManager : MonoBase<CGManager>
+public class CGManager : SingletonAutoMono<CGManager>
 {
-
-    public bool CGPlaying = false;
 
     /// <summary>
     /// 播放开头CG
     /// </summary>
-    public void PlayKaiTouCG()
+    public IEnumerator PlayKaiTouCG()
     {
-        StartCoroutine(PlayKaiTouCGAnim(3f));
+        MusicManager.Instance.PlayBKMusic("阴森的小曲1");
+        MusicManager.Instance.PlaySound("心跳声");
+        yield return PlayKaiTouCGAnim(3f);
+        MusicManager.Instance.ClearSound();
+        MusicManager.Instance.PlayBKMusic("轻松小曲1");
     }
 
     /// <summary>
@@ -22,8 +24,6 @@ public class CGManager : MonoBase<CGManager>
     /// <returns></returns>
     private IEnumerator PlayKaiTouCGAnim(float time)
     {
-        CGPlaying = true;
-
         List<Sprite> clockSprites = new();
         clockSprites.Add(Resources.Load<Sprite>("Sprites/kaitouCG"));
         UIManager.Instance.ShowPanel<RealCGPanel>();
@@ -36,13 +36,6 @@ public class CGManager : MonoBase<CGManager>
             yield return new WaitForSeconds(time);
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
-
-        CGPlaying = false;
-
-        //额外变量
-        SceneLoadManager.Instance.LoadScene("GameScene3", E_SceneLoadType.None);
-        MusicManager.Instance.PlayBKMusic("轻松小曲2");
-
     }
 
     /// <summary>
@@ -55,8 +48,6 @@ public class CGManager : MonoBase<CGManager>
 
     private IEnumerator PlayChiRenCGAnim(float time)
     {
-        CGPlaying = true;
-
         List<Sprite> clockSprites = new();
         clockSprites.Add(Resources.Load<Sprite>("Sprites/chirenCG"));
         UIManager.Instance.ShowPanel<RealCGPanel>();
@@ -83,8 +74,6 @@ public class CGManager : MonoBase<CGManager>
 
     private IEnumerator PlayEndCGAnim(float time)
     {
-        CGPlaying = true;
-
         List<Sprite> clockSprites = new();
         for (int i = 3; i > 0; i--)
         {
@@ -100,10 +89,6 @@ public class CGManager : MonoBase<CGManager>
             yield return new WaitForSeconds(time);
         }
         UIManager.Instance.HidePanel<RealCGPanel>();
-
-        Application.Quit();
-
-        CGPlaying = false;
     }
 
     /// <summary>
@@ -150,10 +135,37 @@ public class CGManager : MonoBase<CGManager>
 
         PlayEndCG();
     }
-    
-    public void PlayerEnd()
+
+    public IEnumerator PlayClockAnim()
     {
-    
+        MusicManager.Instance.PlaySound("时钟的音效2");
+        yield return PlayClockAnimCoroutine(0.3f);
+        MusicManager.Instance.ClearSound();
+        
+    }
+    /// <summary>
+    /// 播放时钟动画
+    /// </summary>
+    /// <param name="time">播放每张图片的时间间隔</param>
+    /// <returns></returns>
+    private IEnumerator PlayClockAnimCoroutine(float time)
+    {
+
+        List<Sprite> clockSprites = new();
+        for (int i = 5; i >= 1; i--)
+        {
+            clockSprites.Add(Resources.Load<Sprite>("Sprites/Clock" + i));
+        }
+        UIManager.Instance.ShowPanel<CGPanel>();
+        CGPanel gPanel = UIManager.Instance.GetPanel<CGPanel>();
+        //从后往前移除列表
+        for (int i = clockSprites.Count - 1; i >= 0; i--)
+        {
+            gPanel.UpdateImage(clockSprites[i]);
+            clockSprites.Remove(clockSprites[i]);
+            yield return new WaitForSeconds(time);
+        }
+        UIManager.Instance.HidePanel<CGPanel>();
     }
 
 }

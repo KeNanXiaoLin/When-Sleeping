@@ -8,18 +8,11 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 管理所有UI面板的管理器
 /// </summary>
-public class UIManager
+public class UIManager:BaseManager<UIManager>
 {
-    private static UIManager _instance;
-    public static UIManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-                _instance = new();
-            return _instance;
-        }
-    }
+
+    public Camera UiCamera { get => uiCamera;  }
+
     private Camera uiCamera;
     private Transform uiRoot;
     private EventSystem uiEventSystem;

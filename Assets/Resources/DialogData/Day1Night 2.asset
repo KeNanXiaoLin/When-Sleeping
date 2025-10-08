@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Day1Night 2
   m_EditorClassIdentifier: 
   id: 102
-  type: 0
-  content: 'I''m tired of drinking it. '
+  type: 1
+  content: If you don't drink it, a monster will come to get you at night.
   nextData: {fileID: 11400000, guid: b8a411916a0598341b12da75c64961ec, type: 2}
   isEnd: 0
   isStart: 0
+  triggerType: 1
+  isTrigger: 0

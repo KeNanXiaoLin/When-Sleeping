@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,12 +14,14 @@ public class GameStartUI : UIPanelBase
 
     public override void HideMe()
     {
-
+        EventCenter.Instance.RemoveCoroutineListener(E_EventType.E_SceneLoadFaderBeforeCoroutine, EnterScene);
+        EventCenter.Instance.RemoveEventListener(E_EventType.E_SceneLoadFaderBefore, InitNewSceneObj);
     }
 
     public override void ShowMe()
     {
-
+        EventCenter.Instance.AddCoroutineListener(E_EventType.E_SceneLoadFaderBeforeCoroutine, EnterScene);
+        EventCenter.Instance.AddEventListener(E_EventType.E_SceneLoadFaderBefore, InitNewSceneObj);
     }
 
     protected override void ClickBtn(string btnName)
@@ -27,8 +30,7 @@ public class GameStartUI : UIPanelBase
         {
             case "Start":
                 //切换场景到游戏场景
-                UIManager.Instance.HidePanel<GameStartUI>();
-                CGManager.Instance.PlayKaiTouCG();
+                SceneLoadManager.Instance.LoadScene("GameScene3");
                 break;
             case "Setting":
                 //打开设置面板
@@ -38,6 +40,33 @@ public class GameStartUI : UIPanelBase
                 Application.Quit();
                 break;
         }
+    }
+
+    public IEnumerator EnterScene()
+    {
+        yield return CGManager.Instance.PlayKaiTouCG();
+    }
+
+    public void InitNewSceneObj()
+    {
+        DialogSystem.Instance.Test();
+        Vector3 spawnPos = GameManager.Instance.playerPos;
+        GameObject playerObj = Instantiate(Resources.Load<GameObject>("Player/Player"), spawnPos, Quaternion.identity);
+        GameObject playerCamera = Instantiate(Resources.Load<GameObject>("Player/PlayerCamera"));
+        DontDestroyOnLoad(playerObj);
+        DontDestroyOnLoad(playerCamera);
+        Player player = playerObj.GetComponent<Player>();
+        CinemachineVirtualCamera camera = playerCamera.GetComponent<CinemachineVirtualCamera>();
+        //记录Player,playerCamera，方便访问
+        GameManager.Instance.player = player;
+        GameManager.Instance.playerCamera = camera;
+        GameManager.Instance.InitCameraValues();
+        //启用玩家输入
+        player.EnablePlayerInput();
+        UIManager.Instance.ShowPanel<GameUI>();
+        UIManager.Instance.HidePanel<GameStartUI>();
+        //启动时间流逝
+        TimeSystem.Instance.RecoverTime();
     }
 
    

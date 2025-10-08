@@ -1,3 +1,4 @@
+using Cinemachine;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -9,20 +10,41 @@ using UnityEngine.UI;
 /// </summary>
 public class Test : MonoBehaviour
 {
-    float x, y;
-    void Update()
+    public Vector3 spawnPos;
+
+    void Awake()
     {
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
-        transform.Translate(Time.deltaTime * x * 2f, Time.deltaTime * y * 2f, 0);
+        DialogSystem.Instance.Test();
+    }
+    void Start()
+    {
+        GameObject playerObj = Instantiate(Resources.Load<GameObject>("Player/Player"), spawnPos, Quaternion.identity);
+        GameObject playerCamera = Instantiate(Resources.Load<GameObject>("Player/PlayerCamera"));
+        CinemachineVirtualCamera camera = playerCamera.GetComponent<CinemachineVirtualCamera>();
+        camera.Follow = playerObj.transform;
+        CinemachineConfiner confiner = camera.GetComponent<CinemachineConfiner>();
+        confiner.m_BoundingShape2D = GameObject.Find("ViewLimit").GetComponent<PolygonCollider2D>();
+        UIManager.Instance.ShowPanel<GameUI>();
+
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void Update()
     {
-        if (collision.CompareTag("Portal"))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SceneManager.UnloadScene("GameScene");
-            SceneManager.LoadScene("GameScene2",LoadSceneMode.Additive);
+            BagManager.Instance.AddItem(1, 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            BagManager.Instance.AddItem(2, 1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            BagManager.Instance.AddItem(3, 1);
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            BagManager.Instance.ShowBagInfo();
         }
     }
 }

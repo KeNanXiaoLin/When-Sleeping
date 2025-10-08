@@ -2,29 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogSystem
+public class DialogSystem :BaseManager<DialogSystem>
 {
-    #region 单例
-    private static DialogSystem _instance;
-
-    public static DialogSystem Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new DialogSystem();
-            }
-            return _instance;
-        }
-    }
-    #endregion
     private Dictionary<int, DialogData> dialogDic;
     private DialogData curData;
 
+    /// <summary>
+    /// 私有构造
+    /// </summary>
     private DialogSystem()
     {
         Init();
+        
     }
 
     /// <summary>
@@ -48,6 +37,13 @@ public class DialogSystem
     }
 
     /// <summary>
+    /// 测试脚本，用于初始化单例
+    /// </summary>
+    public void Test()
+    {
+
+    }
+    /// <summary>
     /// 触发开始对话
     /// </summary>
     /// <param name="data"></param>
@@ -56,14 +52,15 @@ public class DialogSystem
         if (!dialogDic.ContainsKey(data.id)) return;
         curData = data;
 
-
-
         if (data.isStart)
         {
             //显示对话面板，播放对话
             UIManager.Instance.ShowPanel<DialogPanel>((panel) =>
             {
                 panel.UpdateInfo(data);
+                //设置对话已经触发，防止重复触发
+                data.isTrigger = true;
+
             });
         }
         else
@@ -72,20 +69,27 @@ public class DialogSystem
         }
     }
 
-    public void CheckDialogueIndex(int _AimIndex,bool _isCG)
-    {
-
-    }
-
     public void TriggerDialog(DialogData data)
     {
         if (!dialogDic.ContainsKey(data.id)) return;
         curData = data;
-        //显示对话面板，播放对话
-        UIManager.Instance.ShowPanel<DialogPanel>((panel) =>
+        if (data.type == E_DialogType.God)
         {
-            panel.UpdateDialogText(data.content);
-        });
+            UIManager.Instance.ShowPanel<TipPanel>((panel) =>
+            {
+                panel.UpdateInfo(data.item.des);
+                BagManager.Instance.AddItem(data.item.itemID);
+            });
+        }
+        else
+        {
+            //显示对话面板，播放对话
+            UIManager.Instance.ShowPanel<DialogPanel>((panel) =>
+            {
+                panel.UpdateInfo(data);
+            });
+        }
+        
     }
 
     /// <summary>
@@ -103,7 +107,8 @@ public class DialogSystem
             Debug.Log("对话已经触发完毕");
             //关闭对话面板，做一些其他事情
             UIManager.Instance.HidePanel<DialogPanel>();
-            EventListener.DialogueEnd();
+            //分发对话结束事件
+            EventCenter.Instance.EventTrigger(E_EventType.E_DialogEnd);
         }
         else
         {

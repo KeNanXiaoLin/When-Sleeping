@@ -18,3 +18,6 @@ MonoBehaviour:
   nextData: {fileID: 11400000, guid: 8e6c0bf1712283b459485ff210fa5395, type: 2}
   isEnd: 0
   isStart: 1
+  triggerType: 0
+  isTrigger: 0
+  item: {fileID: 0}
