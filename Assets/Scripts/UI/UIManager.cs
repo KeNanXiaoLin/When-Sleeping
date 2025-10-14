@@ -71,10 +71,10 @@ public class UIManager:BaseManager<UIManager>
         panel.SetCamera(uiCamera);
         //显示面板时执行的默认方法
         panel.ShowMe();
-        //传出去使用
-        callBack?.Invoke(panel);
         //存储panel
         panelDic.Add(panelName, panel);
+        //传出去使用
+        callBack?.Invoke(panel);
     }
 
     /// <summary>

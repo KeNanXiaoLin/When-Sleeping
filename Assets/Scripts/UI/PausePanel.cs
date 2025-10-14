@@ -29,6 +29,12 @@ public class PausePanel : UIPanelBase
             case "Quit":
                 Application.Quit();
                 break;
+            case "BackToMenu":
+                GameManager.Instance.DestroyObj();
+                UIManager.Instance.HidePanel<PausePanel>();
+                UIManager.Instance.HidePanel<GameUI>();
+                SceneLoadManager.Instance.LoadScene("StartScene");
+                break;
         }
     }
 }

@@ -129,5 +129,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9b5964398c9d3488bfb4d2416729bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 10.2
-  canFall: 1
+  width: 10.1
+  canFall: 0

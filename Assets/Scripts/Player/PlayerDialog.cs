@@ -58,7 +58,7 @@ public class PlayerDialog : MonoBehaviour
                 //第二天是需要切场景的
                 //初始化玩家位置
                 GameManager.Instance.InitPlayerPos();
-                SceneLoadManager.Instance.LoadScene("GameScene3", ()=>
+                SceneLoadManager.Instance.LoadScene("GameScene3", sceneFaderBefore:()=>
                 {
                     //切换背景音乐
                     MusicManager.Instance.PlayBKMusic("轻松小曲1");
