@@ -100,7 +100,6 @@ public class TimeSystem : SingletonAutoMono<TimeSystem>
 
     public string GetRealTime()
     {
-        string res = "";
         int realDay = gameStartDay + curDay + (gameStartHour + curHour) / 24;
         int realHour = (gameStartHour + curHour) % 24;
         int realMinute = gameStartMinute + curMinute;

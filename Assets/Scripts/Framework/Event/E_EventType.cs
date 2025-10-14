@@ -11,22 +11,11 @@ public enum E_EventType
     /// 时间更新事件
     /// </summary>
     E_UpdateTime,
-    /// <summary>
-    /// 场景切换前做的事情
-    /// </summary>
-    E_SceneLoadBefore,
-    /// <summary>
-    /// 场景切换后的事情
-    /// </summary>
     E_SceneLoadAfter,
     /// <summary>
     /// 场景切换后，淡出销毁前的事情,主要是播动画
     /// </summary>
-    E_SceneLoadFaderBeforeCoroutine,
-    /// <summary>
-    /// 场景切换后，淡出销毁前的事情
-    /// </summary>
-    E_SceneLoadFaderBefore,
+    // E_SceneLoadFaderBeforeCoroutine,
     /// <summary>
     /// 背包更新事件
     /// </summary>

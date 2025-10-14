@@ -7,16 +7,6 @@ public class TransportObj : MonoBehaviour
     public string targetSceneName;
     public Vector3 targetScenePos;
 
-    private void OnEnable()
-    {
-        EventCenter.Instance.AddEventListener(E_EventType.E_SceneLoadFaderBefore, InitPlayerInfo);
-    }
-
-    private void OnDisable()
-    {
-        EventCenter.Instance.RemoveEventListener(E_EventType.E_SceneLoadFaderBefore, InitPlayerInfo);
-    }
-
     /// <summary>
     /// Sent when another object enters a trigger collider attached to this
     /// object (2D physics only).
@@ -32,12 +22,13 @@ public class TransportObj : MonoBehaviour
             //记录玩家进入下一个场景的位置
             GameManager.Instance.playerPos = targetScenePos;
             //切换场景
-            SceneLoadManager.Instance.LoadScene(targetSceneName);
+            SceneLoadManager.Instance.LoadScene(targetSceneName,sceneFaderBefore:InitPlayerInfo);
         }
     }
 
     private void InitPlayerInfo()
     {
+        GameManager.Instance.playerPos = targetScenePos;
         //初始化玩家位置信息，摄像机信息
         GameManager.Instance.InitPlayerData();
         GameManager.Instance.InitCameraValues();

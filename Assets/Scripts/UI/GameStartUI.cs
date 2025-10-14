@@ -14,14 +14,10 @@ public class GameStartUI : UIPanelBase
 
     public override void HideMe()
     {
-        EventCenter.Instance.RemoveCoroutineListener(E_EventType.E_SceneLoadFaderBeforeCoroutine, EnterScene);
-        EventCenter.Instance.RemoveEventListener(E_EventType.E_SceneLoadFaderBefore, InitNewSceneObj);
     }
 
     public override void ShowMe()
     {
-        EventCenter.Instance.AddCoroutineListener(E_EventType.E_SceneLoadFaderBeforeCoroutine, EnterScene);
-        EventCenter.Instance.AddEventListener(E_EventType.E_SceneLoadFaderBefore, InitNewSceneObj);
     }
 
     protected override void ClickBtn(string btnName)
@@ -30,7 +26,7 @@ public class GameStartUI : UIPanelBase
         {
             case "Start":
                 //切换场景到游戏场景
-                SceneLoadManager.Instance.LoadScene("GameScene3");
+                SceneLoadManager.Instance.LoadScene("GameScene3",EnterScene,sceneFaderBefore:InitNewSceneObj);
                 break;
             case "Setting":
                 //打开设置面板

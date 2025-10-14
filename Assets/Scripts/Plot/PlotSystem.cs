@@ -48,8 +48,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
             case 1:
                 GameManager.Instance.InitPlayerPos();
                 //强制把场景切换到场景3，触发剧情
-                EventCenter.Instance.AddCoroutineListener(E_EventType.E_SceneLoadFaderBeforeCoroutine, PlayClockCG);
-                SceneLoadManager.Instance.LoadScene("GameScene3", Day2AfternoonPlot);
+                SceneLoadManager.Instance.LoadScene("GameScene3",PlayClockCG,RefreshPlayerPos, Day2AfternoonPlot);
                 break;
         }
     }
@@ -65,16 +64,13 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
             case 0:
                 GameManager.Instance.InitPlayerPos();
                 //强制把场景切换到场景3，触发剧情
-                EventCenter.Instance.AddCoroutineListener(E_EventType.E_SceneLoadFaderBeforeCoroutine, PlayClockCG);
-                SceneLoadManager.Instance.LoadScene("GameScene3", DayNightPlot);
+                SceneLoadManager.Instance.LoadScene("GameScene3",PlayClockCG,RefreshPlayerPos, DayNightPlot);
                 break;
         }
     }
 
     private void DayNightPlot()
     {
-        //场景加载结束，先移除事件监听
-        EventCenter.Instance.RemoveCoroutineListener(E_EventType.E_SceneLoadFaderBeforeCoroutine, PlayClockCG);
         //切换背景音乐
         MusicManager.Instance.PlayBKMusic("轻松小曲1");
         //因为要触发剧情，所以禁用玩家的输入
@@ -113,8 +109,6 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
 
     private void Day2AfternoonPlot()
     {
-        //场景加载结束，先移除事件监听
-        EventCenter.Instance.RemoveCoroutineListener(E_EventType.E_SceneLoadFaderBeforeCoroutine, PlayClockCG);
         //切换背景音乐
         MusicManager.Instance.PlayBKMusic("轻松小曲1");
         //因为要触发剧情，所以禁用玩家的输入
@@ -135,4 +129,10 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         EventCenter.Instance.AddEventListener(E_EventType.E_DialogEnd, GetItem);
     }
 
+    private void RefreshPlayerPos()
+    {
+        GameManager.Instance.InitPlayerPos();
+        GameManager.Instance.InitPlayerData();
+        GameManager.Instance.InitCameraValues();
+    }
 }

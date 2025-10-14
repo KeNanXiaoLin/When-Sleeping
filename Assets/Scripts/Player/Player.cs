@@ -287,7 +287,7 @@ public class Player : MonoBehaviour
         nowPlatformY = -9999;
         //由于是自由落体 我们Y上的速度应该从0开始
         //避免之前有残留 所以我们将其清0
-        nowYSpeed = 0;
+        nowYSpeed = -2;
         //由于在下落时只允许跳一次 所以我们将计数从1开始
         //这样再下落过程中就不会进行二段跳了
         jumpIndex = 1;
@@ -386,8 +386,7 @@ public class Player : MonoBehaviour
                 panel.UpdateInfo(data.UseInfo);
                 panel.RegisterOKAction(() =>
                 {
-                    EventCenter.Instance.AddEventListener(E_EventType.E_SceneLoadFaderBefore, InitBattleInfo);
-                    SceneLoadManager.Instance.LoadScene("BattleScene");
+                    SceneLoadManager.Instance.LoadScene("BattleScene",sceneFaderBefore:InitBattleInfo);
                     BagManager.Instance.RemoveItem(2);
                 });
             });
@@ -397,7 +396,6 @@ public class Player : MonoBehaviour
 
     private void InitBattleInfo()
     {
-        EventCenter.Instance.RemoveEventListener(E_EventType.E_SceneLoadFaderBefore, InitBattleInfo);
         MusicManager.Instance.PlayBKMusic("战斗时激昂的小曲1");
         this.transform.position = new Vector3(-16, -3.6f, 0);
         this.EnableBattleAction();
