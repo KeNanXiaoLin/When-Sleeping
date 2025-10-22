@@ -355,7 +355,6 @@ GameObject:
   - component: {fileID: 8830535406136899374}
   - component: {fileID: 3222258488232350504}
   - component: {fileID: 5579645191357586169}
-  - component: {fileID: -7418590531025658011}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -493,22 +492,6 @@ MonoBehaviour:
   G: 9.8
   jumpMaxH: 5
   headTip: {fileID: 6411680088279905088}
-  playerDialog: {fileID: 0}
---- !u!114 &-7418590531025658011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3416661808916898005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 874c6cb0dfdd47745a0ce594928f302f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  allDialogs:
-  - {fileID: 11400000, guid: 00f4893ae8ed53a4397501c4c5e206c1, type: 2}
-  - {fileID: 11400000, guid: a1ba711c15e73d94ab07a8e22bc2b6e0, type: 2}
 --- !u!1 &7020273980293842066
 GameObject:
   m_ObjectHideFlags: 0

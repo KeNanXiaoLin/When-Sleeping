@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using KNXL.DialogSystem;
 using TMPro;
 using UnityEngine;
 
@@ -73,11 +74,11 @@ public class Player : MonoBehaviour
 
     #region 功能性参数
     public TextMeshPro headTip;
-    [HideInInspector]
-    public PlayerDialog playerDialog;
     private bool isOnItem = false;
     private Item onItem = null;
     #endregion
+
+    private RoleDialogData curDialogData = null;
 
     // Start is called before the first frame update
     void Awake()
@@ -85,7 +86,6 @@ public class Player : MonoBehaviour
         roleAnimator = this.GetComponent<Animator>();
 
         platformLogic = new PlatformLogic(this);
-        playerDialog = GetComponent<PlayerDialog>();
         Init();
     }
 
@@ -111,16 +111,24 @@ public class Player : MonoBehaviour
         }
         if (disableInput) return;
         CheckBagItemUse();
-        if (isOnItem && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            BagManager.Instance.AddItem(onItem.itemData.itemID);
-            Destroy(onItem.gameObject);
-            onItem = null;
+            if (isOnItem)
+            {
+                BagManager.Instance.AddItem(onItem.itemData.itemID);
+                Destroy(onItem.gameObject);
+                onItem = null;
+            }
+            else
+            {
+                DialogSystemMgr.Instance.StartPlayDialog(curDialogData);
+            }
+
         }
         if (moveType == E_MoveType.Battle && Input.GetKeyDown(KeyCode.N))
-            {
-                TimeSystem.Instance.JumpToNextDay();
-            }
+        {
+            TimeSystem.Instance.JumpToNextDay();
+        }
         switch (moveType)
         {
             case E_MoveType.Battle:
@@ -308,18 +316,53 @@ public class Player : MonoBehaviour
         disableInput = false;
     }
 
-    public void ShowHeadTip(Item item)
+    public void ShowHeadTip()
     {
         headTip.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// 如果玩家站在物品上，需要调用这个方法
+    /// </summary>
+    public void SetItemInfo(Item item)
+    {
         isOnItem = true;
         onItem = item;
     }
 
+    /// <summary>
+    /// 玩家进入可以触发对话的范围，设置数据
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetDialogData(RoleDialogData data)
+    {
+        curDialogData = data;
+    }
+
+    /// <summary>
+    /// 玩家离开可以交互的范围，隐藏头顶提升
+    /// </summary>
     public void HideHeadTip()
     {
         headTip.gameObject.SetActive(false);
+
+    }
+
+    /// <summary>
+    /// 玩家离开物品的时候需要调用的方法
+    /// </summary>
+    public void ClearItemInfo()
+    {
         isOnItem = false;
         onItem = null;
+    }
+
+    /// <summary>
+    /// 玩家离开可以触发对话的范围，清空数据
+    /// </summary>
+    public void ClearDialogInfo()
+    {
+        curDialogData = null;
     }
 
     private void CheckBagItemUse()
@@ -386,7 +429,7 @@ public class Player : MonoBehaviour
                 panel.UpdateInfo(data.UseInfo);
                 panel.RegisterOKAction(() =>
                 {
-                    SceneLoadManager.Instance.LoadScene("BattleScene",sceneFaderBefore:InitBattleInfo);
+                    SceneLoadManager.Instance.LoadScene("BattleScene", sceneFaderBefore: InitBattleInfo);
                     BagManager.Instance.RemoveItem(2);
                 });
             });
@@ -401,5 +444,46 @@ public class Player : MonoBehaviour
         this.EnableBattleAction();
         GameManager.Instance.InitCameraValues();
         UIManager.Instance.HidePanel<GameUI>();
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            Item item = collision.GetComponent<Item>();
+            //如果这个物品可以交互
+            if (item.itemData.canInteractive)
+            {
+                this.ShowHeadTip();
+                this.SetItemInfo(item);
+            }
+        }
+        else if (collision.gameObject.CompareTag("Interactive"))
+        {
+            DialogObj dialogObj = collision.GetComponent<DialogObj>();
+            this.SetDialogData(dialogObj.GetDialogData());
+            //应该是物品交互，电视，相框等内容
+            this.ShowHeadTip();
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            Item item = collision.GetComponent<Item>();
+            //如果这个物品可以交互
+            if (item.itemData.canInteractive)
+            {
+                this.HideHeadTip();
+                this.ClearItemInfo();
+            }
+        }
+        else if (collision.gameObject.CompareTag("Interactive"))
+        {
+            //应该是物品交互，电视，相框等内容
+            this.HideHeadTip();
+            this.ClearDialogInfo();
+        }
     }
 }

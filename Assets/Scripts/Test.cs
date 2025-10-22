@@ -14,7 +14,7 @@ public class Test : MonoBehaviour
 
     void Awake()
     {
-        DialogSystem.Instance.Test();
+        // DialogSystem.Instance.Test();
     }
     void Start()
     {

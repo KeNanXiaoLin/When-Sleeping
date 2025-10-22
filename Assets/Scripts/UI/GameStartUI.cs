@@ -26,7 +26,7 @@ public class GameStartUI : UIPanelBase
         {
             case "Start":
                 //切换场景到游戏场景
-                SceneLoadManager.Instance.LoadScene("GameScene3",EnterScene,sceneFaderBefore:InitNewSceneObj);
+                SceneLoadManager.Instance.LoadScene("GameScene3", EnterScene, sceneFaderBefore: InitNewSceneObj, sceneAfterLoad: PlayGameStartPlot);
                 break;
             case "Setting":
                 //打开设置面板
@@ -45,7 +45,7 @@ public class GameStartUI : UIPanelBase
 
     public void InitNewSceneObj()
     {
-        DialogSystem.Instance.Test();
+        // DialogSystem.Instance.Test();
         Vector3 spawnPos = GameManager.Instance.playerPos;
         GameObject playerObj = Instantiate(Resources.Load<GameObject>("Player/Player"), spawnPos, Quaternion.identity);
         GameObject playerCamera = Instantiate(Resources.Load<GameObject>("Player/PlayerCamera"));
@@ -65,6 +65,11 @@ public class GameStartUI : UIPanelBase
         TimeSystem.Instance.RecoverTime();
     }
 
-   
+    public void PlayGameStartPlot()
+    {
+        PlotSystem.Instance.PlayGameStartDialog();
+    }
+
+
 
 }

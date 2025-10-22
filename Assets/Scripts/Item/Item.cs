@@ -15,23 +15,5 @@ public class Item : MonoBehaviour
         sr.sprite = itemData.sprite;
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            //如果这个物品可以交互
-            if (this.itemData.canInteractive)
-            {
-                GameManager.Instance.player.ShowHeadTip(this);
-            }
-        }
-    }
 
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            GameManager.Instance.player.HideHeadTip();
-        }
-    }
 }
