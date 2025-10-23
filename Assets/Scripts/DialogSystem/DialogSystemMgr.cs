@@ -47,6 +47,7 @@ namespace KNXL.DialogSystem
             List<DialogData> datas = JsonConvert.DeserializeObject<List<DialogData>>(content);
             content = File.ReadAllText(Application.streamingAssetsPath + "/RoleDialogDatas.json");
             List<RoleDialogData> datas1 = JsonConvert.DeserializeObject<List<RoleDialogData>>(content);
+            Debug.Log(JsonConvert.SerializeObject(datas1));
             allDialogDataDic = new();
             allRoleDialogDataDic = new();
             foreach (var item in datas)

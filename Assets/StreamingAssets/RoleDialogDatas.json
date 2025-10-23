@@ -1,56 +1,79 @@
 [
     {
-        "id": "10001",
-        "owner": "0",
-        "startDialog": "10001",
-        "canTriggerRepeat": "FALSE",
-        "preRoleDialogs": "-1",
-        "isPlotDialog": "TRUE",
-        "dialogDes": "主角第一天进入场景触发的剧情对话"
+        "10001": "1001",
+        "0": "True",
+        "-1": "-1",
+        "true": "False",
+        "主角第一天进入场景触发的剧情对话": "和相框交互的对话"
     },
     {
-        "id": "10002",
-        "owner": "5",
-        "startDialog": "1001",
-        "canTriggerRepeat": "TRUE",
-        "preRoleDialogs": "-1",
-        "isPlotDialog": "FALSE",
-        "dialogDes": "和相框交互的对话"
+        "10001": "1101",
+        "0": "True",
+        "-1": "-1",
+        "true": "False",
+        "主角第一天进入场景触发的剧情对话": "和桌子交互的对话"
     },
     {
-        "id": "10003",
-        "owner": "6",
-        "startDialog": "1101",
-        "canTriggerRepeat": "TRUE",
-        "preRoleDialogs": "-1",
-        "isPlotDialog": "FALSE",
-        "dialogDes": "和桌子交互的对话"
+        "10001": "1201",
+        "0": "True",
+        "-1": "-1",
+        "true": "False",
+        "主角第一天进入场景触发的剧情对话": "和电视机交互的对话"
     },
     {
-        "id": "10004",
-        "owner": "4",
-        "startDialog": "1201",
-        "canTriggerRepeat": "TRUE",
-        "preRoleDialogs": "-1",
-        "isPlotDialog": "FALSE",
-        "dialogDes": "和电视机交互的对话"
+        "10001": "10101",
+        "0": "False",
+        "-1": "-1",
+        "true": "True",
+        "主角第一天进入场景触发的剧情对话": "Bob敲门时候玩家的剧情对话"
     },
     {
-        "id": "10005",
-        "owner": "0",
-        "startDialog": "10101",
-        "canTriggerRepeat": "FALSE",
-        "preRoleDialogs": "-1",
-        "isPlotDialog": "TRUE",
-        "dialogDes": "Bob敲门时候玩家的剧情对话"
+        "10001": "10201",
+        "0": "False",
+        "-1": "-1",
+        "true": "True",
+        "主角第一天进入场景触发的剧情对话": "玩家和Bob在与院子里的剧情对话"
     },
     {
-        "id": "10006",
-        "owner": "0",
-        "startDialog": "10201",
-        "canTriggerRepeat": "FALSE",
-        "preRoleDialogs": "-1",
-        "isPlotDialog": "TRUE",
-        "dialogDes": "玩家和Bob在与院子里的剧情对话"
+        "10001": null,
+        "0": null,
+        "-1": null,
+        "true": null,
+        "主角第一天进入场景触发的剧情对话": null
+    },
+    {
+        "10001": null,
+        "0": null,
+        "-1": null,
+        "true": null,
+        "主角第一天进入场景触发的剧情对话": null
+    },
+    {
+        "10001": null,
+        "0": null,
+        "-1": null,
+        "true": null,
+        "主角第一天进入场景触发的剧情对话": null
+    },
+    {
+        "10001": null,
+        "0": null,
+        "-1": null,
+        "true": null,
+        "主角第一天进入场景触发的剧情对话": null
+    },
+    {
+        "10001": null,
+        "0": null,
+        "-1": null,
+        "true": null,
+        "主角第一天进入场景触发的剧情对话": null
+    },
+    {
+        "10001": null,
+        "0": null,
+        "-1": null,
+        "true": null,
+        "主角第一天进入场景触发的剧情对话": null
     }
 ]
