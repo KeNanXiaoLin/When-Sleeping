@@ -24,6 +24,8 @@ public enum E_Direction
 
 public class Player : MonoBehaviour
 {
+    public PlayerStatusData statusData;
+    public int Max_San => statusData.maxSan;
     public E_MoveType moveType = E_MoveType.Battle;
     public RuntimeAnimatorController liftAnimator;
     public RuntimeAnimatorController battleAnimator;
@@ -86,6 +88,7 @@ public class Player : MonoBehaviour
         roleAnimator = this.GetComponent<Animator>();
 
         platformLogic = new PlatformLogic(this);
+        statusData = new();
         Init();
     }
 
@@ -119,9 +122,9 @@ public class Player : MonoBehaviour
                 Destroy(onItem.gameObject);
                 onItem = null;
             }
-            else
+            else if (curDialogData != null)
             {
-                DialogSystemMgr.Instance.StartPlayDialog(curDialogData);
+                DialogSystemMgr.Instance.StartPlayNormalDialog(curDialogData);
             }
 
         }

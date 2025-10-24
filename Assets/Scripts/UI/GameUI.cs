@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,18 +7,36 @@ using UnityEngine.UI;
 public class GameUI : UIPanelBase
 {
     public TextMeshProUGUI tmpTime;
+    public TextMeshProUGUI tmpSanValue;
     public List<Image> images;
     public Image timeIcon;
+    private int maxSanValue;
+    private int lastSanvalue;
+
+    void Start()
+    {
+        if (GameManager.Instance.player != null)
+        {
+            maxSanValue = GameManager.Instance.player.Max_San;
+            lastSanvalue = maxSanValue;
+        }
+        else
+        {
+            Debug.LogError("赋值的时机不对，这个时候玩家还没有初始化");
+        }
+    }
 
     public override void ShowMe()
     {
         EventCenter.Instance.AddEventListener<string>(E_EventType.E_UpdateTime, UpdateTime);
         EventCenter.Instance.AddEventListener<List<BagData>>(E_EventType.E_UpdateBag, UpdateBagInfo);
+        EventCenter.Instance.AddEventListener<int>(E_EventType.E_SanChange, UpdateSanValue);
     }
     public override void HideMe()
     {
         EventCenter.Instance.RemoveEventListener<string>(E_EventType.E_UpdateTime, UpdateTime);
         EventCenter.Instance.RemoveEventListener<List<BagData>>(E_EventType.E_UpdateBag, UpdateBagInfo);
+        EventCenter.Instance.RemoveEventListener<int>(E_EventType.E_SanChange, UpdateSanValue);
     }
 
 
@@ -68,4 +87,22 @@ public class GameUI : UIPanelBase
         }
     }
 
+    public void UpdateSanValue(int value)
+    {
+        StartCoroutine(SanChangeCoroutine(value));
+    }
+
+    private IEnumerator SanChangeCoroutine(int value)
+    {
+        float t = 0;
+        int diff = value - lastSanvalue;
+        while (t <= 1)
+        {
+            t += Time.deltaTime;
+            float val = Mathf.Lerp(lastSanvalue, value, t);
+            tmpSanValue.text = $"{((int)val)} /{maxSanValue}";
+            yield return null;
+        }
+
+    }
 }

@@ -49,16 +49,16 @@ TagManager:
   - name: Ground
     uniqueID: 828395563
     locked: 0
-  - name: Carpet
+  - name: Decoration1
     uniqueID: 1629781025
     locked: 0
-  - name: Furniture
+  - name: Decoration2
     uniqueID: 4191810631
     locked: 0
   - name: Player
     uniqueID: 782070289
     locked: 0
-  - name: Furniture2
+  - name: OnPlayer
     uniqueID: 325101121
     locked: 0
   - name: Collision

@@ -31,13 +31,16 @@ namespace KNXL.DialogSystem
         //记录当前正在播放的对话数据
         private DialogData curDialogData;
         //对话系统管理的普通对话面板
-        private DialogUI dialogNormalUI;
+        // private DialogUI dialogNormalUI;
         //对话系统管理的选择对话面板
-        private DialogChooseUI dialogChooseUI;
+        // private DialogChooseUI dialogChooseUI;
+        //普通对话播放结束的委托
+        private UnityAction normalPlayEndAction;
 
         #region 这里是剧情对话的数据
         private RoleDialogData plotData;
         private DialogData plotSingleData;
+        private UnityAction plotPlayEndAction;
         #endregion
 
         private DialogSystemMgr()
@@ -86,6 +89,19 @@ namespace KNXL.DialogSystem
 
         }
 
+        public RoleDialogData GetPlotByID(int id)
+        {
+            if (allRoleDialogDataDic.ContainsKey(id))
+            {
+                return allRoleDialogDataDic[id];
+            }
+            else
+            {
+                Debug.LogError("请传入正确的ID");
+                return null;
+            }
+        }
+
         /// <summary>
         /// 根据类型得到这种类型对象所拥有的所有对话
         /// </summary>
@@ -131,7 +147,7 @@ namespace KNXL.DialogSystem
                 return;
             }
             curDialogData = data;
-            ShowDialogUI(E_DialogType.Normal, curDialogData);
+            ShowDialogUI(data.dialogType, curDialogData);
         }
 
         public void TriggerDialog(int id)
@@ -142,23 +158,39 @@ namespace KNXL.DialogSystem
                 return;
             }
             curDialogData = allDialogDataDic[id];
-            ShowDialogUI(E_DialogType.Normal, curDialogData);
+            TriggerDialog(curDialogData);
         }
 
         /// <summary>
         /// 传入一个角色对话，开始播放这段对话,默认规则第一句话都是NPC的
         /// </summary>
-        /// <param name="data"></param>
-        public void StartPlayDialog(RoleDialogData data)
+        /// <param name="data">要播放的对话数据</param>
+        /// <param name="action">对话播放结束执行的委托</param>
+        public void StartPlayNormalDialog(RoleDialogData data, UnityAction action = null)
         {
             if (data == null || data.startDialog == 0)
             {
                 Debug.LogError("不支持播放空对话，请检查对话数据");
                 return;
             }
-            currentDialogData = data;
+            //如果对话会触发，那么禁用玩家的输入
+            if (GameManager.Instance.player)
+                GameManager.Instance.player.DisablePlayerInput();
+            else
+            {
+                Debug.LogError("这个时候玩家都没有，怎么开始触发剧情了");
+                return;
+            }
+            //普通的这种交互对话需要进行特殊的判断
+            //如果没有触发过，或者已经触发过但是可以重复触发，才进行播放对话
+            if (!data.isTrigger || data.isTrigger && data.canTriggerRepeat)
+            {
+                normalPlayEndAction += action;
+                currentDialogData = data;
 
-            TriggerDialog(data.startDialog);
+                TriggerDialog(data.startDialog);
+            }
+
         }
 
         /// <summary>
@@ -169,9 +201,7 @@ namespace KNXL.DialogSystem
             //如果当前对话有下一句对话，就播放下一句对话，如果没有，关闭对话窗口
             if (curDialogData.childNodes == 0)
             {
-                //关闭面板
-                CloseDialogChooseUI();
-                CloseDialogNormalUI();
+                NormalDialogPlayEnd();
             }
             else
             {
@@ -179,57 +209,35 @@ namespace KNXL.DialogSystem
                 //如果是正常节点，正常播放下一个即可
                 //如果是选择节点，那么子节点必然全部是选择节点，进行一个检查，然后播放
                 DialogData data = allDialogDataDic[curDialogData.childNodes];
-                if (data.dialogType == E_DialogType.Normal)
-                {
-                    TriggerDialog(data);
-                }
-                else if (data.dialogType == E_DialogType.Item)
-                {
-                    //如果是获得道具对话，怎么处理
-                }
-                else if (data.dialogType == E_DialogType.Effect)
-                {
-                    //如果是状态变化对话，怎么处理
-                }
+                TriggerDialog(data);
             }
         }
 
-        /// <summary>
-        /// 关闭普通对话窗口
-        /// </summary>
-        /// <param name="isDestroy">是否销毁，true会销毁面板，false只是禁用面板</param>
-        /// <param name="action">面板销毁后调用的委托</param>
-        public void CloseDialogNormalUI(bool isDestroy = false, UnityAction action = null)
+        private void NormalDialogPlayEnd()
         {
-            if (dialogNormalUI == null) return;
-            if (isDestroy)
+            //关闭面板
+            CloseAllDialogPanel();
+            //分发这个对话触发完毕的事件，因为电视，相框这些东西可以重复交互，但是我只希望它分发一次事件即可
+            //所以这里需要加条件
+            //如果是第一次触发，那么分发事件，设置为触发过，下次进来就不会在分发这里的事件了
+            if (!currentDialogData.isTrigger)
             {
-                GameObject.Destroy(dialogNormalUI.gameObject);
-                dialogNormalUI = null;
+                EventCenter.Instance.EventTrigger<int>(E_EventType.E_DialogEnd, currentDialogData.id);
+                currentDialogData.isTrigger = true;
             }
-            else
-                dialogNormalUI.gameObject.SetActive(false);
-            action?.Invoke();
+            normalPlayEndAction?.Invoke();
+            normalPlayEndAction = null;
+            currentDialogData = null;
+            //恢复玩家输入，这时候一定有玩家的，如果没有，在播放阶段就会报错
+            GameManager.Instance.player.EnablePlayerInput();
         }
 
-        /// <summary>
-        /// 关闭选择对话窗口
-        /// </summary>
-        /// <param name="isDestroy">是否销毁，true会销毁面板，false只是禁用面板</param>
-        /// <param name="action">面板销毁后调用的委托</param>
-        public void CloseDialogChooseUI(bool isDestroy = false, UnityAction action = null)
+        private void CloseAllDialogPanel()
         {
-            if (dialogChooseUI == null) return;
-            if (isDestroy)
-            {
-                GameObject.Destroy(dialogChooseUI.gameObject);
-                dialogChooseUI = null;
-            }
-            else
-                dialogChooseUI.gameObject.SetActive(false);
-            action?.Invoke();
+            UIManager.Instance.HidePanel<DialogChooseUI>();
+            UIManager.Instance.HidePanel<DialogUI>();
+            UIManager.Instance.HidePanel<DialogInfoPanel>();
         }
-
         /// <summary>
         /// 这里是打开UI面板的方法，仅供内部调用
         /// </summary>
@@ -240,46 +248,54 @@ namespace KNXL.DialogSystem
             {
                 case E_DialogType.Normal:
                     //同一时间只能显示一个对话面板，所以播放这一个面板，需要把另一个销毁
-                    if (dialogChooseUI != null)
-                    {
-                        CloseDialogChooseUI();
-                    }
+                    //暂时不用这种设计
+                    // if (dialogChooseUI != null)
+                    // {
+                    //     CloseDialogChooseUI();
+                    // }
                     //这种情况是没有播放过对话，或者是对话面板销毁的时候
-                    if (dialogNormalUI == null)
+                    UIManager.Instance.ShowPanel<DialogUI>((panel) =>
                     {
-                        LoadNormalUI();
-                    }
-                    //否者可能面板就在界面上，或者隐藏了，我们需要重新显示面板
-                    else
+                        panel.IsPlot = isPlot;
+                        panel.ShowDialog(data);
+                        action?.Invoke();
+                    });
+                    break;
+                case E_DialogType.Item:
+                    BagManager.Instance.AddItem(data.itemID);
+                    break;
+                case E_DialogType.Choose:
+                    break;
+                case E_DialogType.Effect:
+                    UIManager.Instance.ShowPanel<DialogUI>((panel) =>
                     {
-                        ReShowDialogNormalUI();
-                    }
-                    dialogNormalUI.IsPlot = isPlot;
-                    dialogNormalUI.ShowDialog(data);
-                    action?.Invoke();
+                        panel.IsPlot = isPlot;
+                        panel.ShowDialog(data);
+                        action?.Invoke();
+                        GameManager.Instance.player.statusData.ChangeSan(data.effectSize);
+                        // UIManager.Instance.ShowPanel<TipPanel>((panel) =>
+                        // {
+                        //     if (data.effectSize > 0)
+                        //     {
+                        //         panel.UpdateInfo($"玩家San值增加{data.effectSize}");
+                        //     }
+                        //     else if (data.effectSize < 0)
+                        //     {
+                        //         panel.UpdateInfo($"玩家San值减少{-data.effectSize}");
+                        //     }
+                        // });
+                    });
+
+                    break;
+                case E_DialogType.Info:
+                    //暂时就把它显示出来并且设置内容
+                    UIManager.Instance.ShowPanel<DialogInfoPanel>((panel) =>
+                    {
+                        panel.ShowDialog(data);
+                    });
                     break;
             }
 
-        }
-
-        /// <summary>
-        /// 封装一下加载普通对话面板资源的方法
-        /// </summary>
-        private void LoadNormalUI()
-        {
-            //这里可以替换成自己的资源加载代码
-            GameObject prefab = Resources.Load<GameObject>("DialogSystem/UI/DialogUI");
-            dialogNormalUI = GameObject.Instantiate(prefab).GetComponent<DialogUI>();
-        }
-
-        /// <summary>
-        /// 封装一下加载选择对话面板资源的方法
-        /// </summary>
-        private void LoadChooseUI()
-        {
-            //这里可以替换成自己的资源加载代码
-            GameObject prefab = Resources.Load<GameObject>("DialogSystem/UI/DialogChooseUI");
-            dialogChooseUI = GameObject.Instantiate(prefab).GetComponent<DialogChooseUI>();
         }
 
         /// <summary>
@@ -288,7 +304,8 @@ namespace KNXL.DialogSystem
         /// </summary>
         private void ReShowDialogNormalUI()
         {
-            dialogNormalUI.gameObject.SetActive(true);
+            // dialogNormalUI.gameObject.SetActive(true);
+            // 因为没有做隐藏逻辑，所以这里也不需要了
         }
 
         /// <summary>
@@ -297,61 +314,9 @@ namespace KNXL.DialogSystem
         /// </summary>
         private void ReShowDialogChooseUI()
         {
-            dialogChooseUI.gameObject.SetActive(true);
+            // dialogChooseUI.gameObject.SetActive(true);
+            // 因为没有做隐藏逻辑，所以这里也不需要了
         }
-
-        /// <summary>
-        /// 从传入的对话数据中判断当前是否有可以让玩家交互的对话
-        /// 这里是方便外部调用，可以在可交互的头顶出现问号等内容
-        /// </summary>
-        /// <param name="datas"></param>
-        /// <returns></returns>
-        // public RoleDialogDataNoSO GetCanInteractiveData(List<RoleDialogDataNoSO> datas)
-        // {
-        //     //所有可以返回的对话数据，最后根据优先级返回
-        //     List<RoleDialogDataNoSO> allCanUseDatas = new();
-        //     CalDialogDataID(datas);
-        //     foreach (var item in datas)
-        //     {
-        //         //找到当前对话中没有触发的对话或者可以重复触发的对话，直接返回
-        //         //当前没有什么前置条件，所以就这样处理，如果有其他前置条件，添加即可
-        //         //判断有没有前置对话
-        //         //添加了一个字段Locked，对话内容需要解锁才能返回
-        //         if (!item.locked && item.preRoleDialogs.Count != 0)
-        //         {
-        //             bool flag = true;
-        //             //判断前置对话是否全部触发过，如果触发过，能够返回这个对话数据
-        //             foreach (var preLog in item.preRoleDialogs)
-        //             {
-        //                 RoleDialogDataNoSO data = allDialogDataDic[preLog.id];
-        //                 if (!data.isTrigger)
-        //                 {
-        //                     flag = false;
-        //                 }
-        //             }
-        //             if (flag)
-        //             {
-        //                 allCanUseDatas.Add(item);
-        //             }
-        //         }
-        //         //对话已经被解锁并且没有前置对话并且没有触发或者可以重复触发
-        //         else if (!item.locked && (item.preRoleDialogs == null || item.preRoleDialogs.Count == 0)
-        //                 && (item.canTriggerRepeat || !item.isTrigger))
-        //         {
-        //             allCanUseDatas.Add(item);
-        //         }
-        //     }
-        //     if (allCanUseDatas.Count == 0)
-        //         return null;
-        //     else
-        //     {
-        //         //降序排序
-        //         allCanUseDatas.Sort((a, b) => b.id.CompareTo(a.id));
-        //         return allCanUseDatas[0];
-        //     }
-
-        // }
-
 
         public void UnLockedDialogData(UnlockDialogData data)
         {
@@ -364,22 +329,40 @@ namespace KNXL.DialogSystem
         /// 开始播放某段剧情对话
         /// </summary>
         /// <param name="data"></param>
-        public void StartPlayPlotDialog(RoleDialogData data)
+        public void StartPlayPlotDialog(RoleDialogData data, UnityAction action = null)
         {
             if (data == null || data.startDialog == 0)
             {
                 Debug.LogError("不支持播放空对话，请检查对话数据");
                 return;
             }
-            plotData = data;
+            //如果对话会触发，那么禁用玩家的输入
+            if (GameManager.Instance.player)
+                GameManager.Instance.player.DisablePlayerInput();
+            else
+            {
+                Debug.LogError("这个时候玩家都没有，怎么开始触发剧情了");
+                return;
+            }
+            //剧情对话没有触发过，才会触发一次，不会多次触发
+            if (!data.isTrigger)
+            {
+                plotData = data;
+                plotPlayEndAction += action;
 
-            TriggerPlotDialog(plotData.startDialog);
+                TriggerPlotDialog(plotData.startDialog);
+            }
+            else
+            {
+                Debug.LogError("你正在尝试多次触发剧情，请检查代码");
+            }
+
         }
         /// <summary>
         /// 开始播放某段剧情对话
         /// </summary>
         /// <param name="data"></param>
-        public void StartPlayPlotDialog(int plotID)
+        public void StartPlayPlotDialog(int plotID, UnityAction action = null)
         {
             if (!allRoleDialogDataDic.ContainsKey(plotID))
             {
@@ -387,7 +370,7 @@ namespace KNXL.DialogSystem
             }
             plotData = allRoleDialogDataDic[plotID];
 
-            TriggerPlotDialog(plotData.startDialog);
+            StartPlayPlotDialog(plotData, action);
         }
         /// <summary>
         /// 开始播放某一段具体的对话
@@ -401,7 +384,7 @@ namespace KNXL.DialogSystem
                 return;
             }
             plotSingleData = data;
-            ShowDialogUI(E_DialogType.Normal, plotSingleData, true);
+            ShowDialogUI(plotSingleData.dialogType, plotSingleData, true);
         }
 
         /// <summary>
@@ -416,7 +399,7 @@ namespace KNXL.DialogSystem
                 return;
             }
             plotSingleData = allDialogDataDic[id];
-            ShowDialogUI(E_DialogType.Normal, plotSingleData, true);
+            ShowDialogUI(plotSingleData.dialogType, plotSingleData, true);
         }
 
         /// <summary>
@@ -427,11 +410,7 @@ namespace KNXL.DialogSystem
             //如果当前对话有下一句对话，就播放下一句对话，如果没有，关闭对话窗口
             if (plotSingleData.childNodes == 0)
             {
-                //关闭面板
-                CloseDialogChooseUI();
-                CloseDialogNormalUI();
-                //这段剧情播放完毕，不需要再次播放
-                plotData = null;
+                PlotDialogPlayEnd();
             }
             else
             {
@@ -440,15 +419,23 @@ namespace KNXL.DialogSystem
                 //如果是选择节点，那么子节点必然全部是选择节点，进行一个检查，然后播放
 
                 DialogData data = allDialogDataDic[plotSingleData.childNodes];
-                if (data.dialogType == E_DialogType.Item)
-                {
-                    HandleItemDialogData(data);
-                }
-                else if (data.dialogType == E_DialogType.Normal)
-                {
-                    TriggerPlotDialog(data);
-                }
+                TriggerPlotDialog(data);
             }
+        }
+
+        private void PlotDialogPlayEnd()
+        {
+            //关闭面板
+            CloseAllDialogPanel();
+            //这段剧情播放完毕，不需要再次播放
+            //剧情内容只会触发一次，所以直接分发事件即可
+            EventCenter.Instance.EventTrigger<int>(E_EventType.E_DialogEnd, plotData.id);
+            plotData.isTrigger = true;
+            plotData = null;
+            plotPlayEndAction?.Invoke();
+            plotPlayEndAction = null;
+            //恢复玩家输入，这时候一定有玩家的，如果没有，在播放阶段就会报错
+            GameManager.Instance.player.EnablePlayerInput();
         }
 
         public void HandleItemDialogData(DialogData data)

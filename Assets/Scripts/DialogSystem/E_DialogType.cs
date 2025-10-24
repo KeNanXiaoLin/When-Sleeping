@@ -26,5 +26,9 @@ namespace KNXL.DialogSystem
         /// 这个对话是要触发一个什么效果
         /// </summary>
         Effect,
+        /// <summary>
+        /// 信息提示，一般是上帝视角，引导玩家干什么
+        /// </summary>
+        Info,
     }
 }

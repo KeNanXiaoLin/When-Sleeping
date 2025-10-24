@@ -57,8 +57,8 @@ public class GameStartUI : UIPanelBase
         GameManager.Instance.player = player;
         GameManager.Instance.playerCamera = camera;
         GameManager.Instance.InitCameraValues();
-        //启用玩家输入
-        player.EnablePlayerInput();
+        //禁用玩家输入
+        player.DisablePlayerInput();
         UIManager.Instance.ShowPanel<GameUI>();
         UIManager.Instance.HidePanel<GameStartUI>();
         //启动时间流逝
@@ -67,6 +67,8 @@ public class GameStartUI : UIPanelBase
 
     public void PlayGameStartPlot()
     {
+        //禁用玩家的输入
+        GameManager.Instance.player.DisablePlayerInput();
         PlotSystem.Instance.PlayGameStartDialog();
     }
 

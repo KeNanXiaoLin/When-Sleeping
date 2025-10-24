@@ -34,5 +34,9 @@ namespace KNXL.DialogSystem
         /// 为对话添加的描述，只是为了配置方便查看的，没有其他作用
         /// </summary>
         public string dialogDes;
+        /// <summary>
+        /// 这个对话是否已经触发过
+        /// </summary>
+        public bool isTrigger = false;
     }
 }

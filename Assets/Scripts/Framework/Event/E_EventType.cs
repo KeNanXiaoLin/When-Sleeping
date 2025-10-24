@@ -36,4 +36,12 @@ public enum E_EventType
     /// 对话结束触发事件
     /// </summary>
     E_DialogEnd,
+    /// <summary>
+    /// san值改变触发的事件
+    /// </summary>
+    E_SanChange,
+    /// <summary>
+    /// 场景切换会触发的事件
+    /// </summary>
+    E_SceneLoad,
 }

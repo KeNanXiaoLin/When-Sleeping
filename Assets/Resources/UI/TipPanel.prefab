@@ -530,8 +530,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Get A Milk
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a27f656dee8f87547b30fd3541741bbb, type: 2}
-  m_sharedMaterial: {fileID: 2942736305579552490, guid: a27f656dee8f87547b30fd3541741bbb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9ce28258732e04d8cacd45c193454e35, type: 2}
+  m_sharedMaterial: {fileID: 5388435459077620716, guid: 9ce28258732e04d8cacd45c193454e35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

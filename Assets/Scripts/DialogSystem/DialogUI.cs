@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace KNXL.DialogSystem
 {
 
-    public class DialogUI : MonoBehaviour
+    public class DialogUI : UIPanelBase
     {
         // 主角色信息
         public Image mainRoleImage;
@@ -56,6 +56,16 @@ namespace KNXL.DialogSystem
             {
                 DialogSystemMgr.Instance.PlayNextPlotDialog();
             }
+        }
+
+        public override void ShowMe()
+        {
+
+        }
+
+        public override void HideMe()
+        {
+
         }
     }
 }
