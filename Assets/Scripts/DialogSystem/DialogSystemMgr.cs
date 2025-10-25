@@ -110,13 +110,13 @@ namespace KNXL.DialogSystem
         public List<RoleDialogData> GetDialogDataByType(E_DialogRoleType type)
         {
             List<RoleDialogData> res = new();
-            // foreach (var item in allDialogDataDic.Values)
-            // {
-            //     if (item.owner == type)
-            //     {
-            //         res.Add(item);
-            //     }
-            // }
+            foreach (var item in allRoleDialogDataDic.Values)
+            {
+                if (item.owner == type)
+                {
+                    res.Add(item);
+                }
+            }
             return res;
         }
 
@@ -125,7 +125,7 @@ namespace KNXL.DialogSystem
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public RoleDialogData GetDialogDataByType(int id)
+        public RoleDialogData GetDialogDataByID(int id)
         {
             if (allRoleDialogDataDic.ContainsKey(id))
             {
@@ -183,7 +183,7 @@ namespace KNXL.DialogSystem
             }
             //普通的这种交互对话需要进行特殊的判断
             //如果没有触发过，或者已经触发过但是可以重复触发，才进行播放对话
-            if (!data.isTrigger || data.isTrigger && data.canTriggerRepeat)
+            if (!data.isLocked && (!data.isTrigger || data.isTrigger && data.canTriggerRepeat))
             {
                 normalPlayEndAction += action;
                 currentDialogData = data;
@@ -345,7 +345,7 @@ namespace KNXL.DialogSystem
                 return;
             }
             //剧情对话没有触发过，才会触发一次，不会多次触发
-            if (!data.isTrigger)
+            if (!data.isLocked && !data.isTrigger)
             {
                 plotData = data;
                 plotPlayEndAction += action;
@@ -441,6 +441,28 @@ namespace KNXL.DialogSystem
         public void HandleItemDialogData(DialogData data)
         {
 
+        }
+        /// <summary>
+        /// 解锁指定前置剧情id的剧情
+        /// </summary>
+        /// <param name="id"></param>
+        public void UnLockDialogByPreID(int id)
+        {
+            foreach (var item in allRoleDialogDataDic.Values)
+            {
+                //找到指定前置剧情的ID，解锁他
+                if(item.preRoleDialogs == id)
+                {
+                    if (item.isLocked)
+                    {
+                        item.isLocked = false;
+                    }
+                    else
+                    {
+                        Debug.LogError("这个剧情已经解锁了，不要重复解锁");
+                    }
+                }
+            }
         }
         #endregion
     }

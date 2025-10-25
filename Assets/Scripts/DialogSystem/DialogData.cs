@@ -26,6 +26,8 @@ namespace KNXL.DialogSystem
         /// 对话的时机，目前用到的只有开始，用来找开始节点
         /// </summary>
         public E_DialogTime dialogTime = E_DialogTime.isSpeaking;
+        public string dialogName;
+        public string headIconRes;
         /// <summary>
         /// 如果是一个获得物品的对话，获得物品的id
         /// </summary>

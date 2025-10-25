@@ -35,10 +35,13 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     /// <param name="dialogId"></param>
     private void CheckPlotCanPlayByDialogID(int dialogId)
     {
+        //这个对话播放完毕，看是否有能够解锁的剧情对话
+        DialogSystemMgr.Instance.UnLockDialogByPreID(dialogId);
         switch (dialogId)
         {
             //这里是玩家和电视剧交互完毕后解锁的剧情
             case 10004:
+                //这里解锁Bob敲门的剧情
                 //播放敲门声
                 MusicManager.Instance.PlaySound("按门铃音效6");
                 //播放提示内容
@@ -71,7 +74,9 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 {
                     //实例化一个Bob出来和玩家模拟对话
                     GameObject BobPrefab = Resources.Load<GameObject>("NPC/Bob");
-                    GameObject.Instantiate(BobPrefab);
+                    // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
+                    var bobObj = GameObject.Instantiate(BobPrefab, GameManager.Instance.player.transform);
+                    bobObj.transform.localPosition = new Vector3(-1, 0, 0);
                     DialogSystemMgr.Instance.StartPlayPlotDialog(10006);
                 }
                 break;

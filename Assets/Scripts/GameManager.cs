@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
@@ -17,7 +15,7 @@ public class GameManager : BaseManager<GameManager>
     /// 并且这里很重要的一点，这个场景加载后处理的时机必须要是玩家实例化出来之后
     /// 否则GameManager中的player记录值是空，会报空引用异常
     /// </summary>
-    public Vector3 initPos = new Vector3(5, 1, 0);
+    public Vector3 initPos = new Vector3(-5, 3, 0);
     public Vector3 playerPos;
     /// <summary>
     /// 记录Player
@@ -89,5 +87,21 @@ public class GameManager : BaseManager<GameManager>
         EventCenter.Instance.Clear();
         GameObject.DestroyImmediate(player.gameObject);
         GameObject.DestroyImmediate(playerCamera.gameObject);
+    }
+
+    public void EnablePlayerInput()
+    {
+        if (player != null)
+        {
+            player.EnablePlayerInput();
+        }
+    }
+    
+    public void DisablePlayerInput()
+    {
+        if(player != null)
+        {
+            player.DisablePlayerInput();
+        }
     }
 }

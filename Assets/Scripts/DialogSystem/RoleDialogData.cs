@@ -38,5 +38,9 @@ namespace KNXL.DialogSystem
         /// 这个对话是否已经触发过
         /// </summary>
         public bool isTrigger = false;
+        /// <summary>
+        /// 这个对话是否已经解锁
+        /// </summary>
+        public bool isLocked;
     }
 }

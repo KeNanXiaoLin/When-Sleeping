@@ -29,21 +29,8 @@ namespace KNXL.DialogSystem
         public void ShowDialog(DialogData data)
         {
             dialogText.text = data.dialogText;
-            switch (data.type)
-            {
-                case E_DialogRoleType.MainRole:
-                    mainRoleImage.sprite = Resources.Load<Sprite>("Sprites/MainRole");
-                    mainRoleNameText.text = "Mike";
-                    break;
-                case E_DialogRoleType.Mom:
-                    mainRoleImage.sprite = Resources.Load<Sprite>("Sprites/Mom");
-                    mainRoleNameText.text = "Mom";
-                    break;
-                case E_DialogRoleType.Bob:
-                    mainRoleImage.sprite = Resources.Load<Sprite>("Sprites/Bob");
-                    mainRoleNameText.text = "Bob";
-                    break;
-            }
+            mainRoleImage.sprite = Resources.Load<Sprite>(data.headIconRes);
+            mainRoleNameText.text = data.dialogName;
         }
 
         public void PlayNextDialog()

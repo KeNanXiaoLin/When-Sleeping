@@ -233,37 +233,7 @@ public class Player : MonoBehaviour
                 else if (horizontalMove < 0 && verticalMove < 0)
                     last_dir = E_Direction.LeftDown;
                 transform.Translate(new Vector2(horizontalMove * moveSpeed * Time.deltaTime, verticalMove * moveSpeed * Time.deltaTime));
-                switch (last_dir)
-                {
-                    case E_Direction.Left:
-                        xFaceMinVal = -0.01f;
-                        break;
-                    case E_Direction.Right:
-                        xFaceMinVal = 0.01f;
-                        break;
-                    case E_Direction.Up:
-                        yFaceMinVal = 0.01f;
-                        break;
-                    case E_Direction.Down:
-                        yFaceMinVal = -0.01f;
-                        break;
-                    case E_Direction.RightUp:
-                        xFaceMinVal = 0.01f;
-                        yFaceMinVal = 0.01f;
-                        break;
-                    case E_Direction.RightDown:
-                        xFaceMinVal = 0.01f;
-                        yFaceMinVal = -0.01f;
-                        break;
-                    case E_Direction.LeftUp:
-                        xFaceMinVal = -0.01f;
-                        yFaceMinVal = 0.01f;
-                        break;
-                    case E_Direction.LeftDown:
-                        xFaceMinVal = -0.01f;
-                        yFaceMinVal = -0.01f;
-                        break;
-                }
+                ResetAnimatorParameters();
                 roleAnimator.SetFloat("x", Mathf.Abs(horizontalMove) < 0.1f ? xFaceMinVal : horizontalMove);
                 roleAnimator.SetFloat("y", Mathf.Abs(verticalMove) < 0.1f ? yFaceMinVal : verticalMove);
                 break;
@@ -304,11 +274,54 @@ public class Player : MonoBehaviour
         jumpIndex = 1;
     }
     /// <summary>
-    /// 禁用玩家输入
+    /// 禁用玩家输入,需要重置动画机参数
     /// </summary>
     public void DisablePlayerInput()
     {
+        ResetAnimatorParameters();
         disableInput = true;
+        roleAnimator.SetFloat("x",xFaceMinVal);
+        roleAnimator.SetFloat("y",yFaceMinVal);
+    }
+
+    private void ResetAnimatorParameters()
+    {
+        switch (last_dir)
+        {
+            case E_Direction.Left:
+                xFaceMinVal = -0.01f;
+                yFaceMinVal = 0f;
+                break;
+            case E_Direction.Right:
+                xFaceMinVal = 0.01f;
+                yFaceMinVal = 0f;
+                break;
+            case E_Direction.Up:
+                yFaceMinVal = 0.01f;
+                xFaceMinVal = 0f;
+                break;
+            case E_Direction.Down:
+                yFaceMinVal = -0.01f;
+                xFaceMinVal = 0f;
+                break;
+            case E_Direction.RightUp:
+                xFaceMinVal = 0.01f;
+                yFaceMinVal = 0.01f;
+                break;
+            case E_Direction.RightDown:
+                xFaceMinVal = 0.01f;
+                yFaceMinVal = -0.01f;
+                break;
+            case E_Direction.LeftUp:
+                xFaceMinVal = -0.01f;
+                yFaceMinVal = 0.01f;
+                break;
+            case E_Direction.LeftDown:
+                xFaceMinVal = -0.01f;
+                yFaceMinVal = -0.01f;
+                break;
+        }
+        
     }
 
     /// <summary>
@@ -464,9 +477,14 @@ public class Player : MonoBehaviour
         else if (collision.gameObject.CompareTag("Interactive"))
         {
             DialogObj dialogObj = collision.GetComponent<DialogObj>();
-            this.SetDialogData(dialogObj.GetDialogData());
-            //应该是物品交互，电视，相框等内容
-            this.ShowHeadTip();
+            //只有当前可以播放对话的时候，才显示头顶的提示交互信息
+            if(dialogObj.IsHaveDialogCanPlay())
+            {
+                this.SetDialogData(dialogObj.GetFirstCanTriggerDialogData());
+                //应该是物品交互，电视，相框等内容
+                this.ShowHeadTip();
+            }
+            
         }
     }
 

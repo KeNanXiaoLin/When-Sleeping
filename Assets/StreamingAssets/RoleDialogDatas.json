@@ -7,7 +7,8 @@
         "preRoleDialogs": -1,
         "isPlotDialog": true,
         "dialogDes": "主角第一天进入场景触发的剧情对话",
-        "isTrigger": false
+        "isTrigger": false,
+        "isLocked": false
     },
     {
         "id": 10002,
@@ -17,7 +18,8 @@
         "preRoleDialogs": -1,
         "isPlotDialog": false,
         "dialogDes": "和相框交互的对话",
-        "isTrigger": false
+        "isTrigger": false,
+        "isLocked": false
     },
     {
         "id": 10003,
@@ -27,7 +29,8 @@
         "preRoleDialogs": -1,
         "isPlotDialog": false,
         "dialogDes": "和桌子交互的对话",
-        "isTrigger": false
+        "isTrigger": false,
+        "isLocked": false
     },
     {
         "id": 10004,
@@ -37,17 +40,19 @@
         "preRoleDialogs": -1,
         "isPlotDialog": false,
         "dialogDes": "和电视机交互的对话",
-        "isTrigger": false
+        "isTrigger": false,
+        "isLocked": false
     },
     {
         "id": 10005,
         "owner": 0,
         "startDialog": 10101,
         "canTriggerRepeat": false,
-        "preRoleDialogs": -1,
+        "preRoleDialogs": 10004,
         "isPlotDialog": true,
         "dialogDes": "Bob敲门时候玩家的剧情对话",
-        "isTrigger": false
+        "isTrigger": false,
+        "isLocked": true
     },
     {
         "id": 10006,
@@ -57,6 +62,7 @@
         "preRoleDialogs": 10005,
         "isPlotDialog": true,
         "dialogDes": "玩家和Bob在与院子里的剧情对话",
-        "isTrigger": false
+        "isTrigger": false,
+        "isLocked": true
     }
 ]

@@ -22,7 +22,7 @@ public class TransportObj : MonoBehaviour
             //记录玩家进入下一个场景的位置
             GameManager.Instance.playerPos = targetScenePos;
             //切换场景
-            SceneLoadManager.Instance.LoadScene(targetSceneName,sceneFaderBefore:InitPlayerInfo);
+            SceneLoadManager.Instance.LoadScene(targetSceneName,sceneFaderBefore:InitPlayerInfo,sceneAfterLoad:GameManager.Instance.EnablePlayerInput);
         }
     }
 
@@ -32,7 +32,5 @@ public class TransportObj : MonoBehaviour
         //初始化玩家位置信息，摄像机信息
         GameManager.Instance.InitPlayerData();
         GameManager.Instance.InitCameraValues();
-        //启用玩家的输入
-        GameManager.Instance.player.EnablePlayerInput();
     }
 }
