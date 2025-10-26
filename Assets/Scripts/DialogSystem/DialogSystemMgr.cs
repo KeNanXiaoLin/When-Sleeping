@@ -247,6 +247,7 @@ namespace KNXL.DialogSystem
             switch (type)
             {
                 case E_DialogType.Normal:
+                case E_DialogType.Task:
                     //同一时间只能显示一个对话面板，所以播放这一个面板，需要把另一个销毁
                     //暂时不用这种设计
                     // if (dialogChooseUI != null)
@@ -272,7 +273,12 @@ namespace KNXL.DialogSystem
                         panel.IsPlot = isPlot;
                         panel.ShowDialog(data);
                         action?.Invoke();
-                        GameManager.Instance.player.statusData.ChangeSan(data.effectSize);
+                        //只有第一次触发才会出现San值变化
+                        //因为这里有两种对话都会出现San值改变，所以需要两重判断
+                        //这一次播放的是普通对话还是剧情对话，都要保证他们是第一次触发
+                        if((currentDialogData != null && !currentDialogData.isTrigger) ||
+                            (plotData != null && !plotData.isTrigger))
+                            GameManager.Instance.player.statusData.ChangeSan(data.effectSize);
                         // UIManager.Instance.ShowPanel<TipPanel>((panel) =>
                         // {
                         //     if (data.effectSize > 0)
@@ -347,6 +353,8 @@ namespace KNXL.DialogSystem
             //剧情对话没有触发过，才会触发一次，不会多次触发
             if (!data.isLocked && !data.isTrigger)
             {
+                //剧情对话开始播放前需要做的事情，比如播放音效
+                EventCenter.Instance.EventTrigger<int>(E_EventType.E_PlotDialogStart, data.id);
                 plotData = data;
                 plotPlayEndAction += action;
 
@@ -451,7 +459,7 @@ namespace KNXL.DialogSystem
             foreach (var item in allRoleDialogDataDic.Values)
             {
                 //找到指定前置剧情的ID，解锁他
-                if(item.preRoleDialogs == id)
+                if (item.preRoleDialogs == id)
                 {
                     if (item.isLocked)
                     {
@@ -463,6 +471,23 @@ namespace KNXL.DialogSystem
                     }
                 }
             }
+        }
+        
+        public bool CheckPlotDialogCanPlay(int plotID)
+        {
+            if (!allRoleDialogDataDic.ContainsKey(plotID))
+            {
+                Debug.LogError("请检查传入参数，找不到要播放的剧情片段");
+                return false;
+            }
+            plotData = allRoleDialogDataDic[plotID];
+            //剧情对话没有触发过，才会触发一次，不会多次触发
+            if (!plotData.isLocked && !plotData.isTrigger)
+            {
+                return true;
+            }
+            return false;
+            
         }
         #endregion
     }

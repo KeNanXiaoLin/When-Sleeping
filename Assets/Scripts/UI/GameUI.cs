@@ -89,13 +89,13 @@ public class GameUI : UIPanelBase
 
     public void UpdateSanValue(int value)
     {
+        Debug.Log("San值变化:" + value);
         StartCoroutine(SanChangeCoroutine(value));
     }
 
     private IEnumerator SanChangeCoroutine(int value)
     {
         float t = 0;
-        int diff = value - lastSanvalue;
         while (t <= 1)
         {
             t += Time.deltaTime;
@@ -103,6 +103,7 @@ public class GameUI : UIPanelBase
             tmpSanValue.text = $"{((int)val)} /{maxSanValue}";
             yield return null;
         }
+        lastSanvalue = value;
 
     }
 }

@@ -13,12 +13,14 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     {
         EventCenter.Instance.AddEventListener<int>(E_EventType.E_DialogEnd, CheckPlotCanPlayByDialogID);
         EventCenter.Instance.AddEventListener<string>(E_EventType.E_SceneLoad, CheckPlotCanPlayByChangeScene);
+        EventCenter.Instance.AddEventListener<int>(E_EventType.E_PlotDialogStart, CheckPlotStartCanDoSomething);
     }
 
     void OnDisable()
     {
         EventCenter.Instance.RemoveEventListener<int>(E_EventType.E_DialogEnd, CheckPlotCanPlayByDialogID);
         EventCenter.Instance.RemoveEventListener<string>(E_EventType.E_SceneLoad, CheckPlotCanPlayByChangeScene);
+        EventCenter.Instance.RemoveEventListener<int>(E_EventType.E_PlotDialogStart, CheckPlotStartCanDoSomething);
     }
 
     public void PlayGameStartDialog()
@@ -40,15 +42,22 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         switch (dialogId)
         {
             //这里是玩家和电视剧交互完毕后解锁的剧情
-            case 10004:
-                //这里解锁Bob敲门的剧情
-                //播放敲门声
-                MusicManager.Instance.PlaySound("按门铃音效6");
-                //播放提示内容
-                DialogSystemMgr.Instance.StartPlayPlotDialog(10005, () =>
-                {
-                    GameManager.Instance.player.EnablePlayerInput();
-                });
+            //现在是通过触发器进行剧情触发，这里没用了
+            // case 10004:
+            //     //这里解锁Bob敲门的剧情
+            //     //播放敲门声
+            //     MusicManager.Instance.PlaySound("按门铃音效6");
+            //     //播放提示内容
+            //     DialogSystemMgr.Instance.StartPlayPlotDialog(10005, () =>
+            //     {
+            //         GameManager.Instance.player.EnablePlayerInput();
+            //     });
+            //     break;
+            case 10014:
+                //在让Bob回家后销毁Bob
+                Player player = GameManager.Instance.player;
+                var bobObj = player.transform.Find("Bob");
+                Destroy(bobObj.gameObject);
                 break;
         }
     }
@@ -77,8 +86,26 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                     // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
                     var bobObj = GameObject.Instantiate(BobPrefab, GameManager.Instance.player.transform);
                     bobObj.transform.localPosition = new Vector3(-1, 0, 0);
+                    bobObj.name = "Bob";
                     DialogSystemMgr.Instance.StartPlayPlotDialog(10006);
                 }
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 在某段剧情触发前做的事情
+    /// </summary>
+    /// <param name="dialogId"></param>
+    private void CheckPlotStartCanDoSomething(int dialogId)
+    {
+        switch (dialogId)
+        {
+            //这里是玩家和电视剧交互完毕后解锁的剧情
+            case 10005:
+                //这里解锁Bob敲门的剧情
+                //播放敲门声
+                MusicManager.Instance.PlaySound("按门铃音效6");
                 break;
         }
     }

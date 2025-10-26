@@ -478,12 +478,28 @@ public class Player : MonoBehaviour
         {
             DialogObj dialogObj = collision.GetComponent<DialogObj>();
             //只有当前可以播放对话的时候，才显示头顶的提示交互信息
-            if(dialogObj.IsHaveDialogCanPlay())
+            //先看是不是单次剧情触发器
+            if (dialogObj.enterTrigger)
             {
-                this.SetDialogData(dialogObj.GetFirstCanTriggerDialogData());
-                //应该是物品交互，电视，相框等内容
-                this.ShowHeadTip();
+                //看这个剧情是否达到触发条件，进行触发
+                if(DialogSystemMgr.Instance.CheckPlotDialogCanPlay(dialogObj.dialogId))
+                {
+                    this.SetDialogData(dialogObj.GetDialogData());
+                    //应该是物品交互，电视，相框等内容
+                    this.ShowHeadTip();
+                }
             }
+            //如果不是，再找他身上可以触发的对话
+            else
+            {
+                if (dialogObj.IsHaveDialogCanPlay())
+                {
+                    this.SetDialogData(dialogObj.GetFirstCanTriggerDialogData());
+                    //应该是物品交互，电视，相框等内容
+                    this.ShowHeadTip();
+                }
+            }
+            
             
         }
     }

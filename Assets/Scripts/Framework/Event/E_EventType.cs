@@ -37,6 +37,10 @@ public enum E_EventType
     /// </summary>
     E_DialogEnd,
     /// <summary>
+    /// 对话结束触发事件
+    /// </summary>
+    E_PlotDialogStart,
+    /// <summary>
     /// san值改变触发的事件
     /// </summary>
     E_SanChange,

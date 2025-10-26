@@ -10,13 +10,17 @@ public class DialogObj : MonoBehaviour
     /// </summary>
     public E_DialogRoleType dialogType;
     /// <summary>
+    /// 这个对话是否是通过进入触发的
+    /// </summary>
+    public bool enterTrigger = false;
+    /// <summary>
     /// 这个对象可以触发的所有对话
     /// </summary>
     private List<RoleDialogData> m_allDialogDatas;
     /// <summary>
-    /// 当前能够触发的对话，如果没有，返回null
+    /// 这是通过进入触发的对话id，只会有一段剧情
     /// </summary>
-    // public int dialogId;
+    public int dialogId;
 
     void Awake()
     {
@@ -27,10 +31,10 @@ public class DialogObj : MonoBehaviour
     /// <summary>
     /// 返回当前能够触发的对话
     /// </summary>
-    // public RoleDialogData GetDialogData()
-    // {
-    //     return DialogSystemMgr.Instance.GetDialogDataByID(dialogId);
-    // }
+    public RoleDialogData GetDialogData()
+    {
+        return DialogSystemMgr.Instance.GetDialogDataByID(dialogId);
+    }
 
     /// <summary>
     /// 从对话管理器中找到所有属于自己的对话
@@ -68,5 +72,28 @@ public class DialogObj : MonoBehaviour
         if (data != null)
             return true;
         return false;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        //必须要设置了进入触发，才会触发，只会触发一次的剧情
+        if(enterTrigger)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                if (DialogSystemMgr.Instance.CheckPlotDialogCanPlay(dialogId))
+                {
+                    DialogSystemMgr.Instance.StartPlayPlotDialog(dialogId, GameManager.Instance.EnablePlayerInput);
+                    enterTrigger = false;
+                    //因为只触发一次，所以触发后就可以删除
+                    Destroy(this.gameObject);
+                }
+                else
+                {
+                    Debug.LogError("对话还没有解锁，暂时不能播放");
+                }
+                
+            }
+        }
     }
 }
