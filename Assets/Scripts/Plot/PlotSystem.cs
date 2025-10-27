@@ -104,6 +104,10 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 //播放敲门声
                 MusicManager.Instance.PlaySound("按门铃音效6");
                 break;
+            case 10015:
+                //切换到场景3
+                SceneLoadManager.Instance.LoadScene("GameScene3",sceneFaderBefore:GameManager.Instance.BackToInitPos);
+                break;
         }
     }
 }

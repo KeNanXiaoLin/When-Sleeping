@@ -158,11 +158,11 @@
         "owner": 0,
         "startDialog": 1801,
         "canTriggerRepeat": false,
-        "preRoleDialogs": -1,
+        "preRoleDialogs": 10014,
         "dialogPlayType": 1,
         "dialogDes": "迈克在床边时触发的对话",
         "isTrigger": false,
-        "isLocked": false
+        "isLocked": true
     },
     {
         "id": 10016,

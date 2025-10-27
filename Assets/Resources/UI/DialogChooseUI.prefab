@@ -919,9 +919,11 @@ MonoBehaviour:
   btnOption1: {fileID: 2560353278919744482}
   btnOption2: {fileID: 8113916785416430324}
   btnOption3: {fileID: 5463470784959648049}
+  btnOption4: {fileID: 293134518985180355}
   tmpOption1: {fileID: 1144674925234754343}
   tmpOption2: {fileID: 8291781777932676889}
   tmpOption3: {fileID: 7202704936113291344}
+  tmpOption4: {fileID: 3015724418871107158}
 --- !u!1 &6118290436242074635
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,7 +37,7 @@ public class GameManager : BaseManager<GameManager>
     /// </summary>
     public void InitCameraValues()
     {
-        if (player ==null || playerCamera == null) return;
+        if (player == null || playerCamera == null) return;
         playerCamera.Follow = player.transform;
         CinemachineConfiner confiner = playerCamera.GetComponent<CinemachineConfiner>();
         confiner.m_BoundingShape2D = GameObject.Find("ViewLimit").GetComponent<PolygonCollider2D>();
@@ -96,12 +96,19 @@ public class GameManager : BaseManager<GameManager>
             player.EnablePlayerInput();
         }
     }
-    
+
     public void DisablePlayerInput()
     {
-        if(player != null)
+        if (player != null)
         {
             player.DisablePlayerInput();
         }
+    }
+
+    public void BackToInitPos()
+    {
+        InitPlayerPos();
+        InitPlayerData();
+        InitCameraValues();
     }
 }
