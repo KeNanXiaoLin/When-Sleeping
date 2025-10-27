@@ -10,7 +10,12 @@
         "effectSize": 0,
         "dialogText": "又做梦了，怎么最近老是梦到奇怪的场景",
         "parentNodes": 0,
-        "childNodes": 10002
+        "childNodes": 10002,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10002,
@@ -21,9 +26,14 @@
         "headIconRes": "Sprites/MainRole",
         "itemID": -1,
         "effectSize": 0,
-        "dialogText": "别管了，出去走走吧，今天还约了bob来家里玩 ",
+        "dialogText": "别管了，出去走走吧，今天还约了bob来家里玩",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1001,
@@ -36,7 +46,12 @@
         "effectSize": 0,
         "dialogText": "这是一张全家福。不过爸爸最近出差了，不知道什么时候回来。",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1101,
@@ -49,7 +64,12 @@
         "effectSize": 0,
         "dialogText": "吃饭的地方。有时除了饭还想吃点别的。",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1201,
@@ -62,10 +82,33 @@
         "effectSize": 0,
         "dialogText": "近日，镇上隔壁老王失踪多日后确认遇害。",
         "parentNodes": 0,
-        "childNodes": 1202
+        "childNodes": 1202,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1202,
+        "type": 4,
+        "dialogType": 0,
+        "dialogTime": 1,
+        "dialogName": "电视",
+        "headIconRes": "Sprites/God",
+        "itemID": -1,
+        "effectSize": 0,
+        "dialogText": "据透露，有人上山时打猎时在的山中发现他的残缺的遗体......",
+        "parentNodes": 0,
+        "childNodes": 1203,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
+    },
+    {
+        "id": 1203,
         "type": 4,
         "dialogType": 4,
         "dialogTime": 1,
@@ -73,9 +116,14 @@
         "headIconRes": "Sprites/God",
         "itemID": -1,
         "effectSize": -20,
-        "dialogText": "据透露，有人上山时打猎时在的山中发现他的残缺的遗体......",
+        "dialogText": "",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "感觉收到惊吓，San值减少了20",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10101,
@@ -88,7 +136,12 @@
         "effectSize": 0,
         "dialogText": "bob来了，我去开门吧",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10201,
@@ -101,7 +154,12 @@
         "effectSize": 0,
         "dialogText": "嘿bro，看我在家里翻出一个水晶徽章，送给你",
         "parentNodes": 0,
-        "childNodes": 10202
+        "childNodes": 10202,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10202,
@@ -114,10 +172,33 @@
         "effectSize": 0,
         "dialogText": "徽章中镶嵌着水晶，在阳光下很耀眼，似乎很珍贵",
         "parentNodes": 0,
-        "childNodes": 10203
+        "childNodes": 10203,
+        "tipInfoText": "获得了Bob赠送的一个徽章",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10203,
+        "type": 0,
+        "dialogType": 0,
+        "dialogTime": 1,
+        "dialogName": "迈克",
+        "headIconRes": "Sprites/MainRole",
+        "itemID": 0,
+        "effectSize": 0,
+        "dialogText": "谢谢你，很好看，我很喜欢。",
+        "parentNodes": 0,
+        "childNodes": 10204,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
+    },
+    {
+        "id": 10204,
         "type": 0,
         "dialogType": 4,
         "dialogTime": 1,
@@ -125,12 +206,17 @@
         "headIconRes": "Sprites/MainRole",
         "itemID": 0,
         "effectSize": 5,
-        "dialogText": "谢谢你，很好看，我很喜欢。",
+        "dialogText": "",
         "parentNodes": 0,
-        "childNodes": 10204
+        "childNodes": 10205,
+        "tipInfoText": "因为徽章的原因，觉得很开心，San值增加5",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
-        "id": 10204,
+        "id": 10205,
         "type": 0,
         "dialogType": 0,
         "dialogTime": 1,
@@ -140,10 +226,15 @@
         "effectSize": 0,
         "dialogText": "对了，你听说了隔壁老王的事吗？太可怕了，他住的就离我们家不远。",
         "parentNodes": 0,
-        "childNodes": 10205
+        "childNodes": 10206,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
-        "id": 10205,
+        "id": 10206,
         "type": 2,
         "dialogType": 0,
         "dialogTime": 1,
@@ -153,20 +244,12 @@
         "effectSize": 0,
         "dialogText": "我听家里人说了...他们还让我不要多问。",
         "parentNodes": 0,
-        "childNodes": 10206
-    },
-    {
-        "id": 10206,
-        "type": 0,
-        "dialogType": 0,
-        "dialogTime": 1,
-        "dialogName": "迈克",
-        "headIconRes": "Sprites/MainRole",
-        "itemID": 0,
-        "effectSize": 0,
-        "dialogText": "......",
-        "parentNodes": 0,
-        "childNodes": 10207
+        "childNodes": 10207,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10207,
@@ -177,12 +260,53 @@
         "headIconRes": "Sprites/MainRole",
         "itemID": 0,
         "effectSize": 0,
+        "dialogText": "......",
+        "parentNodes": 0,
+        "childNodes": 10208,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
+    },
+    {
+        "id": 10208,
+        "type": 0,
+        "dialogType": 0,
+        "dialogTime": 1,
+        "dialogName": "迈克",
+        "headIconRes": "Sprites/MainRole",
+        "itemID": 0,
+        "effectSize": 0,
         "dialogText": "一起走走吧。",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1301,
+        "type": 7,
+        "dialogType": 0,
+        "dialogTime": 0,
+        "dialogName": "猫",
+        "headIconRes": "Sprites/God",
+        "itemID": -1,
+        "effectSize": 0,
+        "dialogText": "猫抬头看了你一眼，并伸了个懒腰",
+        "parentNodes": 0,
+        "childNodes": 1302,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
+    },
+    {
+        "id": 1302,
         "type": 7,
         "dialogType": 4,
         "dialogTime": 0,
@@ -190,12 +314,35 @@
         "headIconRes": "Sprites/God",
         "itemID": -1,
         "effectSize": 5,
-        "dialogText": "猫抬头看了你一眼，并伸了个懒腰",
+        "dialogText": "",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "和小猫互动感觉很开心，San值增加了5",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1401,
+        "type": 8,
+        "dialogType": 0,
+        "dialogTime": 0,
+        "dialogName": "狗",
+        "headIconRes": "Sprites/God",
+        "itemID": -1,
+        "effectSize": 0,
+        "dialogText": "继续继续，狗子更喜欢你",
+        "parentNodes": 0,
+        "childNodes": 1402,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
+    },
+    {
+        "id": 1402,
         "type": 8,
         "dialogType": 4,
         "dialogTime": 0,
@@ -203,14 +350,19 @@
         "headIconRes": "Sprites/God",
         "itemID": -1,
         "effectSize": 5,
-        "dialogText": "继续继续，狗子更喜欢你",
+        "dialogText": "",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "和小狗互动感觉很开心，San值增加了5",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1501,
         "type": 9,
-        "dialogType": 4,
+        "dialogType": 0,
         "dialogTime": 0,
         "dialogName": "炸鸡店",
         "headIconRes": "Sprites/God",
@@ -218,7 +370,30 @@
         "effectSize": 5,
         "dialogText": "好心的老板给了两位小朋友一人一个炸鸡腿",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 1502,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
+    },
+    {
+        "id": 1502,
+        "type": 9,
+        "dialogType": 4,
+        "dialogTime": 0,
+        "dialogName": "炸鸡店",
+        "headIconRes": "Sprites/God",
+        "itemID": -1,
+        "effectSize": 5,
+        "dialogText": "",
+        "parentNodes": 0,
+        "childNodes": 0,
+        "tipInfoText": "因为老板赠送的鸡腿感觉很高兴，San值增加了5",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1601,
@@ -231,7 +406,12 @@
         "effectSize": 0,
         "dialogText": "小时候最爱吃的糖果。不对现在就是小时候啊喂",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1701,
@@ -244,7 +424,12 @@
         "effectSize": 0,
         "dialogText": "买束花吧，或许接下来会有用",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10301,
@@ -257,7 +442,12 @@
         "effectSize": 0,
         "dialogText": "好像是隔壁老王家在举行葬礼",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10401,
@@ -270,7 +460,12 @@
         "effectSize": 0,
         "dialogText": "上周我还跟老王聊天呢。哎。他说他睡得不太好。",
         "parentNodes": 0,
-        "childNodes": 10402
+        "childNodes": 10402,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10402,
@@ -283,7 +478,12 @@
         "effectSize": 0,
         "dialogText": "我最近也睡得不好，醒来总是很疲惫。",
         "parentNodes": 0,
-        "childNodes": 10404
+        "childNodes": 10404,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10404,
@@ -296,7 +496,12 @@
         "effectSize": 0,
         "dialogText": "奇怪的是，醒来鞋子上有湿泥土的痕迹。但最近只有晚上下雨啊",
         "parentNodes": 0,
-        "childNodes": 10403
+        "childNodes": 10403,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10403,
@@ -309,7 +514,12 @@
         "effectSize": 0,
         "dialogText": "......",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10501,
@@ -322,7 +532,12 @@
         "effectSize": 0,
         "dialogText": "快傍晚了，心底有一股力量在说你们该回家了",
         "parentNodes": 0,
-        "childNodes": 10502
+        "childNodes": 10502,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10502,
@@ -335,12 +550,17 @@
         "effectSize": 0,
         "dialogText": "我总觉得有些不对，bob你明天再来我家吧",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1801,
         "type": 0,
-        "dialogType": 3,
+        "dialogType": 0,
         "dialogTime": 0,
         "dialogName": "迈克",
         "headIconRes": "Sprites/MainRole",
@@ -348,7 +568,48 @@
         "effectSize": 0,
         "dialogText": "想想今天所看到的。奇怪的梦，遇害的隔壁老王，带血的牙齿，异常的毛发......",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 1802,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
+    },
+    {
+        "id": 1802,
+        "type": 0,
+        "dialogType": 0,
+        "dialogTime": 0,
+        "dialogName": "迈克",
+        "headIconRes": "Sprites/MainRole",
+        "itemID": -1,
+        "effectSize": 0,
+        "dialogText": "你认为这是因为？",
+        "parentNodes": 0,
+        "childNodes": 1803,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
+    },
+    {
+        "id": 1803,
+        "type": 0,
+        "dialogType": 3,
+        "dialogTime": 1,
+        "dialogName": "迈克",
+        "headIconRes": "Sprites/MainRole",
+        "itemID": -1,
+        "effectSize": 0,
+        "dialogText": "",
+        "parentNodes": 0,
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "外星人打过来了",
+        "option2": "怪物吃人不止是个梦",
+        "option3": "没睡醒我还在做梦",
+        "option4": "一切纯属意外"
     },
     {
         "id": 10601,
@@ -361,7 +622,12 @@
         "effectSize": 0,
         "dialogText": "宝贝，喝了牛奶快睡觉吧。",
         "parentNodes": 0,
-        "childNodes": 10602
+        "childNodes": 10602,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10602,
@@ -374,7 +640,12 @@
         "effectSize": 0,
         "dialogText": "我有点不想喝",
         "parentNodes": 0,
-        "childNodes": 10603
+        "childNodes": 10603,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10603,
@@ -387,7 +658,12 @@
         "effectSize": 0,
         "dialogText": "不喝的话晚上会有怪兽来抓你噢。",
         "parentNodes": 0,
-        "childNodes": 10604
+        "childNodes": 10604,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10604,
@@ -400,7 +676,12 @@
         "effectSize": 0,
         "dialogText": "我才不怕呢，有怪兽我会打败它的。",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10701,
@@ -411,9 +692,14 @@
         "headIconRes": "Sprites/MainRole",
         "itemID": -1,
         "effectSize": 0,
-        "dialogText": "这里感觉好像平常的街道 ",
+        "dialogText": "这里感觉好像平常的街道",
         "parentNodes": 0,
-        "childNodes": 10702
+        "childNodes": 10702,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10702,
@@ -426,7 +712,12 @@
         "effectSize": 0,
         "dialogText": "哇我穿着勇士的铠甲，还有一把剑",
         "parentNodes": 0,
-        "childNodes": 10703
+        "childNodes": 10703,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10703,
@@ -439,7 +730,12 @@
         "effectSize": 0,
         "dialogText": "又是怪兽！等等，那个人好像是我们镇上的，得快点去救他！",
         "parentNodes": 0,
-        "childNodes": 10704
+        "childNodes": 10704,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10704,
@@ -452,7 +748,12 @@
         "effectSize": 0,
         "dialogText": "水晶闪着奇异的光芒",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10801,
@@ -465,7 +766,12 @@
         "effectSize": -10,
         "dialogText": "这太奇怪了，我居然又做了这种梦",
         "parentNodes": 0,
-        "childNodes": 10802
+        "childNodes": 10802,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10802,
@@ -476,9 +782,14 @@
         "headIconRes": "Sprites/MainRole",
         "itemID": -1,
         "effectSize": 0,
-        "dialogText": "等下bob来，必须得和他说一下 ",
+        "dialogText": "等下bob来，必须得和他说一下",
         "parentNodes": 0,
-        "childNodes": 10803
+        "childNodes": 10803,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10803,
@@ -491,7 +802,12 @@
         "effectSize": 0,
         "dialogText": "bob来了，我去开门吧",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10901,
@@ -504,7 +820,12 @@
         "effectSize": 0,
         "dialogText": "嘿bob我跟你说，我这两天都梦见我在打怪兽。",
         "parentNodes": 0,
-        "childNodes": 10902
+        "childNodes": 10902,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10902,
@@ -517,7 +838,12 @@
         "effectSize": 0,
         "dialogText": "我特别厉害，一刀一个打倒了很多怪兽，还救了路人",
         "parentNodes": 0,
-        "childNodes": 10903
+        "childNodes": 10903,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10903,
@@ -530,7 +856,12 @@
         "effectSize": 0,
         "dialogText": "我今天早上起来好像都有点腰酸背痛呢",
         "parentNodes": 0,
-        "childNodes": 10904
+        "childNodes": 10904,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10904,
@@ -543,7 +874,12 @@
         "effectSize": 0,
         "dialogText": "但我觉得这有些奇怪。",
         "parentNodes": 0,
-        "childNodes": 10905
+        "childNodes": 10905,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10905,
@@ -556,7 +892,12 @@
         "effectSize": 0,
         "dialogText": "我才不信呢，如果我打怪兽肯定比你厉害 。我家可还有圣剑！",
         "parentNodes": 0,
-        "childNodes": 10906
+        "childNodes": 10906,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10906,
@@ -569,7 +910,12 @@
         "effectSize": 0,
         "dialogText": "那可不一定！但是说不定今晚你也能梦到，我们一起打怪兽",
         "parentNodes": 0,
-        "childNodes": 10907
+        "childNodes": 10907,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10907,
@@ -582,7 +928,12 @@
         "effectSize": 0,
         "dialogText": "可是我从来没做过梦",
         "parentNodes": 0,
-        "childNodes": 10908
+        "childNodes": 10908,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10908,
@@ -595,7 +946,12 @@
         "effectSize": 0,
         "dialogText": "怎么会呢？我就经常做梦",
         "parentNodes": 0,
-        "childNodes": 10909
+        "childNodes": 10909,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10909,
@@ -608,7 +964,12 @@
         "effectSize": 0,
         "dialogText": "别说这些了，进去坐坐，我们喝牛奶吧",
         "parentNodes": 0,
-        "childNodes": 10910
+        "childNodes": 10910,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10910,
@@ -621,7 +982,12 @@
         "effectSize": 0,
         "dialogText": "好啊。不过那种东西你天天喝还没喝腻吗",
         "parentNodes": 0,
-        "childNodes": 10911
+        "childNodes": 10911,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 10911,
@@ -634,7 +1000,12 @@
         "effectSize": 0,
         "dialogText": "没办法，我妈让我喝，说长得高",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11001,
@@ -647,7 +1018,12 @@
         "effectSize": 0,
         "dialogText": "你们不可以白天喝牛奶噢。乖，去外边玩吧",
         "parentNodes": 0,
-        "childNodes": 10102
+        "childNodes": 10102,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11002,
@@ -660,7 +1036,12 @@
         "effectSize": 0,
         "dialogText": "......",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11101,
@@ -673,7 +1054,12 @@
         "effectSize": 0,
         "dialogText": "为什么妈妈不让我们现在喝牛奶呢？好奇怪",
         "parentNodes": 0,
-        "childNodes": 11102
+        "childNodes": 11102,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11102,
@@ -686,7 +1072,12 @@
         "effectSize": 0,
         "dialogText": "要不给小猫喝一下？",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 1901,
@@ -699,7 +1090,12 @@
         "effectSize": -5,
         "dialogText": "猫喝了牛奶很快呼呼大睡了，你心里觉得更奇怪了",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11201,
@@ -712,7 +1108,12 @@
         "effectSize": 0,
         "dialogText": "小猫真是吃饱了就睡觉了。我们把它的铃铛取下来吧",
         "parentNodes": 0,
-        "childNodes": 11202
+        "childNodes": 11202,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11202,
@@ -725,7 +1126,12 @@
         "effectSize": 0,
         "dialogText": "看起来有些旧，收着可能有用吧",
         "parentNodes": 0,
-        "childNodes": 11203
+        "childNodes": 11203,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11203,
@@ -738,7 +1144,12 @@
         "effectSize": 0,
         "dialogText": "不应该是这样的，我们得去问问其他人",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11301,
@@ -751,7 +1162,12 @@
         "effectSize": 0,
         "dialogText": "叔叔，想问你会在白天喝牛奶吗",
         "parentNodes": 0,
-        "childNodes": 11302
+        "childNodes": 11302,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11302,
@@ -764,7 +1180,12 @@
         "effectSize": 0,
         "dialogText": "会。但我指的牛奶跟你说的不是同一种吧。",
         "parentNodes": 0,
-        "childNodes": 11303
+        "childNodes": 11303,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11303,
@@ -777,7 +1198,12 @@
         "effectSize": -5,
         "dialogText": "......为什么这么说",
         "parentNodes": 0,
-        "childNodes": 11304
+        "childNodes": 11304,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11304,
@@ -790,7 +1216,12 @@
         "effectSize": 0,
         "dialogText": "是你家大人不让你们喝吗？我只能告诉你，我的父母从小也是这么告诉我的，父母的父母那辈也是如此。",
         "parentNodes": 0,
-        "childNodes": 11305
+        "childNodes": 11305,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11305,
@@ -803,7 +1234,12 @@
         "effectSize": 0,
         "dialogText": "说不定只有我们镇上，父母会跟孩子说睡前不喝牛奶会有怪兽来抓你呢。",
         "parentNodes": 0,
-        "childNodes": 11306
+        "childNodes": 11306,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11306,
@@ -816,7 +1252,12 @@
         "effectSize": 0,
         "dialogText": "你长大就知道了。有些事情就是这样传承下来的。不需要知道为什么。",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 2001,
@@ -829,7 +1270,12 @@
         "effectSize": 0,
         "dialogText": "我爱睡觉皮肤好好，啦啦啦",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 2101,
@@ -842,7 +1288,12 @@
         "effectSize": 0,
         "dialogText": "又要轮到我家去洞穴开采药物了",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 2201,
@@ -855,7 +1306,12 @@
         "effectSize": 0,
         "dialogText": "最近晚上不安全啊",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 2301,
@@ -868,7 +1324,12 @@
         "effectSize": 0,
         "dialogText": "快傍晚了，心底有一股力量在说你们该回家了",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11401,
@@ -881,7 +1342,12 @@
         "effectSize": 0,
         "dialogText": "宝贝，喝牛奶长高高，喝了快睡觉吧",
         "parentNodes": 0,
-        "childNodes": 11402
+        "childNodes": 11402,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11402,
@@ -894,7 +1360,12 @@
         "effectSize": 0,
         "dialogText": "你感到牛奶也很奇怪，但心底有股冲动还是想喝下去",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11501,
@@ -907,7 +1378,12 @@
         "effectSize": 0,
         "dialogText": "bob！把作业写了之后把这个喝了，你怎么又在玩玩具！",
         "parentNodes": 0,
-        "childNodes": 11502
+        "childNodes": 11502,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11502,
@@ -920,7 +1396,12 @@
         "effectSize": 0,
         "dialogText": "这是圣剑啦！作业我早就写完了，还有，我不想喝这个了，我都喝腻了",
         "parentNodes": 0,
-        "childNodes": 11503
+        "childNodes": 11503,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11503,
@@ -933,7 +1414,12 @@
         "effectSize": 0,
         "dialogText": "这个牛奶的味道让我恶心。（拿过杯子）（也许我可以偷偷把它倒掉）",
         "parentNodes": 0,
-        "childNodes": 11504
+        "childNodes": 11504,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11504,
@@ -946,7 +1432,12 @@
         "effectSize": 0,
         "dialogText": "......",
         "parentNodes": 0,
-        "childNodes": 11505
+        "childNodes": 11505,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11505,
@@ -959,7 +1450,12 @@
         "effectSize": 0,
         "dialogText": "奇怪，今天怎么有点睡不着？",
         "parentNodes": 0,
-        "childNodes": 11506
+        "childNodes": 11506,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11506,
@@ -972,7 +1468,12 @@
         "effectSize": 0,
         "dialogText": "（外面月光明亮）",
         "parentNodes": 0,
-        "childNodes": 11507
+        "childNodes": 11507,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11507,
@@ -985,7 +1486,12 @@
         "effectSize": 0,
         "dialogText": "带上圣剑出去走走吧",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11601,
@@ -998,7 +1504,12 @@
         "effectSize": 0,
         "dialogText": "还从来没有在这时候出过门呢，路上怎么一个人都没有。我有点害怕了，也许我该回去了",
         "parentNodes": 0,
-        "childNodes": 11602
+        "childNodes": 11602,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11602,
@@ -1011,7 +1522,12 @@
         "effectSize": 0,
         "dialogText": "那里有个人！等等，那些是什么啊！",
         "parentNodes": 0,
-        "childNodes": 11603
+        "childNodes": 11603,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11603,
@@ -1024,7 +1540,12 @@
         "effectSize": 0,
         "dialogText": "......",
         "parentNodes": 0,
-        "childNodes": 11604
+        "childNodes": 11604,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11604,
@@ -1037,7 +1558,12 @@
         "effectSize": 0,
         "dialogText": "啊！那些怪物吃了他！我要快点回家！",
         "parentNodes": 0,
-        "childNodes": 11605
+        "childNodes": 11605,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11605,
@@ -1050,7 +1576,12 @@
         "effectSize": 0,
         "dialogText": "......",
         "parentNodes": 0,
-        "childNodes": 11606
+        "childNodes": 11606,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11606,
@@ -1063,7 +1594,12 @@
         "effectSize": 0,
         "dialogText": "我家门口也有那种怪兽！去Mike家吧！",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 2401,
@@ -1076,7 +1612,12 @@
         "effectSize": 0,
         "dialogText": "又是昨天一样的梦......得快点救下那个人！",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11701,
@@ -1089,7 +1630,12 @@
         "effectSize": -20,
         "dialogText": "刚刚真是吓死我了， 我手上怎么有伤痕？",
         "parentNodes": 0,
-        "childNodes": 11702
+        "childNodes": 11702,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11702,
@@ -1100,9 +1646,14 @@
         "headIconRes": "Sprites/MainRole",
         "itemID": -1,
         "effectSize": 0,
-        "dialogText": "这果然不是梦吗 ",
+        "dialogText": "这果然不是梦吗",
         "parentNodes": 0,
-        "childNodes": 11703
+        "childNodes": 11703,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11703,
@@ -1115,7 +1666,12 @@
         "effectSize": 0,
         "dialogText": "怪兽到底是哪里来的",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 2501,
@@ -1128,7 +1684,12 @@
         "effectSize": 0,
         "dialogText": "这么晚了，还有谁会来呢",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 2601,
@@ -1141,7 +1702,12 @@
         "effectSize": 0,
         "dialogText": "救命啊 , mike快开门，",
         "parentNodes": 0,
-        "childNodes": 2602
+        "childNodes": 2602,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 2602,
@@ -1154,7 +1720,12 @@
         "effectSize": 0,
         "dialogText": "你都不知道我在外面看到了什么恐怖的东西",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11801,
@@ -1165,9 +1736,14 @@
         "headIconRes": "Sprites/MainRole",
         "itemID": -1,
         "effectSize": -10,
-        "dialogText": "我闻到一股香甜的味道。 ",
+        "dialogText": "我闻到一股香甜的味道。",
         "parentNodes": 0,
-        "childNodes": 11802
+        "childNodes": 11802,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11802,
@@ -1178,9 +1754,14 @@
         "headIconRes": "Sprites/MainRole",
         "itemID": -1,
         "effectSize": -10,
-        "dialogText": "我感觉身体在被撕裂，正在慢慢变大，牙齿也在变长...... ",
+        "dialogText": "我感觉身体在被撕裂，正在慢慢变大，牙齿也在变长......",
         "parentNodes": 0,
-        "childNodes": 11803
+        "childNodes": 11803,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     },
     {
         "id": 11803,
@@ -1193,6 +1774,11 @@
         "effectSize": -10,
         "dialogText": "我难以抑制的向前扑了过去",
         "parentNodes": 0,
-        "childNodes": 0
+        "childNodes": 0,
+        "tipInfoText": "",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": ""
     }
 ]

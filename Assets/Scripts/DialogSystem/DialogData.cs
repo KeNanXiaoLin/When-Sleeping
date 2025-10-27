@@ -48,5 +48,25 @@ namespace KNXL.DialogSystem
         /// 这个对话的子节点
         /// </summary>
         public int childNodes;
+        /// <summary>
+        /// 提示面板显示出的信息
+        /// </summary>
+        public string tipInfoText;
+        /// <summary>
+        /// 对话节点的选项一
+        /// </summary>
+        public string option1;
+        /// <summary>
+        /// 对话节点的选项二
+        /// </summary>
+        public string option2;
+        /// <summary>
+        /// 对话节点的选项三
+        /// </summary>
+        public string option3;
+        /// <summary>
+        /// 对话节点的选项四
+        /// </summary>
+        public string option4;
     }
 }

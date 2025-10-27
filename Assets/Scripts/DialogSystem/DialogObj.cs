@@ -77,13 +77,14 @@ public class DialogObj : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision)
     {
         //必须要设置了进入触发，才会触发，只会触发一次的剧情
-        if(enterTrigger)
+        if (enterTrigger)
         {
             if (collision.CompareTag("Player"))
             {
-                if (DialogSystemMgr.Instance.CheckPlotDialogCanPlay(dialogId))
+                //这种都是剧情对话
+                if (DialogSystemMgr.Instance.CheckDialogCanPlay(dialogId, E_DialogPlayType.Plot))
                 {
-                    DialogSystemMgr.Instance.StartPlayPlotDialog(dialogId, GameManager.Instance.EnablePlayerInput);
+                    DialogSystemMgr.Instance.StartPlayDialog(dialogId, E_DialogPlayType.Plot, GameManager.Instance.EnablePlayerInput);
                     enterTrigger = false;
                     //因为只触发一次，所以触发后就可以删除
                     Destroy(this.gameObject);
@@ -92,7 +93,7 @@ public class DialogObj : MonoBehaviour
                 {
                     Debug.LogError("对话还没有解锁，暂时不能播放");
                 }
-                
+
             }
         }
     }

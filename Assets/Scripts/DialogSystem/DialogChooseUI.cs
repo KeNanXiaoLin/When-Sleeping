@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using KNXL.DialogSystem;
@@ -14,13 +15,12 @@ namespace KNXL.DialogSystem
         public Button btnOption1;
         public Button btnOption2;
         public Button btnOption3;
+        public Button btnOption4;
         public TextMeshProUGUI tmpOption1;
         public TextMeshProUGUI tmpOption2;
         public TextMeshProUGUI tmpOption3;
+        public TextMeshProUGUI tmpOption4;
 
-        private DialogData dialogData1;
-        private DialogData dialogData2;
-        private DialogData dialogData3;
 
         public override void HideMe()
         {
@@ -31,75 +31,92 @@ namespace KNXL.DialogSystem
         {
 
         }
-        /*
-public void ShowDialog(List<DialogData> datas)
-{
-   if (datas == null || datas.Count == 0)
-   {
-       Debug.LogError("请检查配置文件，传入的数据不能为空");
-       return;
-   }
-   switch (datas.Count)
-   {
-       case 1:
-           DialogData data1 = datas[0];
-           tmpOption1.text = data1.dialogText;
-           dialogData1 = data1;
-           btnOption1.onClick.AddListener(() =>
-           {
-               DialogSystemMgr.Instance.PlayNextDialog(dialogData1);
-           });
-           //禁用按钮2和3的显示
-           btnOption2.gameObject.SetActive(false);
-           tmpOption2.gameObject.SetActive(false);
-           btnOption3.gameObject.SetActive(false);
-           tmpOption3.gameObject.SetActive(false);
-           break;
-       case 2:
-           data1 = datas[0];
-           DialogData data2 = datas[1];
-           tmpOption1.text = data1.dialogText;
-           dialogData1 = data1;
-           btnOption1.onClick.AddListener(() =>
-           {
-               DialogSystemMgr.Instance.PlayNextDialog(dialogData1);
-           });
-           dialogData2 = data2;
-           tmpOption2.text = data2.dialogText;
-           btnOption2.onClick.AddListener(() =>
-           {
-               DialogSystemMgr.Instance.PlayNextDialog(dialogData2);
-           });
-           //禁用按钮3的显示
-           btnOption3.gameObject.SetActive(false);
-           tmpOption3.gameObject.SetActive(false);
-           break;
-       case 3:
-           data1 = datas[0];
-           data2 = datas[1];
-           DialogData data3 = datas[2];
-           tmpOption1.text = data1.dialogText;
-           dialogData1 = data1;
-           btnOption1.onClick.AddListener(() =>
-           {
-               DialogSystemMgr.Instance.PlayNextDialog(dialogData1);
-           });
-           dialogData2 = data2;
-           tmpOption2.text = data2.dialogText;
-           btnOption2.onClick.AddListener(() =>
-           {
-               DialogSystemMgr.Instance.PlayNextDialog(dialogData2);
-           });
-           dialogData3 = data3;
-           tmpOption3.text = data3.dialogText;
-           btnOption3.onClick.AddListener(() =>
-           {
-               DialogSystemMgr.Instance.PlayNextDialog(dialogData3);
-           });
-           break;
-   }
 
-}*/
+        public void ShowDialog(DialogData data)
+        {
+            if (data == null)
+            {
+                Debug.LogError("请检查配置文件，传入的数据不能为空");
+                return;
+            }
+            if (data.dialogType == E_DialogType.Choose)
+            {
+                Debug.LogError("不能处理不是选择对话的节点，请检查传入类型");
+                return;
+            }
+            if (data.option1 == "")
+            {
+                Debug.LogError("请检查配置数据，不能配置空选择节点");
+                return;
+            }
+            else if (data.option2 == "")
+            {
+                ShowOneOption(data);
+            }
+            else if (data.option3 == "")
+            {
+                ShowTwoOption(data);
+            }
+            else if (data.option4 == "")
+            {
+                ShowThreeOption(data);
+            }
+            else
+            {
+                ShowFourOption(data);
+            }
+        }
 
+        private void ShowFourOption(DialogData data)
+        {
+            tmpOption1.text = data.option1;
+            tmpOption2.text = data.option2;
+            tmpOption3.text = data.option3;
+            tmpOption4.text = data.option4;
+        }
+
+        private void ShowThreeOption(DialogData data)
+        {
+            HideOption(4);
+            tmpOption1.text = data.option1;
+            tmpOption2.text = data.option2;
+            tmpOption3.text = data.option3;
+        }
+
+        private void ShowTwoOption(DialogData data)
+        {
+            HideOption(3);
+            HideOption(4);
+            tmpOption1.text = data.option1;
+            tmpOption2.text = data.option2;
+        }
+
+        private void ShowOneOption(DialogData data)
+        {
+            HideOption(2);
+            HideOption(3);
+            HideOption(4);
+            tmpOption1.text = data.option1;
+        }
+
+        private void HideOption(int id)
+        {
+            switch (id)
+            {
+                case 1:
+                    btnOption1.gameObject.SetActive(false);
+                    break;
+                case 2:
+                    btnOption2.gameObject.SetActive(false);
+                    break;
+                case 3:
+                    btnOption3.gameObject.SetActive(false);
+                    break;
+                case 4:
+                    btnOption4.gameObject.SetActive(false);
+                    break;
+            }
+        }
     }
+
 }

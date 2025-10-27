@@ -25,10 +25,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
 
     public void PlayGameStartDialog()
     {
-        DialogSystemMgr.Instance.StartPlayPlotDialog(10001, () =>
-        {
-            GameManager.Instance.player.EnablePlayerInput();
-        });
+        DialogSystemMgr.Instance.StartPlayDialog(10001, E_DialogPlayType.Plot, GameManager.Instance.EnablePlayerInput);
     }
 
     /// <summary>
@@ -87,7 +84,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                     var bobObj = GameObject.Instantiate(BobPrefab, GameManager.Instance.player.transform);
                     bobObj.transform.localPosition = new Vector3(-1, 0, 0);
                     bobObj.name = "Bob";
-                    DialogSystemMgr.Instance.StartPlayPlotDialog(10006);
+                    DialogSystemMgr.Instance.StartPlayDialog(10006, E_DialogPlayType.Plot);
                 }
                 break;
         }

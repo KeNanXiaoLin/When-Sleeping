@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
             }
             else if (curDialogData != null)
             {
-                DialogSystemMgr.Instance.StartPlayNormalDialog(curDialogData);
+                DialogSystemMgr.Instance.StartPlayDialog(curDialogData.id, curDialogData.dialogPlayType);
             }
 
         }
@@ -280,8 +280,8 @@ public class Player : MonoBehaviour
     {
         ResetAnimatorParameters();
         disableInput = true;
-        roleAnimator.SetFloat("x",xFaceMinVal);
-        roleAnimator.SetFloat("y",yFaceMinVal);
+        roleAnimator.SetFloat("x", xFaceMinVal);
+        roleAnimator.SetFloat("y", yFaceMinVal);
     }
 
     private void ResetAnimatorParameters()
@@ -321,7 +321,7 @@ public class Player : MonoBehaviour
                 yFaceMinVal = -0.01f;
                 break;
         }
-        
+
     }
 
     /// <summary>
@@ -482,7 +482,7 @@ public class Player : MonoBehaviour
             if (dialogObj.enterTrigger)
             {
                 //看这个剧情是否达到触发条件，进行触发
-                if(DialogSystemMgr.Instance.CheckPlotDialogCanPlay(dialogObj.dialogId))
+                if (DialogSystemMgr.Instance.CheckDialogCanPlay(dialogObj.dialogId, E_DialogPlayType.Plot))
                 {
                     this.SetDialogData(dialogObj.GetDialogData());
                     //应该是物品交互，电视，相框等内容
@@ -499,8 +499,8 @@ public class Player : MonoBehaviour
                     this.ShowHeadTip();
                 }
             }
-            
-            
+
+
         }
     }
 

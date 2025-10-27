@@ -35,14 +35,7 @@ namespace KNXL.DialogSystem
 
         public void PlayNextDialog()
         {
-            if (!isPlot)
-            {
-                DialogSystemMgr.Instance.PlayNextDialog();
-            }
-            else
-            {
-                DialogSystemMgr.Instance.PlayNextPlotDialog();
-            }
+            DialogSystemMgr.Instance.PlayNextDialog();
         }
 
         public override void ShowMe()

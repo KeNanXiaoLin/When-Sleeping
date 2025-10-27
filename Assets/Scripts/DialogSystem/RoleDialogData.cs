@@ -29,7 +29,7 @@ namespace KNXL.DialogSystem
         /// <summary>
         /// 是否是剧情对话
         /// </summary>
-        public bool isPlotDialog = true;
+        public E_DialogPlayType dialogPlayType;
         /// <summary>
         /// 为对话添加的描述，只是为了配置方便查看的，没有其他作用
         /// </summary>
