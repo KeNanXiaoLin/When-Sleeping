@@ -68,5 +68,21 @@ namespace KNXL.DialogSystem
         /// 对话节点的选项四
         /// </summary>
         public string option4;
+        /// <summary>
+        /// 选择选项对话1对应的下一个RoleDialogData的ID,如果是0，没有任何效果，直接结束这段对话
+        /// </summary>
+        public int option1Next;
+        /// <summary>
+        /// 选择选项对话2对应的下一个RoleDialogData的ID,如果是0，没有任何效果，直接结束这段对话
+        /// </summary>
+        public int option2Next;
+        /// <summary>
+        /// 选择选项对话3对应的下一个RoleDialogData的ID,如果是0，没有任何效果，直接结束这段对话
+        /// </summary>
+        public int option3Next;
+        /// <summary>
+        /// 选择选项对话4对应的下一个RoleDialogData的ID,如果是0，没有任何效果，直接结束这段对话
+        /// </summary>
+        public int option4Next;
     }
 }

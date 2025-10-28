@@ -24,7 +24,7 @@ public class SceneLoadManager : SingletonAutoMono<SceneLoadManager>
 
     public void LoadScene(string name, Func<IEnumerator> sceneFaderBeforeCoroutine = null, UnityAction sceneFaderBefore = null, UnityAction sceneAfterLoad = null)
     {
-        FadeAndLoadScene(name, sceneFaderBeforeCoroutine, sceneFaderBefore, sceneAfterLoad);
+        StartCoroutine(FadeAndLoadScene(name, sceneFaderBeforeCoroutine, sceneFaderBefore, sceneAfterLoad));
     }
 
     /// <summary>
@@ -103,7 +103,7 @@ public class SceneLoadManager : SingletonAutoMono<SceneLoadManager>
     /// </summary>
     /// <param name="sceneName">要切换到的场景名称</param>
     /// <param name="spawnPosition">玩家在新场景中的生成位置</param>
-    public void FadeAndLoadScene(string sceneName, Func<IEnumerator> sceneFaderBeforeCoroutine = null, UnityAction sceneFaderBefore = null, UnityAction sceneAfterLoad = null)
+    public IEnumerator FadeAndLoadScene(string sceneName, Func<IEnumerator> sceneFaderBeforeCoroutine = null, UnityAction sceneFaderBefore = null, UnityAction sceneAfterLoad = null)
     {
         // 如果当前没有进行淡入淡出操作，则开始淡入淡出并切换场景
         if (!isFading)
@@ -114,7 +114,7 @@ public class SceneLoadManager : SingletonAutoMono<SceneLoadManager>
                 faderCanvasGroup.alpha = 0;
                 faderCanvasGroup.blocksRaycasts = true;
             });
-            StartCoroutine(FadeAndSwitchScenes(sceneName, sceneFaderBeforeCoroutine, sceneFaderBefore, sceneAfterLoad));
+            yield return FadeAndSwitchScenes(sceneName, sceneFaderBeforeCoroutine, sceneFaderBefore, sceneAfterLoad);
         }
     }
 }

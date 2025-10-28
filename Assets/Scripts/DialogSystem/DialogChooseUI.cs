@@ -73,6 +73,22 @@ namespace KNXL.DialogSystem
             tmpOption2.text = data.option2;
             tmpOption3.text = data.option3;
             tmpOption4.text = data.option4;
+            btnOption1.onClick.AddListener(() =>
+            {
+                AddListenerEvent(1, data);
+            });
+            btnOption2.onClick.AddListener(() =>
+            {
+                AddListenerEvent(2, data);
+            });
+            btnOption3.onClick.AddListener(() =>
+            {
+                AddListenerEvent(3, data);
+            });
+            btnOption4.onClick.AddListener(() =>
+            {
+                AddListenerEvent(4, data);
+            });
         }
 
         private void ShowThreeOption(DialogData data)
@@ -81,6 +97,18 @@ namespace KNXL.DialogSystem
             tmpOption1.text = data.option1;
             tmpOption2.text = data.option2;
             tmpOption3.text = data.option3;
+            btnOption1.onClick.AddListener(() =>
+            {
+                AddListenerEvent(1, data);
+            });
+            btnOption2.onClick.AddListener(() =>
+            {
+                AddListenerEvent(2, data);
+            });
+            btnOption3.onClick.AddListener(() =>
+            {
+                AddListenerEvent(3, data);
+            });
         }
 
         private void ShowTwoOption(DialogData data)
@@ -89,6 +117,14 @@ namespace KNXL.DialogSystem
             HideOption(4);
             tmpOption1.text = data.option1;
             tmpOption2.text = data.option2;
+            btnOption1.onClick.AddListener(() =>
+            {
+                AddListenerEvent(1, data);
+            });
+            btnOption2.onClick.AddListener(() =>
+            {
+                AddListenerEvent(2, data);
+            });
         }
 
         private void ShowOneOption(DialogData data)
@@ -97,6 +133,10 @@ namespace KNXL.DialogSystem
             HideOption(3);
             HideOption(4);
             tmpOption1.text = data.option1;
+            btnOption1.onClick.AddListener(() =>
+            {
+                AddListenerEvent(1, data);
+            });
         }
 
         private void HideOption(int id)
@@ -114,6 +154,29 @@ namespace KNXL.DialogSystem
                     break;
                 case 4:
                     btnOption4.gameObject.SetActive(false);
+                    break;
+            }
+        }
+
+        private void AddListenerEvent(int id, DialogData data)
+        {
+            switch (id)
+            {
+                case 1:
+                    DialogSystemMgr.Instance.DialogPlayEnd();
+                    DialogSystemMgr.Instance.PlayNextRoleDialog(data.option1Next);
+                    break;
+                case 2:
+                    DialogSystemMgr.Instance.DialogPlayEnd();
+                    DialogSystemMgr.Instance.PlayNextRoleDialog(data.option2Next);
+                    break;
+                case 3:
+                    DialogSystemMgr.Instance.DialogPlayEnd();
+                    DialogSystemMgr.Instance.PlayNextRoleDialog(data.option3Next);
+                    break;
+                case 4:
+                    DialogSystemMgr.Instance.DialogPlayEnd();
+                    DialogSystemMgr.Instance.PlayNextRoleDialog(data.option4Next);
                     break;
             }
         }

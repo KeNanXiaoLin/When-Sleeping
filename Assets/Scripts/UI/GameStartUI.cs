@@ -26,7 +26,7 @@ public class GameStartUI : UIPanelBase
         {
             case "Start":
                 //切换场景到游戏场景
-                SceneLoadManager.Instance.LoadScene("GameScene3", EnterScene, sceneFaderBefore: InitNewSceneObj, sceneAfterLoad: PlayGameStartPlot);
+                SceneLoadManager.Instance.LoadScene(Setting.GameScene3, EnterScene, sceneFaderBefore: InitNewSceneObj, sceneAfterLoad: PlayGameStartPlot);
                 break;
             case "Setting":
                 //打开设置面板

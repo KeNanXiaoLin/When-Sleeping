@@ -11,16 +11,16 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     }
     private void OnEnable()
     {
-        EventCenter.Instance.AddEventListener<int>(E_EventType.E_DialogEnd, CheckPlotCanPlayByDialogID);
+        EventCenter.Instance.AddCoroutineListener<int>(E_EventType.E_DialogEnd, CheckPlotCanPlayByDialogID);
         EventCenter.Instance.AddEventListener<string>(E_EventType.E_SceneLoad, CheckPlotCanPlayByChangeScene);
-        EventCenter.Instance.AddEventListener<int>(E_EventType.E_PlotDialogStart, CheckPlotStartCanDoSomething);
+        EventCenter.Instance.AddCoroutineListener<int>(E_EventType.E_PlotDialogStart, CheckPlotStartCanDoSomething);
     }
 
     void OnDisable()
     {
-        EventCenter.Instance.RemoveEventListener<int>(E_EventType.E_DialogEnd, CheckPlotCanPlayByDialogID);
+        EventCenter.Instance.RemoveCoroutineListener<int>(E_EventType.E_DialogEnd, CheckPlotCanPlayByDialogID);
         EventCenter.Instance.RemoveEventListener<string>(E_EventType.E_SceneLoad, CheckPlotCanPlayByChangeScene);
-        EventCenter.Instance.RemoveEventListener<int>(E_EventType.E_PlotDialogStart, CheckPlotStartCanDoSomething);
+        EventCenter.Instance.RemoveCoroutineListener<int>(E_EventType.E_PlotDialogStart, CheckPlotStartCanDoSomething);
     }
 
     public void PlayGameStartDialog()
@@ -32,29 +32,30 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     /// 检测因为对话播放而解锁的剧情事件
     /// </summary>
     /// <param name="dialogId"></param>
-    private void CheckPlotCanPlayByDialogID(int dialogId)
+    private IEnumerator CheckPlotCanPlayByDialogID(int dialogId)
     {
+        Player player = GameManager.Instance.player;
         //这个对话播放完毕，看是否有能够解锁的剧情对话
         DialogSystemMgr.Instance.UnLockDialogByPreID(dialogId);
         switch (dialogId)
         {
-            //这里是玩家和电视剧交互完毕后解锁的剧情
-            //现在是通过触发器进行剧情触发，这里没用了
-            // case 10004:
-            //     //这里解锁Bob敲门的剧情
-            //     //播放敲门声
-            //     MusicManager.Instance.PlaySound("按门铃音效6");
-            //     //播放提示内容
-            //     DialogSystemMgr.Instance.StartPlayPlotDialog(10005, () =>
-            //     {
-            //         GameManager.Instance.player.EnablePlayerInput();
-            //     });
-            //     break;
             case 10014:
                 //在让Bob回家后销毁Bob
-                Player player = GameManager.Instance.player;
-                var bobObj = player.transform.Find("Bob");
+                var bobObj = player.transform.Find(Setting.bobName);
                 Destroy(bobObj.gameObject);
+                break;
+            //玩家选择选项之后出现Mom出现让玩家喝牛奶
+            case 10015:
+                GameObject momPrefab = Resources.Load<GameObject>($"NPC/{Setting.momName}");
+                var momObj = GameObject.Instantiate(momPrefab, new Vector3(-5, -3, 0), Quaternion.identity);
+                momObj.name = Setting.momName;
+                while (Vector2.Distance(player.transform.position, momObj.transform.position) > 1f)
+                {
+                    Vector2 dir = (player.transform.position - momObj.transform.position).normalized;
+                    momObj.transform.Translate(dir * Time.deltaTime);
+                    yield return null;
+                }
+                DialogSystemMgr.Instance.StartPlayDialog(10016, E_DialogPlayType.Plot);
                 break;
         }
     }
@@ -72,18 +73,18 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     {
         switch (sceneName)
         {
-            case "GameScene":
+            case Setting.GameScene1:
                 //玩家在切换到场景1的时候，可以播放和Bob对话的剧情，前提是剧情没有被触发过，并且剧情的前置已经解锁
                 RoleDialogData plotData = DialogSystemMgr.Instance.GetPlotByID(10006);
                 if (!plotData.isTrigger &&
                     DialogSystemMgr.Instance.GetPlotByID(plotData.preRoleDialogs).isTrigger)
                 {
                     //实例化一个Bob出来和玩家模拟对话
-                    GameObject BobPrefab = Resources.Load<GameObject>("NPC/Bob");
+                    GameObject BobPrefab = Resources.Load<GameObject>($"NPC/{Setting.bobName}");
                     // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
                     var bobObj = GameObject.Instantiate(BobPrefab, GameManager.Instance.player.transform);
                     bobObj.transform.localPosition = new Vector3(-1, 0, 0);
-                    bobObj.name = "Bob";
+                    bobObj.name = Setting.bobName;
                     DialogSystemMgr.Instance.StartPlayDialog(10006, E_DialogPlayType.Plot);
                 }
                 break;
@@ -94,7 +95,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     /// 在某段剧情触发前做的事情
     /// </summary>
     /// <param name="dialogId"></param>
-    private void CheckPlotStartCanDoSomething(int dialogId)
+    private IEnumerator CheckPlotStartCanDoSomething(int dialogId)
     {
         switch (dialogId)
         {
@@ -106,7 +107,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 break;
             case 10015:
                 //切换到场景3
-                SceneLoadManager.Instance.LoadScene("GameScene3",sceneFaderBefore:GameManager.Instance.BackToInitPos);
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
                 break;
         }
     }

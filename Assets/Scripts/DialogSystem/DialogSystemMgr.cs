@@ -14,21 +14,9 @@ namespace KNXL.DialogSystem
         Plot      // 剧情对话（仅触发一次）
     }
 
-    public class DialogSystemMgr
+    public class DialogSystemMgr : SingletonAutoMono<DialogSystemMgr>
     {
         public Transform parentTransform;
-        private static DialogSystemMgr _instance;
-        public static DialogSystemMgr Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new();
-                }
-                return _instance;
-            }
-        }
 
         // 存储所有的对话数据
         private Dictionary<int, DialogData> allDialogDataDic;
@@ -43,7 +31,7 @@ namespace KNXL.DialogSystem
         // 记录当前对话类型（区分普通/剧情）
         private E_DialogPlayType currentPlayType;
 
-        private DialogSystemMgr()
+        private void Awake()
         {
             string content = File.ReadAllText(Application.streamingAssetsPath + "/DialogDatas.json");
             List<DialogData> datas = JsonConvert.DeserializeObject<List<DialogData>>(content);
@@ -111,36 +99,32 @@ namespace KNXL.DialogSystem
         }
 
         // 保留原有单条对话触发（无修改）
-        public void TriggerDialog(DialogData data)
+        public IEnumerator TriggerDialog(DialogData data)
         {
             if (data == null)
             {
                 Debug.LogError("不支持播放空对话，请检查对话数据");
-                return;
+                yield break;
             }
             currentSingleDialogData = data;
             ShowDialogUI(data.dialogType, currentSingleDialogData);
+            yield return null;
         }
 
-        public void TriggerDialog(int id)
+        public IEnumerator TriggerDialog(int id)
         {
             if (allDialogDataDic.TryGetValue(id, out var data))
             {
-                TriggerDialog(data);
+                yield return TriggerDialog(data);
             }
             else
             {
                 Debug.LogError("找不到对话数据，请检查参数传入是否正确");
+                yield break;
             }
         }
 
         #region 核心修改：合并普通/剧情对话播放方法
-        /// <summary>
-        /// 统一播放对话（支持普通/剧情类型）
-        /// </summary>
-        /// <param name="dialogID">对话ID</param>
-        /// <param name="playType">对话类型（普通/剧情）</param>
-        /// <param name="endAction">播放结束回调</param>
         public void StartPlayDialog(int dialogID, E_DialogPlayType playType, UnityAction endAction = null)
         {
             // 1. 校验对话数据
@@ -163,7 +147,18 @@ namespace KNXL.DialogSystem
                 Debug.LogError($"对话无法触发（ID：{dialogID}，类型：{playType}）");
                 return;
             }
-
+            StartCoroutine(StartPlayDialogCoroutine(dialogID, playType, endAction));
+        }
+        /// <summary>
+        /// 统一播放对话（支持普通/剧情类型）
+        /// </summary>
+        /// <param name="dialogID">对话ID</param>
+        /// <param name="playType">对话类型（普通/剧情）</param>
+        /// <param name="endAction">播放结束回调</param>
+        private IEnumerator StartPlayDialogCoroutine(int dialogID, E_DialogPlayType playType, UnityAction endAction = null)
+        {
+            // 外面已经做了验证，这里可以直接拿值
+            RoleDialogData roleDialogData = allRoleDialogDataDic[dialogID];
             // 4. 初始化对话状态（统一赋值）
             currentRoleDialogData = roleDialogData;
             currentPlayType = playType;
@@ -173,11 +168,11 @@ namespace KNXL.DialogSystem
             // 5. 剧情对话专属前置逻辑
             if (playType == E_DialogPlayType.Plot)
             {
-                EventCenter.Instance.EventTrigger<int>(E_EventType.E_PlotDialogStart, dialogID);
+                yield return EventCenter.Instance.TriggerCoroutineAndWait<int>(E_EventType.E_PlotDialogStart, dialogID);
             }
 
             // 6. 开始播放第一条对话（统一逻辑）
-            TriggerDialog(roleDialogData.startDialog);
+            yield return TriggerDialog(roleDialogData.startDialog);
         }
 
         /// <summary>
@@ -219,7 +214,7 @@ namespace KNXL.DialogSystem
             {
                 if (allDialogDataDic.TryGetValue(currentSingleDialogData.childNodes, out var nextData))
                 {
-                    TriggerDialog(nextData);
+                    StartCoroutine(TriggerDialog(nextData));
                 }
                 else
                 {
@@ -232,34 +227,74 @@ namespace KNXL.DialogSystem
                 DialogPlayEnd();
             }
         }
+
+        /// <summary>
+        /// 播放下一段指定对话（普通/剧情通用），主要用于玩家选择出现不同的剧情
+        /// </summary>
+        public void PlayNextRoleDialog(int id)
+        {
+            //如果传入的id是0，那不会播放任何的剧情
+            if (id == 0) return;
+            if (!allRoleDialogDataDic.ContainsKey(id))
+            {
+                Debug.LogError("找不到要播放的指定参数，请检查配置");
+                return;
+            }
+            RoleDialogData roleDialogData = allRoleDialogDataDic[id];
+            StartPlayDialog(id, roleDialogData.dialogPlayType);
+
+        }
         #endregion
 
         #region 核心修改：合并对话结束方法
+        public void DialogPlayEnd()
+        {
+            StartCoroutine(DialogPlayEndCoroutine());
+        }
+
         /// <summary>
         /// 对话播放结束（统一处理逻辑）
         /// </summary>
-        private void DialogPlayEnd()
+        public IEnumerator DialogPlayEndCoroutine()
         {
             // 1. 关闭所有面板（通用）
             CloseAllDialogPanel();
 
             // 2. 分发结束事件 + 标记已触发（通用）
+            // 这里会存在这样的问题，在我播放完对话的时候，可能会在剧情系统中开启一段新的剧情对话（比如妈妈走向Mike让他喝牛奶）
+            // 这里需要用到协程，但是开启一段新对话之后，继续执行后面的逻辑，currentRoleDialogData被置空
+            // 这样播放下一句对话就会报错，所以需要在触发新的对话前就把内容进行置空
             if (!currentRoleDialogData.isTrigger)
             {
-                EventCenter.Instance.EventTrigger<int>(E_EventType.E_DialogEnd, currentRoleDialogData.id);
+                //设置当前对话为已经触发过，防止重复触发
                 currentRoleDialogData.isTrigger = true;
+                int endID = currentRoleDialogData.id;
+                // 3. 执行结束回调（通用）
+                dialogPlayEndAction?.Invoke();
+
+                // 4. 重置状态（通用）
+                dialogPlayEndAction = null;
+                currentRoleDialogData = null;
+                currentSingleDialogData = null;
+
+                // 5. 恢复玩家输入（通用）
+                GameManager.Instance.player.EnablePlayerInput();
+                yield return EventCenter.Instance.TriggerCoroutineAndWait<int>(E_EventType.E_DialogEnd, endID);
+
             }
+            else
+            {
+                // 3. 执行结束回调（通用）
+                dialogPlayEndAction?.Invoke();
 
-            // 3. 执行结束回调（通用）
-            dialogPlayEndAction?.Invoke();
+                // 4. 重置状态（通用）
+                dialogPlayEndAction = null;
+                currentRoleDialogData = null;
+                currentSingleDialogData = null;
 
-            // 4. 重置状态（通用）
-            dialogPlayEndAction = null;
-            currentRoleDialogData = null;
-            currentSingleDialogData = null;
-
-            // 5. 恢复玩家输入（通用）
-            GameManager.Instance.player.EnablePlayerInput();
+                // 5. 恢复玩家输入（通用）
+                GameManager.Instance.player.EnablePlayerInput();
+            }
         }
         #endregion
 
