@@ -25,6 +25,10 @@ public class GameManager : BaseManager<GameManager>
     /// 记录跟随玩家的摄像机
     /// </summary>
     public CinemachineVirtualCamera playerCamera;
+    /// <summary>
+    /// 当前玩家所在的场景的名字
+    /// </summary>
+    public string currentSceneName;
 
     private GameManager()
     {
