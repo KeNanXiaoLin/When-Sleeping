@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class PlotSystem : SingletonAutoMono<PlotSystem>
 {
+    /// <summary>
+    /// 在播放剧情的时候需要用到bob
+    /// </summary>
+    private NPCController bobController;
     void Awake()
     {
         // gameStartDialogData = Resources.Load<RoleDialogData>("PlotData/GameStartDialog");
@@ -57,6 +61,9 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 }
                 DialogSystemMgr.Instance.StartPlayDialog(10016, E_DialogPlayType.Plot);
                 break;
+            case 10006:
+                bobController.EnableFollow(GameManager.Instance.player.transform);
+                break;
         }
     }
 
@@ -82,9 +89,10 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                     //实例化一个Bob出来和玩家模拟对话
                     GameObject BobPrefab = Resources.Load<GameObject>($"NPC/{Setting.bobName}");
                     // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
-                    var bobObj = GameObject.Instantiate(BobPrefab, GameManager.Instance.player.transform);
-                    bobObj.transform.localPosition = new Vector3(-1, 0, 0);
+                    var bobObj = GameObject.Instantiate(BobPrefab, new Vector3(-3, 15.8f, 0f), Quaternion.identity);
+                    // bobObj.transform.localPosition = new Vector3(-1, 0, 0);
                     bobObj.name = Setting.bobName;
+                    bobController = bobObj.GetComponent<NPCController>();
                     DialogSystemMgr.Instance.StartPlayDialog(10006, E_DialogPlayType.Plot);
                 }
                 break;

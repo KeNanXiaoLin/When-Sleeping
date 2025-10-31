@@ -34,6 +34,12 @@ public class GameManager : BaseManager<GameManager>
     {
         // pData = Resources.Load<PlayerData>("PlayerData/PlayerData");
         playerPos = initPos;
+        EventCenter.Instance.AddEventListener<string>(E_EventType.E_SceneLoad, BindMapNodeInfo);
+    }
+
+    ~GameManager()
+    {
+        EventCenter.Instance.RemoveEventListener<string>(E_EventType.E_SceneLoad, BindMapNodeInfo);
     }
 
     /// <summary>
@@ -114,5 +120,22 @@ public class GameManager : BaseManager<GameManager>
         InitPlayerPos();
         InitPlayerData();
         InitCameraValues();
+    }
+
+    private void BindMapNodeInfo(string sceneName)
+    {
+        currentSceneName = sceneName;
+        switch (sceneName)
+        {
+            case Setting.GameScene1:
+            case Setting.GameScene2:
+            case Setting.GameScene3:
+                GameObject gridObj = GameObject.FindWithTag("Path");
+                TilemapGrid tilemapGrid = gridObj.GetComponent<TilemapGrid>();
+                AStarMapNode aStarMapNode = new AStarMapNode(currentSceneName, tilemapGrid);
+                AStarMgr.Instance.AddMapNodeInfo(sceneName, aStarMapNode);
+                break;
+        }
+
     }
 }

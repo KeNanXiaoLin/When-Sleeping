@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Item
   - Interactive
+  - Path
   layers:
   - Default
   - TransparentFX

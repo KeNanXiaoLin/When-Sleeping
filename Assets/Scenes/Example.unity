@@ -4719,7 +4719,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {x: -10, y: 2, z: 0}
-  endPos: {x: 10, y: -5, z: 0}
+  endPos: {x: -2, y: -5, z: 0}
   tilemapGrid: {fileID: 1651673390}
   sceneName: 1
 --- !u!1660057539 &9223372036854775807

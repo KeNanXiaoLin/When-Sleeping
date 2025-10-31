@@ -140,4 +140,23 @@ public class TilemapGrid : MonoBehaviour, IMapGenerator
             Gizmos.DrawCube(worldPos, Vector3.one * (nodeSize - 0.1f));
         }
     }
+
+    void UpdateBounds()
+    {
+        if (groundTilemap != null)
+        {
+            // 强制Tilemap重新计算边界
+            groundTilemap.CompressBounds();
+            // 此时再获取cellBounds就是最新的了
+            BoundsInt newBounds = groundTilemap.cellBounds;
+            Debug.Log("更新后的边界: " + newBounds);
+        }
+    }
+
+    // 可以在编辑器中手动触发（比如挂在Tilemap对象上，通过按钮调用）
+    [ContextMenu("刷新Tilemap边界")]
+    void RefreshInEditor()
+    {
+        UpdateBounds();
+    }
 }
