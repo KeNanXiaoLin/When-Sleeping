@@ -128,17 +128,21 @@ public class TilemapGrid : MonoBehaviour, IMapGenerator
     // Gizmos绘制网格（在Scene窗口可视化）
     private void OnDrawGizmos()
     {
-        if (grid == null) return;
-
-        // 绘制每个节点
-        foreach (Node node in grid)
+        if (AStarMgr.Instance.Config.isDebug)
         {
-            // 可通行=白色，障碍物=红色
-            Gizmos.color = node.isWalkable ? Color.white : Color.red;
-            // 绘制节点的立方体（位置为瓦片中心）
-            Vector3 worldPos = GetWorldPosFromNode(node);
-            Gizmos.DrawCube(worldPos, Vector3.one * (nodeSize - 0.1f));
+            if (grid == null) return;
+
+            // 绘制每个节点
+            foreach (Node node in grid)
+            {
+                // 可通行=白色，障碍物=红色
+                Gizmos.color = node.isWalkable ? Color.white : Color.red;
+                // 绘制节点的立方体（位置为瓦片中心）
+                Vector3 worldPos = GetWorldPosFromNode(node);
+                Gizmos.DrawCube(worldPos, Vector3.one * (nodeSize - 0.1f));
+            }
         }
+
     }
 
     void UpdateBounds()

@@ -4,21 +4,58 @@ using UnityEngine;
 
 public class NPCController : MonoBehaviour
 {
+    #region 私有成员
+    /// <summary>
+    /// 持有的状态机
+    /// </summary>
     private StateMachine m_stateMachine;
+    /// <summary>
+    /// 持有的动画控制器
+    /// </summary>
     private Animator m_animator;
+    /// <summary>
+    /// 记录跟随的对象
+    /// </summary>
     private Transform target;
+    /// <summary>
+    /// A*寻路计算的频率
+    /// </summary>
     private WaitForSeconds aStarCalInterval;
+    private Coroutine followCoroutine;
+    /// <summary>
+    /// 目标的上次位置，主要是避免目标没有移动的时候进行计算
+    /// </summary>
     private Vector3 lastTargetPos;
+    /// <summary>
+    /// 当前到目标的路径点
+    /// </summary>
     private List<Vector3> currentPath = new();
+    /// <summary>
+    /// 当前走到了哪个点
+    /// </summary>
     private int currentPathIndex = 0;
+    /// <summary>
+    /// 是否处于移动状态
+    /// </summary>
     private bool isMoving = false;
+    #endregion
+    /// <summary>
+    /// 每个NPC应该有一个家的位置，如果没有，不用赋值即可
+    /// </summary>
+    public Vector2 homePos;
+    /// <summary>
+    /// NPC的移动速度
+    /// </summary>
     public float moveSpeed = 3f;
+    /// <summary>
+    /// 跟随保持的距离
+    /// </summary>
     public float followDis = 1f;
+    /// <summary>
+    /// 当前的面朝向，主要用于控制动画
+    /// </summary>
     public E_Direction Facing = E_Direction.Right;
     public Animator Animator => m_animator;
-
-
-
 
 
     void Awake()
@@ -48,12 +85,15 @@ public class NPCController : MonoBehaviour
     public void EnableFollow(Transform target)
     {
         this.target = target;
-        StartCoroutine(FollowTarget());
+        followCoroutine = StartCoroutine(FollowTarget());
     }
 
     public void DisableFollow()
     {
         target = null;
+        currentPath.Clear();
+        currentPathIndex = 0;
+        StopCoroutine(followCoroutine);
     }
 
     public IEnumerator FollowTarget()
@@ -166,12 +206,37 @@ public class NPCController : MonoBehaviour
     }
 
     /// <summary>
-    /// 更新移动动画（根据方向）
+    /// 回家
     /// </summary>
-    private void UpdateMoveAnimation(Vector3 direction)
+    public void BackToHome()
     {
-        m_animator.SetBool("IsMoving", true);
-        m_animator.SetFloat("X", direction.x);
-        m_animator.SetFloat("Y", direction.y);
+        //首先禁用跟随
+        DisableFollow();
+        if(homePos == Vector2.zero)
+        {
+            Debug.LogError("请初始化家的位置");
+            return;
+        }
+        List<Vector3> newPath = AStarMgr.Instance.FindPath(transform.position, homePos);
+        // 更新当前路径（清除旧路径，添加新路径）
+        currentPath.Clear();
+        if (newPath != null && newPath.Count > 0)
+        {
+            currentPath.AddRange(newPath);
+            currentPathIndex = 0; // 重置路径索引
+            isMoving = true;
+            // 如果当前是Idle状态，切换到Move状态
+            if (m_stateMachine.CurrentStateType != E_StateType.Move)
+            {
+                m_stateMachine.ChangeState(E_StateType.Move);
+            }
+        }
+        else
+        {
+            // 没有路径时停止移动
+            Debug.LogError("找不到一条通往家的路");
+            isMoving = false;
+            m_stateMachine.ChangeState(E_StateType.Idle);
+        }
     }
 }

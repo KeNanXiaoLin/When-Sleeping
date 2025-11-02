@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba8d533a9d684797a05708b64d53baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  homePos: {x: -30, y: 5}
   moveSpeed: 3
   followDis: 1
   Facing: 1

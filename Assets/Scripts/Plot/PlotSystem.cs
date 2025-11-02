@@ -45,8 +45,9 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         {
             case 10014:
                 //在让Bob回家后销毁Bob
-                var bobObj = player.transform.Find(Setting.bobName);
-                Destroy(bobObj.gameObject);
+                // var bobObj = player.transform.Find(Setting.bobName);
+                // Destroy(bobObj.gameObject);
+                bobController.BackToHome();
                 break;
             //玩家选择选项之后出现Mom出现让玩家喝牛奶
             case 10015:
