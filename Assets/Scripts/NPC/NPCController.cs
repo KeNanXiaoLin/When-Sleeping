@@ -60,16 +60,17 @@ public class NPCController : MonoBehaviour
 
     void Awake()
     {
-        m_stateMachine = new StateMachine();
         m_animator = GetComponent<Animator>();
+        m_stateMachine = new StateMachine();
+        m_stateMachine.AddState(E_StateType.Idle, new IdleState(this));
+        m_stateMachine.AddState(E_StateType.Move, new MoveState(this));
+        m_stateMachine.ChangeState(E_StateType.Idle);
         aStarCalInterval = new WaitForSeconds(0.2f);
     }
 
     void Start()
     {
-        m_stateMachine.AddState(E_StateType.Idle, new IdleState(this));
-        m_stateMachine.AddState(E_StateType.Move, new MoveState(this));
-        m_stateMachine.ChangeState(E_StateType.Idle);
+
     }
 
     void Update()
@@ -93,7 +94,8 @@ public class NPCController : MonoBehaviour
         target = null;
         currentPath.Clear();
         currentPathIndex = 0;
-        StopCoroutine(followCoroutine);
+        if (followCoroutine != null)
+            StopCoroutine(followCoroutine);
     }
 
     public IEnumerator FollowTarget()
@@ -212,7 +214,7 @@ public class NPCController : MonoBehaviour
     {
         //首先禁用跟随
         DisableFollow();
-        if(homePos == Vector2.zero)
+        if (homePos == Vector2.zero)
         {
             Debug.LogError("请初始化家的位置");
             return;
@@ -238,5 +240,37 @@ public class NPCController : MonoBehaviour
             isMoving = false;
             m_stateMachine.ChangeState(E_StateType.Idle);
         }
+    }
+
+    public void GotoTargetPos(Vector3 targetPos)
+    {
+        //首先禁用跟随
+        DisableFollow();
+        List<Vector3> newPath = AStarMgr.Instance.FindPath(transform.position, targetPos);
+        // 更新当前路径（清除旧路径，添加新路径）
+        currentPath.Clear();
+        if (newPath != null && newPath.Count > 0)
+        {
+            currentPath.AddRange(newPath);
+            currentPathIndex = 0; // 重置路径索引
+            isMoving = true;
+            // 如果当前是Idle状态，切换到Move状态
+            if (m_stateMachine.CurrentStateType != E_StateType.Move)
+            {
+                m_stateMachine.ChangeState(E_StateType.Move);
+            }
+        }
+        else
+        {
+            // 没有路径时停止移动
+            Debug.LogError($"找不到一条通往目标位置的路，目标位置{targetPos}");
+            isMoving = false;
+            m_stateMachine.ChangeState(E_StateType.Idle);
+        }
+    }
+
+    public void SetNPCFacing(E_Direction dir)
+    {
+        Facing = dir;
     }
 }

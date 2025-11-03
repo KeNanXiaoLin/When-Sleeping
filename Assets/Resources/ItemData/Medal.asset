@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Medal
   m_EditorClassIdentifier: 
   itemID: 1
-  sprite: {fileID: 21300000, guid: 777ae6e85a4ef1c499c373e1cf17ce4c, type: 3}
+  sprite: {fileID: 21300000, guid: e6571810e7913354ea5354c359c2b354, type: 3}
   itemName: "\u52CB\u7AE0"
   des: A Medal
   canInteractive: 1

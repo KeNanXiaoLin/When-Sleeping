@@ -45,16 +45,40 @@ public class BagManager : BaseManager<BagManager>
     }
 
     /// <summary>
-    /// 添加物品，默认添加一个
+    /// 从所有物品中拿取指定ID的物品
     /// </summary>
-    /// <param name="itemID"></param>
-    /// <param name="count"></param>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public BagItem GetBagItemByItemID(int id)
+    {
+        if (allIteminfos.ContainsKey(id))
+        {
+            return allIteminfos[id];
+        }
+        return null;
+    }
+
     public void AddItem(int itemID, int count = 1)
     {
         if (!allIteminfos.ContainsKey(itemID))
         {
             Debug.LogError("不存在这种物品，请检查传入参数");
             return;
+        }
+        TimeSystem.Instance.StartCoroutine(AddItemCoroutine(itemID, count));
+    }
+
+    /// <summary>
+    /// 添加物品，默认添加一个
+    /// </summary>
+    /// <param name="itemID"></param>
+    /// <param name="count"></param>
+    public IEnumerator AddItemCoroutine(int itemID, int count = 1)
+    {
+        if (!allIteminfos.ContainsKey(itemID))
+        {
+            Debug.LogError("不存在这种物品，请检查传入参数");
+            yield break;
         }
         BagItem addItem = allIteminfos[itemID];
         bool find = false;
@@ -72,6 +96,7 @@ public class BagManager : BaseManager<BagManager>
             allDatas.Add(new BagData(addItem, count));
         }
         EventCenter.Instance.EventTrigger<List<BagData>>(E_EventType.E_UpdateBag, allDatas);
+        yield return EventCenter.Instance.TriggerCoroutineAndWait<int>(E_EventType.E_BagAddItem, addItem.itemID);
     }
 
     public void RemoveItem(int itemID, int count = 1)

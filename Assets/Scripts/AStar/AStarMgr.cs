@@ -9,22 +9,16 @@ public class AStarMgr : BaseManager<AStarMgr>
     public bool IsWalkStraight => aStarConfig.isWalkStraight;
     public AStarConfig Config => aStarConfig;
     public string currentMap => GameManager.Instance.currentSceneName;
-    public AStarMapNode currentMapNode
-    {
-        get
-        {
-            if (!allMapNodes.ContainsKey(currentMap))
-            {
-                Debug.LogError("不知道当前场景是什么？请检查代码");
-                return null;
-            }
-            return allMapNodes[currentMap];
-        }
-    }
+    /// <summary>
+    /// 当前地图的MapNode
+    /// </summary>
+    public AStarMapNode currentMapNode;
+
     /// <summary>
     /// 用来存储每张地图的A*寻路的地图信息
     /// </summary>
-    private Dictionary<string, AStarMapNode> allMapNodes = new();
+    // private Dictionary<string, AStarMapNode> allMapNodes = new();
+    //由于Unity过场景会重新创建所有场景中的物品，所以使用字典来存储是不合适的，我们只需要记录当前地图的mapNode即可
     private AStarMgr()
     {
         aStarConfig = Resources.Load<AStarConfig>("AStar/AStarConfig");
@@ -124,53 +118,53 @@ public class AStarMgr : BaseManager<AStarMgr>
         return 10 * (dstX + dstY);
     }
 
-    /// <summary>
-    /// 添加地图信息，第一次初始化地图的时候调用
-    /// </summary>
-    /// <param name="sceneName">当前场景的名字</param>
-    /// <param name="mapNode">地图信息</param>
-    public void AddMapNodeInfo(string sceneName, AStarMapNode mapNode)
-    {
-        if (!allMapNodes.ContainsKey(sceneName))
-        {
-            allMapNodes.Add(sceneName, mapNode);
-        }
-        else
-        {
-            Debug.LogWarning("已经存在地图信息了，不要重复添加，如果需要请更新，调用UpdateMapNodeInfo");
-        }
-    }
+    // /// <summary>
+    // /// 添加地图信息，第一次初始化地图的时候调用
+    // /// </summary>
+    // /// <param name="sceneName">当前场景的名字</param>
+    // /// <param name="mapNode">地图信息</param>
+    // public void AddMapNodeInfo(string sceneName, AStarMapNode mapNode)
+    // {
+    //     if (!allMapNodes.ContainsKey(sceneName))
+    //     {
+    //         allMapNodes.Add(sceneName, mapNode);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("已经存在地图信息了，不要重复添加，如果需要请更新，调用UpdateMapNodeInfo");
+    //     }
+    // }
 
-    /// <summary>
-    /// 更新地图信息，比如场景中普通格子变成了障碍格子，或者格子的移动花费发生变化
-    /// </summary>
-    /// <param name="sceneName">当前场景的名字</param>
-    /// <param name="mapNode">地图信息</param>
-    public void UpdateMapNodeInfo(string sceneName, AStarMapNode mapNode)
-    {
-        if (allMapNodes.ContainsKey(sceneName))
-        {
-            allMapNodes[sceneName] = mapNode;
-        }
-        else
-        {
-            Debug.LogWarning("不存在对应地图信息，请先添加地图信息，调用AddMapNodeInfo");
-        }
-    }
+    // /// <summary>
+    // /// 更新地图信息，比如场景中普通格子变成了障碍格子，或者格子的移动花费发生变化
+    // /// </summary>
+    // /// <param name="sceneName">当前场景的名字</param>
+    // /// <param name="mapNode">地图信息</param>
+    // public void UpdateMapNodeInfo(string sceneName, AStarMapNode mapNode)
+    // {
+    //     if (allMapNodes.ContainsKey(sceneName))
+    //     {
+    //         allMapNodes[sceneName] = mapNode;
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("不存在对应地图信息，请先添加地图信息，调用AddMapNodeInfo");
+    //     }
+    // }
 
-    /// <summary>
-    /// 移除对应地图的信息
-    /// </summary>
-    /// <param name="sceneName">当前场景的名字</param>
-    public void RemoveMapNodeInfo(string sceneName)
-    {
-        if (allMapNodes.ContainsKey(sceneName))
-        {
-            allMapNodes.Remove(sceneName);
-        }
-        else
-        {
-            Debug.LogWarning("不存在对应地图信息，移除失败");
-        }
-    }
+    // /// <summary>
+    // /// 移除对应地图的信息
+    // /// </summary>
+    // /// <param name="sceneName">当前场景的名字</param>
+    // public void RemoveMapNodeInfo(string sceneName)
+    // {
+    //     if (allMapNodes.ContainsKey(sceneName))
+    //     {
+    //         allMapNodes.Remove(sceneName);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("不存在对应地图信息，移除失败");
+    //     }
+    // }
 }

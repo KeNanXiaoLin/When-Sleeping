@@ -48,4 +48,12 @@ public enum E_EventType
     /// 场景切换会触发的事件
     /// </summary>
     E_SceneLoad,
+    /// <summary>
+    /// 特殊对话对话处理
+    /// </summary>
+    E_SpecialDialogPlay,
+    /// <summary>
+    /// 背包新增物品事件
+    /// </summary>
+    E_BagAddItem,
 }

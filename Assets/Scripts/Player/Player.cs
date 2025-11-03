@@ -453,7 +453,10 @@ public class Player : MonoBehaviour
 
     }
 
-    private void InitBattleInfo()
+    /// <summary>
+    /// 初始化玩家在战斗场景的一些信息
+    /// </summary>
+    public void InitBattleInfo()
     {
         MusicManager.Instance.PlayBKMusic("战斗时激昂的小曲1");
         this.transform.position = new Vector3(-16, -3.6f, 0);
@@ -462,6 +465,32 @@ public class Player : MonoBehaviour
         UIManager.Instance.HidePanel<GameUI>();
     }
 
+    /// <summary>
+    /// 改变玩家的朝向
+    /// </summary>
+    public void UpdatePlayerFacing(E_Direction dir)
+    {
+        last_dir = dir;
+        // switch (dir)
+        // {
+        //     case E_Direction.Left:
+        //         roleAnimator.SetFloat("x", -0.1f);
+        //         roleAnimator.SetFloat("y", 0);
+        //         break;
+        //     case E_Direction.Right:
+        //         roleAnimator.SetFloat("x", 0.1f);
+        //         roleAnimator.SetFloat("y", 0);
+        //         break;
+        //     case E_Direction.Up:
+        //         roleAnimator.SetFloat("x", -0f);
+        //         roleAnimator.SetFloat("y", 0.1f);
+        //         break;
+        //     case E_Direction.Down:
+        //         roleAnimator.SetFloat("x", 0f);
+        //         roleAnimator.SetFloat("y", -0.1f);
+        //         break;
+        // }
+    }
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Item"))

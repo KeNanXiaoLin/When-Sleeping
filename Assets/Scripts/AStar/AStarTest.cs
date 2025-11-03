@@ -15,7 +15,7 @@ public class AStarTest : MonoBehaviour
     {
         // res = AStarMgr.Instance.FindPath(startPos, endPos);
         AStarMapNode mapNode = new AStarMapNode(sceneName, tilemapGrid);
-        AStarMgr.Instance.AddMapNodeInfo(sceneName, mapNode);
+        AStarMgr.Instance.currentMapNode = mapNode;
         GameManager.Instance.currentSceneName = sceneName;
         res = AStarMgr.Instance.FindPath(startPos, endPos);
 

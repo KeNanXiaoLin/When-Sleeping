@@ -133,7 +133,7 @@ public class GameManager : BaseManager<GameManager>
                 GameObject gridObj = GameObject.FindWithTag("Path");
                 TilemapGrid tilemapGrid = gridObj.GetComponent<TilemapGrid>();
                 AStarMapNode aStarMapNode = new AStarMapNode(currentSceneName, tilemapGrid);
-                AStarMgr.Instance.AddMapNodeInfo(sceneName, aStarMapNode);
+                AStarMgr.Instance.currentMapNode = aStarMapNode;
                 break;
         }
 

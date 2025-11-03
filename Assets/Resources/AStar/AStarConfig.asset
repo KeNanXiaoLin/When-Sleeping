@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWalkStraight: 1
   tilemapName: AStarTilemap
+  groundTileName: Ground
+  obstacleTileName: Obstacle
+  isDebug: 0
+  waterTileName: Water
+  waterCost: 10

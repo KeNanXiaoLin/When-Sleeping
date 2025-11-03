@@ -15,5 +15,10 @@ public class Item : MonoBehaviour
         sr.sprite = itemData.sprite;
     }
 
+    public void Init(BagItem item)
+    {
+        itemData = item;
+    }
+
 
 }

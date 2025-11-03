@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class TipPanel : UIPanelBase
 {
@@ -31,5 +33,11 @@ public class TipPanel : UIPanelBase
         this.tmpInfo.text = info;
     }
 
-    
+    public void AddOKEvent(UnityAction action)
+    {
+        Button ok = GetControl<Button>("OK");
+        ok.onClick.AddListener(action);
+    }
+
+
 }

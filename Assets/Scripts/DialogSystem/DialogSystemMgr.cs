@@ -107,6 +107,7 @@ namespace KNXL.DialogSystem
                 yield break;
             }
             currentSingleDialogData = data;
+            yield return EventCenter.Instance.TriggerCoroutineAndWait<int>(E_EventType.E_SpecialDialogPlay, data.id);
             ShowDialogUI(data.dialogType, currentSingleDialogData);
             yield return null;
         }
