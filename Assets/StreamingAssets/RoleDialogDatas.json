@@ -427,5 +427,27 @@
         "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在院子中进行探索的引导",
         "isTrigger": false,
         "isLocked": true
+    },
+    {
+        "id": 10040,
+        "owner": 0,
+        "startDialog": 10950,
+        "canTriggerRepeat": true,
+        "preRoleDialogs": 10019,
+        "dialogPlayType": 0,
+        "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在客厅里喝牛奶，不要让玩家到卧室去的引导",
+        "isTrigger": false,
+        "isLocked": true
+    },
+    {
+        "id": 10041,
+        "owner": 0,
+        "startDialog": 10950,
+        "canTriggerRepeat": true,
+        "preRoleDialogs": 10019,
+        "dialogPlayType": 0,
+        "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在客厅里喝牛奶，不要让玩家到院子去的引导",
+        "isTrigger": false,
+        "isLocked": true
     }
 ]

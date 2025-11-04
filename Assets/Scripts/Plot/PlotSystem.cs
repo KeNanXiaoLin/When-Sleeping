@@ -96,16 +96,36 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
             case 10006:
                 bobController.EnableFollow(GameManager.Instance.player.transform);
                 break;
+                //这是Mom禁止白天喝牛奶的剧情，结束之后可以去院子
+            case 10020:
+                plotData = DialogSystemMgr.Instance.GetPlotByID(10041);
+                DisableNormalRoleDialog(plotData);
+                break;
             //两人商量将牛奶给猫喝
             case 10021:
                 //将前置对话给关闭了，播放新的对话
                 plotData = DialogSystemMgr.Instance.GetPlotByID(10007);
-                plotData.canTriggerRepeat = false;
-                plotData.isTrigger = true;
+                DisableNormalRoleDialog(plotData);
+                plotData = DialogSystemMgr.Instance.GetPlotByID(10040);
+                DisableNormalRoleDialog(plotData);
                 bobController.EnableFollow(GameManager.Instance.player.transform);
                 break;
             case 10022:
                 DialogSystemMgr.Instance.StartPlayDialog(10023, E_DialogPlayType.Plot);
+                break;
+            //这个时候播放完毕Mike和Mom的对话，应该切换到Bob视角
+            case 10029:
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene1);
+                yield return SimulateBobAction();
+                break;
+            case 10030:
+                DialogSystemMgr.Instance.StartPlayDialog(10031, E_DialogPlayType.Plot);
+                yield return null;
+                break;
+            //播放完Bob视角，回到主角视角
+            case 10031:
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
+                yield return BackToPlayerView();
                 break;
         }
     }
@@ -208,7 +228,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 break;
             case 10029:
                 //切换到场景3
-                player.UpdatePlayerFacing(E_Direction.Up);
+                player.UpdatePlayerFacing(E_Direction.Down);
                 yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
                 SpawnMom(new Vector3(-5, -3, 0));
                 momController.GotoTargetPos(player.transform.position + new Vector3(0, -1, 0));
@@ -220,6 +240,10 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
             case 10023:
                 //喂小猫喝牛奶，需要使用牛奶
                 BagManager.Instance.RemoveItem(2);
+                break;
+                //这里是Bob睡不着，出门走走的剧情
+            case 10031:
+                yield return SimulateBobGoOutSide();
                 break;
         }
     }
@@ -271,4 +295,74 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         plotData.canTriggerRepeat = false;
         plotData.isTrigger = true;
     }
+
+    /// <summary>
+    /// 模拟Bob的行为
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator SimulateBobAction()
+    {
+        //首先要把玩家给禁用了
+        Player player = GameManager.Instance.player;
+        GameManager.Instance.InitCameraValues();
+        player.DisablePlayerInput();
+        player.gameObject.SetActive(false);
+        SpawnBob(Vector3.zero);
+        bobController.transform.position = bobController.homePos;
+        //设置相机跟随为bob
+        GameManager.Instance.playerCamera.Follow = bobController.transform;
+        //模拟Bob踱步
+        Vector3 firstPos = bobController.homePos + Vector2.right * 5;
+        bobController.GotoTargetPos(firstPos);
+        while (Vector2.Distance(firstPos, bobController.transform.position) > 1f)
+        {
+            yield return null;
+        }
+        Vector3 secondPos = bobController.homePos + Vector2.left * 5;
+        bobController.GotoTargetPos(secondPos);
+        while (Vector2.Distance(secondPos, bobController.transform.position) > 1f)
+        {
+            yield return null;
+        }
+        Vector3 thirdPos = bobController.homePos;
+        bobController.GotoTargetPos(thirdPos);
+        while (Vector2.Distance(thirdPos, bobController.transform.position) > 1f)
+        {
+            yield return null;
+        }
+        //播放关于bob的对话
+        DialogSystemMgr.Instance.StartPlayDialog(10030, E_DialogPlayType.Plot);
+    }
+
+    private IEnumerator SimulateBobGoOutSide()
+    {
+        Vector3 firstPos = bobController.homePos + Vector2.down * 10;
+        bobController.GotoTargetPos(firstPos);
+        while (Vector2.Distance(firstPos, bobController.transform.position) > 1f)
+        {
+            yield return null;
+        }
+        Vector3 secondPos = bobController.transform.position + Vector3.right * 20;
+        bobController.GotoTargetPos(secondPos);
+        while (Vector2.Distance(secondPos, bobController.transform.position) > 1f)
+        {
+            yield return null;
+        }
+        Vector3 thirdPos = bobController.transform.position + Vector3.up * 10;
+        bobController.GotoTargetPos(thirdPos);
+        while (Vector2.Distance(thirdPos, bobController.transform.position) > 1f)
+        {
+            yield return null;
+        }
+    }
+    
+    private IEnumerator BackToPlayerView()
+    {
+        Player player = GameManager.Instance.player;
+        player.gameObject.SetActive(true);
+        GameManager.Instance.InitPlayerPos();
+        player.EnablePlayerInput();
+        yield return null;
+    }
 }
+

@@ -38,7 +38,7 @@ public abstract class BaseManager<T> where T:class//,new()
                         if (info != null)
                             instance = info.Invoke(null) as T;
                         else
-                            Debug.LogError("没有得到对应的无参构造函数");
+                            Debug.LogWarning("没有得到对应的无参构造函数");
 
                         //instance = Activator.CreateInstance(typeof(T), true) as T;
                     }

@@ -216,7 +216,7 @@ public class NPCController : MonoBehaviour
         DisableFollow();
         if (homePos == Vector2.zero)
         {
-            Debug.LogError("请初始化家的位置");
+            Debug.LogWarning("请初始化家的位置");
             return;
         }
         List<Vector3> newPath = AStarMgr.Instance.FindPath(transform.position, homePos);
@@ -236,7 +236,7 @@ public class NPCController : MonoBehaviour
         else
         {
             // 没有路径时停止移动
-            Debug.LogError("找不到一条通往家的路");
+            Debug.LogWarning("找不到一条通往家的路");
             isMoving = false;
             m_stateMachine.ChangeState(E_StateType.Idle);
         }
@@ -263,7 +263,7 @@ public class NPCController : MonoBehaviour
         else
         {
             // 没有路径时停止移动
-            Debug.LogError($"找不到一条通往目标位置的路，目标位置{targetPos}");
+            Debug.LogWarning($"找不到一条通往目标位置的路，目标位置{targetPos}");
             isMoving = false;
             m_stateMachine.ChangeState(E_StateType.Idle);
         }

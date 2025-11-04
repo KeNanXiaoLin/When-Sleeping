@@ -16,7 +16,7 @@ public class StateMachine
     {
         if (!_states.ContainsKey(stateName))
         {
-            Debug.LogError($"状态机中不存在名为 {stateName} 的状态");
+            Debug.LogWarning($"状态机中不存在名为 {stateName} 的状态");
             return;
         }
         if (CurrentStateType == stateName)

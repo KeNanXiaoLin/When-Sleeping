@@ -127,7 +127,7 @@ public class DialogObj : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("对话还没有解锁，暂时不能播放");
+                    Debug.LogWarning("对话还没有解锁，暂时不能播放");
                 }
 
             }

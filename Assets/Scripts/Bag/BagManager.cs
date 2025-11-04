@@ -62,7 +62,7 @@ public class BagManager : BaseManager<BagManager>
     {
         if (!allIteminfos.ContainsKey(itemID))
         {
-            Debug.LogError("不存在这种物品，请检查传入参数");
+            Debug.LogWarning("不存在这种物品，请检查传入参数");
             return;
         }
         TimeSystem.Instance.StartCoroutine(AddItemCoroutine(itemID, count));
@@ -77,7 +77,7 @@ public class BagManager : BaseManager<BagManager>
     {
         if (!allIteminfos.ContainsKey(itemID))
         {
-            Debug.LogError("不存在这种物品，请检查传入参数");
+            Debug.LogWarning("不存在这种物品，请检查传入参数");
             yield break;
         }
         BagItem addItem = allIteminfos[itemID];
@@ -103,7 +103,7 @@ public class BagManager : BaseManager<BagManager>
     {
         if (!allIteminfos.ContainsKey(itemID))
         {
-            Debug.LogError("不存在这种物品，请检查传入参数");
+            Debug.LogWarning("不存在这种物品，请检查传入参数");
             return;
         }
         BagItem removeItem = allIteminfos[itemID];
@@ -123,7 +123,7 @@ public class BagManager : BaseManager<BagManager>
         }
         if (!find)
         {
-            Debug.LogError("尝试移除你背包中不存在的物品，请检查传入参数");
+            Debug.LogWarning("尝试移除你背包中不存在的物品，请检查传入参数");
         }
         EventCenter.Instance.EventTrigger<List<BagData>>(E_EventType.E_UpdateBag, allDatas);
     }

@@ -50,7 +50,7 @@ namespace KNXL.DialogSystem
                 }
                 else
                 {
-                    Debug.LogError("存在id相同的数据，请检查配置文件");
+                    Debug.LogWarning("存在id相同的数据，请检查配置文件");
                 }
             }
 
@@ -62,7 +62,7 @@ namespace KNXL.DialogSystem
                 }
                 else
                 {
-                    Debug.LogError("存在id相同的数据，请检查配置文件");
+                    Debug.LogWarning("存在id相同的数据，请检查配置文件");
                 }
             }
         }
@@ -76,7 +76,7 @@ namespace KNXL.DialogSystem
             {
                 return allRoleDialogDataDic[id];
             }
-            Debug.LogError("请传入正确的ID");
+            Debug.LogWarning("请传入正确的ID");
             return null;
         }
 
@@ -103,7 +103,7 @@ namespace KNXL.DialogSystem
         {
             if (data == null)
             {
-                Debug.LogError("不支持播放空对话，请检查对话数据");
+                Debug.LogWarning("不支持播放空对话，请检查对话数据");
                 yield break;
             }
             currentSingleDialogData = data;
@@ -120,7 +120,7 @@ namespace KNXL.DialogSystem
             }
             else
             {
-                Debug.LogError("找不到对话数据，请检查参数传入是否正确");
+                Debug.LogWarning("找不到对话数据，请检查参数传入是否正确");
                 yield break;
             }
         }
@@ -131,21 +131,21 @@ namespace KNXL.DialogSystem
             // 1. 校验对话数据
             if (!allRoleDialogDataDic.TryGetValue(dialogID, out var roleDialogData) || roleDialogData.startDialog == 0)
             {
-                Debug.LogError($"找不到对话数据或对话配置错误（ID：{dialogID}）");
+                Debug.LogWarning($"找不到对话数据或对话配置错误（ID：{dialogID}）");
                 return;
             }
 
             // 2. 校验玩家存在
             if (GameManager.Instance.player == null)
             {
-                Debug.LogError("玩家未初始化，无法触发对话");
+                Debug.LogWarning("玩家未初始化，无法触发对话");
                 return;
             }
 
             // 3. 校验触发条件（核心差异点）
             if (!CheckCanPlayDialog(roleDialogData))
             {
-                Debug.LogError($"对话无法触发（ID：{dialogID}，类型：{playType}）");
+                Debug.LogWarning($"对话无法触发（ID：{dialogID}，类型：{playType}）");
                 return;
             }
             StartCoroutine(StartPlayDialogCoroutine(dialogID, playType, endAction));
@@ -206,7 +206,7 @@ namespace KNXL.DialogSystem
         {
             if (currentSingleDialogData == null || currentRoleDialogData == null)
             {
-                Debug.LogError("无当前播放的对话数据");
+                Debug.LogWarning("无当前播放的对话数据");
                 return;
             }
 
@@ -219,7 +219,7 @@ namespace KNXL.DialogSystem
                 }
                 else
                 {
-                    Debug.LogError($"找不到下一句对话（子节点ID：{currentSingleDialogData.childNodes}）");
+                    Debug.LogWarning($"找不到下一句对话（子节点ID：{currentSingleDialogData.childNodes}）");
                     DialogPlayEnd(); // 找不到下一句也强制结束
                 }
             }
@@ -238,7 +238,7 @@ namespace KNXL.DialogSystem
             if (id == 0) return;
             if (!allRoleDialogDataDic.ContainsKey(id))
             {
-                Debug.LogError("找不到要播放的指定参数，请检查配置");
+                Debug.LogWarning("找不到要播放的指定参数，请检查配置");
                 return;
             }
             RoleDialogData roleDialogData = allRoleDialogDataDic[id];
@@ -371,7 +371,7 @@ namespace KNXL.DialogSystem
                     }
                     else
                     {
-                        Debug.LogError("这个剧情已经解锁了，不要重复解锁");
+                        Debug.LogWarning("这个剧情已经解锁了，不要重复解锁");
                     }
                 }
             }
@@ -381,7 +381,7 @@ namespace KNXL.DialogSystem
         {
             if (!allRoleDialogDataDic.ContainsKey(dialogID))
             {
-                Debug.LogError($"找不到对话数据（ID：{dialogID}）");
+                Debug.LogWarning($"找不到对话数据（ID：{dialogID}）");
                 type = E_DialogPlayType.Plot;
                 return false;
             }

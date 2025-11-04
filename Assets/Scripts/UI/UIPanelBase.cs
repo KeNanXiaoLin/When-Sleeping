@@ -43,12 +43,12 @@ public abstract class UIPanelBase : MonoBehaviour
         {
             T control = controlDic[name] as T;
             if (control == null)
-                Debug.LogError($"不存在对应名字{name}类型为{typeof(T)}的组件");
+                Debug.LogWarning($"不存在对应名字{name}类型为{typeof(T)}的组件");
             return control;
         }
         else
         {
-            Debug.LogError($"不存在对应名字{name}的组件");
+            Debug.LogWarning($"不存在对应名字{name}的组件");
             return null;
         }
     }

@@ -1342,6 +1342,28 @@
         "option4Next": 0
     },
     {
+        "id": 10950,
+        "type": 0,
+        "dialogType": 5,
+        "dialogTime": 0,
+        "dialogName": "上帝",
+        "headIconRes": "Sprites/God",
+        "itemID": -1,
+        "effectSize": 0,
+        "dialogText": "去客厅的桌子上喝牛奶吧",
+        "parentNodes": 0,
+        "childNodes": 0,
+        "tipInfoText": "去客厅的桌子上喝牛奶吧",
+        "option1": "",
+        "option2": "",
+        "option3": "",
+        "option4": "",
+        "option1Next": 0,
+        "option2Next": 0,
+        "option3Next": 0,
+        "option4Next": 0
+    },
+    {
         "id": 11001,
         "type": 1,
         "dialogType": 1,

@@ -22,19 +22,19 @@ public class GameUI : UIPanelBase
         }
         else
         {
-            Debug.LogError("赋值的时机不对，这个时候玩家还没有初始化");
+            Debug.LogWarning("赋值的时机不对，这个时候玩家还没有初始化");
         }
     }
 
     public override void ShowMe()
     {
-        EventCenter.Instance.AddEventListener<string>(E_EventType.E_UpdateTime, UpdateTime);
+        // EventCenter.Instance.AddEventListener<string>(E_EventType.E_UpdateTime, UpdateTime);
         EventCenter.Instance.AddEventListener<List<BagData>>(E_EventType.E_UpdateBag, UpdateBagInfo);
         EventCenter.Instance.AddEventListener<int>(E_EventType.E_SanChange, UpdateSanValue);
     }
     public override void HideMe()
     {
-        EventCenter.Instance.RemoveEventListener<string>(E_EventType.E_UpdateTime, UpdateTime);
+        // EventCenter.Instance.RemoveEventListener<string>(E_EventType.E_UpdateTime, UpdateTime);
         EventCenter.Instance.RemoveEventListener<List<BagData>>(E_EventType.E_UpdateBag, UpdateBagInfo);
         EventCenter.Instance.RemoveEventListener<int>(E_EventType.E_SanChange, UpdateSanValue);
     }

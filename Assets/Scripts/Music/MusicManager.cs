@@ -66,7 +66,7 @@ public class MusicManager:SingletonAutoMono<MusicManager>
         }
         else
         {
-            Debug.LogError("加载资源失败，请检查加载资源路径是否存在问题" + "Music/" + name);
+            Debug.LogWarning("加载资源失败，请检查加载资源路径是否存在问题" + "Music/" + name);
         }
     }
 
@@ -132,7 +132,7 @@ public class MusicManager:SingletonAutoMono<MusicManager>
         }
         else
         {
-            Debug.LogError("加载资源失败，请检查加载资源路径是否存在问题" + "Sound/" + name);
+            Debug.LogWarning("加载资源失败，请检查加载资源路径是否存在问题" + "Sound/" + name);
         }
     }
 

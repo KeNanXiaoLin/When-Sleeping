@@ -36,17 +36,17 @@ namespace KNXL.DialogSystem
         {
             if (data == null)
             {
-                Debug.LogError("请检查配置文件，传入的数据不能为空");
+                Debug.LogWarning("请检查配置文件，传入的数据不能为空");
                 return;
             }
             if (data.dialogType != E_DialogType.Choose)
             {
-                Debug.LogError("不能处理不是选择对话的节点，请检查传入类型");
+                Debug.LogWarning("不能处理不是选择对话的节点，请检查传入类型");
                 return;
             }
             if (data.option1 == "")
             {
-                Debug.LogError("请检查配置数据，不能配置空选择节点");
+                Debug.LogWarning("请检查配置数据，不能配置空选择节点");
                 return;
             }
             else if (data.option2 == "")

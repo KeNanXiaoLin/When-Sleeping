@@ -63,7 +63,7 @@ public class UIManager:BaseManager<UIManager>
         GameObject prefab = Resources.Load<GameObject>("UI/" + panelName);
         if (prefab == null)
         {
-            Debug.LogError("面板不存在，请检测路径下是否存在面板,面板加载路径" + "UI/" + panelName);
+            Debug.LogWarning("面板不存在，请检测路径下是否存在面板,面板加载路径" + "UI/" + panelName);
         }
         GameObject panelObj = GameObject.Instantiate(prefab, uiRoot, false);
         //获取对应UI组件返回出去
