@@ -52,21 +52,29 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         DialogSystemMgr.Instance.UnLockDialogByPreID(dialogId);
         switch (dialogId)
         {
+            //这里是玩家触发了Bob敲门的剧情，可以让玩家出门了
+            case 10005:
+                RoleDialogData plotData = DialogSystemMgr.Instance.GetPlotByID(10037);
+                DisableNormalRoleDialog(plotData);
+                break;
+            //旁白提示玩家回家，这个时候可以让Bob回家，可以让玩家正常从院子回家
             case 10014:
-                //在让Bob回家后销毁Bob
-                // var bobObj = player.transform.Find(Setting.bobName);
-                // Destroy(bobObj.gameObject);
                 bobController.BackToHome();
+                plotData = DialogSystemMgr.Instance.GetPlotByID(10038);
+                DisableNormalRoleDialog(plotData);
+                break;
+            //旁白提示玩家回家，这个时候可以让Bob回家，可以让玩家正常从院子回家
+            case 10028:
+                bobController.BackToHome();
+                plotData = DialogSystemMgr.Instance.GetPlotByID(10039);
+                DisableNormalRoleDialog(plotData);
                 break;
             //玩家选择选项之后出现Mom出现让玩家喝牛奶
             case 10015:
                 player.UpdatePlayerFacing(E_Direction.Down);
-                GameObject momPrefab = Resources.Load<GameObject>($"NPC/{Setting.momName}");
-                var momObj = GameObject.Instantiate(momPrefab, new Vector3(-5, -3, 0), Quaternion.identity);
-                momObj.name = Setting.momName;
-                momController = momObj.GetComponent<NPCController>();
+                SpawnMom(new Vector3(-5, -3, 0));
                 momController.GotoTargetPos(player.transform.position + new Vector3(0, -1, 0));
-                while (Vector2.Distance(player.transform.position, momObj.transform.position) > 1f)
+                while (Vector2.Distance(player.transform.position, momController.transform.position) > 1f)
                 {
                     yield return null;
                 }
@@ -91,10 +99,13 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
             //两人商量将牛奶给猫喝
             case 10021:
                 //将前置对话给关闭了，播放新的对话
-                RoleDialogData plotData = DialogSystemMgr.Instance.GetPlotByID(10007);
+                plotData = DialogSystemMgr.Instance.GetPlotByID(10007);
                 plotData.canTriggerRepeat = false;
                 plotData.isTrigger = true;
                 bobController.EnableFollow(GameManager.Instance.player.transform);
+                break;
+            case 10022:
+                DialogSystemMgr.Instance.StartPlayDialog(10023, E_DialogPlayType.Plot);
                 break;
         }
     }
@@ -109,17 +120,14 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 //必须要在场景2
                 if (GameManager.Instance.currentSceneName == Setting.GameScene2)
                 {
-                    GameObject momPrefab = Resources.Load<GameObject>($"NPC/{Setting.momName}");
-                    var momObj = GameObject.Instantiate(momPrefab, new Vector3(-1, -5, 0), Quaternion.identity);
-                    momObj.name = Setting.momName;
-                    momController = momObj.GetComponent<NPCController>();
-                    momController.GotoTargetPos(player.transform.position + new Vector3(-1, 1, 0));
-                    while (Vector2.Distance(player.transform.position, momObj.transform.position) > 1f)
+                    SpawnMom(new Vector3(-1, -5, 0));
+                    momController.GotoTargetPos(player.transform.position + new Vector3(0, 1, 0));
+                    while (Vector2.Distance(player.transform.position, momController.transform.position) > 1f)
                     {
                         yield return null;
                     }
-                    player.UpdatePlayerFacing(E_Direction.Left);
-                    momController.SetNPCFacing(E_Direction.Right);
+                    player.UpdatePlayerFacing(E_Direction.Up);
+                    momController.SetNPCFacing(E_Direction.Down);
                     DialogSystemMgr.Instance.StartPlayDialog(10020, E_DialogPlayType.Plot);
                 }
                 break;
@@ -138,13 +146,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                     DialogSystemMgr.Instance.GetPlotByID(plotData.preRoleDialogs).isTrigger)
                 {
                     player.UpdatePlayerFacing(E_Direction.Left);
-                    //实例化一个Bob出来和玩家模拟对话
-                    GameObject BobPrefab = Resources.Load<GameObject>($"NPC/{Setting.bobName}");
-                    // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
-                    var bobObj = GameObject.Instantiate(BobPrefab, new Vector3(-3, 15.8f, 0f), Quaternion.identity);
-                    // bobObj.transform.localPosition = new Vector3(-1, 0, 0);
-                    bobObj.name = Setting.bobName;
-                    bobController = bobObj.GetComponent<NPCController>();
+                    SpawnBob(player.transform.position + Vector3.left);
                     DialogSystemMgr.Instance.StartPlayDialog(10021, E_DialogPlayType.Plot);
                     return;
                 }
@@ -154,13 +156,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                     DialogSystemMgr.Instance.GetPlotByID(plotData.preRoleDialogs).isTrigger)
                 {
                     player.UpdatePlayerFacing(E_Direction.Left);
-                    //实例化一个Bob出来和玩家模拟对话
-                    GameObject BobPrefab = Resources.Load<GameObject>($"NPC/{Setting.bobName}");
-                    // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
-                    var bobObj = GameObject.Instantiate(BobPrefab, new Vector3(-3, 15.8f, 0f), Quaternion.identity);
-                    // bobObj.transform.localPosition = new Vector3(-1, 0, 0);
-                    bobObj.name = Setting.bobName;
-                    bobController = bobObj.GetComponent<NPCController>();
+                    SpawnBob(player.transform.position + Vector3.left);
                     DialogSystemMgr.Instance.StartPlayDialog(10019, E_DialogPlayType.Plot);
                     return;
                 }
@@ -170,13 +166,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                     DialogSystemMgr.Instance.GetPlotByID(plotData.preRoleDialogs).isTrigger)
                 {
                     player.UpdatePlayerFacing(E_Direction.Left);
-                    //实例化一个Bob出来和玩家模拟对话
-                    GameObject BobPrefab = Resources.Load<GameObject>($"NPC/{Setting.bobName}");
-                    // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
-                    var bobObj = GameObject.Instantiate(BobPrefab, new Vector3(-3, 15.8f, 0f), Quaternion.identity);
-                    // bobObj.transform.localPosition = new Vector3(-1, 0, 0);
-                    bobObj.name = Setting.bobName;
-                    bobController = bobObj.GetComponent<NPCController>();
+                    SpawnBob(player.transform.position + Vector3.left);
                     DialogSystemMgr.Instance.StartPlayDialog(10006, E_DialogPlayType.Plot);
                 }
                 break;
@@ -185,11 +175,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 //这个对话必须触发才会在桌上出现牛奶
                 if (plotData.isTrigger)
                 {
-                    //实例化一个Bob出来
-                    GameObject BobPrefab = Resources.Load<GameObject>($"NPC/{Setting.bobName}");
-                    var bobObj = GameObject.Instantiate(BobPrefab, new Vector3(-1, -5f, 0f), Quaternion.identity);
-                    bobObj.name = Setting.bobName;
-                    bobController = bobObj.GetComponent<NPCController>();
+                    SpawnBob(new Vector3(-1, -5f, 0f));
                     bobController.EnableFollow(player.transform);
                     GameObject milkObj = GameObject.Instantiate(Resources.Load<GameObject>("Item/ItemPrefab"));
                     milkObj.transform.position = new Vector3(2.7f, 1.2f, 0);
@@ -206,6 +192,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     /// <param name="dialogId"></param>
     private IEnumerator CheckPlotStartCanDoSomething(int dialogId)
     {
+        Player player = GameManager.Instance.player;
         switch (dialogId)
         {
             //这里是玩家和电视剧交互完毕后解锁的剧情
@@ -215,12 +202,24 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 MusicManager.Instance.PlaySound("按门铃音效6");
                 break;
             case 10015:
-                //切换到场景3
-                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
-                break;
             case 10018:
                 //切换到场景3
                 yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
+                break;
+            case 10029:
+                //切换到场景3
+                player.UpdatePlayerFacing(E_Direction.Up);
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
+                SpawnMom(new Vector3(-5, -3, 0));
+                momController.GotoTargetPos(player.transform.position + new Vector3(0, -1, 0));
+                while (Vector2.Distance(player.transform.position, momController.transform.position) > 1f)
+                {
+                    yield return null;
+                }
+                break;
+            case 10023:
+                //喂小猫喝牛奶，需要使用牛奶
+                BagManager.Instance.RemoveItem(2);
                 break;
         }
     }
@@ -239,5 +238,37 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 yield return null;
                 break;
         }
+    }
+
+    /// <summary>
+    /// 在当前场景中产生一个Bob
+    /// </summary>
+    private void SpawnBob(Vector3 bobPos)
+    {
+        //实例化一个Bob出来和玩家模拟对话
+        GameObject BobPrefab = Resources.Load<GameObject>($"NPC/{Setting.bobName}");
+        // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
+        var bobObj = GameObject.Instantiate(BobPrefab, bobPos, Quaternion.identity);
+        // bobObj.transform.localPosition = new Vector3(-1, 0, 0);
+        bobObj.name = Setting.bobName;
+        bobController = bobObj.GetComponent<NPCController>();
+    }
+
+    private void SpawnMom(Vector3 momPos)
+    {
+        GameObject momPrefab = Resources.Load<GameObject>($"NPC/{Setting.momName}");
+        var momObj = GameObject.Instantiate(momPrefab, momPos, Quaternion.identity);
+        momObj.name = Setting.momName;
+        momController = momObj.GetComponent<NPCController>();
+    }
+
+    /// <summary>
+    /// 关闭在场景中放置的可以正常触发的对话
+    /// </summary>
+    /// <param name="plotData"></param>
+    private void DisableNormalRoleDialog(RoleDialogData plotData)
+    {
+        plotData.canTriggerRepeat = false;
+        plotData.isTrigger = true;
     }
 }

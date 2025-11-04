@@ -19,7 +19,7 @@ public class DialogInfoPanel : UIPanelBase
 
     public void PlayNextDialog()
     {
-
+        DialogSystemMgr.Instance.PlayNextDialog();
     }
 
     public void ShowDialog(DialogData data)

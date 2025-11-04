@@ -24,6 +24,32 @@ public class DialogObj : MonoBehaviour
 
     void Awake()
     {
+        //如果是进入触发的剧情对话，那么触发了一次后就不用再次实例化科
+        if (enterTrigger)
+        {
+            RoleDialogData data = GetDialogData();
+            switch (data.dialogPlayType)
+            {
+                case E_DialogPlayType.Plot:
+                    if (data.isTrigger)
+                    {
+                        Destroy(gameObject);
+                        return;
+                    }
+                    break;
+                case E_DialogPlayType.Normal:
+                    //如果对话不可以重复触发且已经触发过，不需要这个物体了
+                    if (!data.canTriggerRepeat && data.isTrigger)
+                    {
+                        Destroy(gameObject);
+                        return;
+                    }
+
+                    break;
+            }
+
+        }
+
         //初始化所有身上的数据
         GetAllDialogData();
     }
@@ -82,12 +108,22 @@ public class DialogObj : MonoBehaviour
             if (collision.CompareTag("Player"))
             {
                 //这种都是剧情对话
-                if (DialogSystemMgr.Instance.CheckDialogCanPlay(dialogId, E_DialogPlayType.Plot))
+                if (DialogSystemMgr.Instance.CheckDialogCanPlay(dialogId, out E_DialogPlayType playType))
                 {
-                    DialogSystemMgr.Instance.StartPlayDialog(dialogId, E_DialogPlayType.Plot, GameManager.Instance.EnablePlayerInput);
-                    enterTrigger = false;
-                    //因为只触发一次，所以触发后就可以删除
-                    Destroy(this.gameObject);
+                    switch (playType)
+                    {
+                        //剧情对话只会触发一次
+                        case E_DialogPlayType.Plot:
+                            DialogSystemMgr.Instance.StartPlayDialog(dialogId, E_DialogPlayType.Plot, GameManager.Instance.EnablePlayerInput);
+                            Destroy(this.gameObject);
+                            break;
+                        case E_DialogPlayType.Normal:
+                            DialogSystemMgr.Instance.StartPlayDialog(dialogId, E_DialogPlayType.Plot, GameManager.Instance.EnablePlayerInput);
+                            break;
+
+
+                    }
+
                 }
                 else
                 {

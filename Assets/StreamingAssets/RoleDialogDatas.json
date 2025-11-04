@@ -298,25 +298,25 @@
     },
     {
         "id": 10028,
-        "owner": 3,
+        "owner": 0,
         "startDialog": 2301,
         "canTriggerRepeat": false,
-        "preRoleDialogs": -1,
+        "preRoleDialogs": 10024,
         "dialogPlayType": 0,
         "dialogDes": "旁白提醒玩家该回家了",
         "isTrigger": false,
-        "isLocked": false
+        "isLocked": true
     },
     {
         "id": 10029,
         "owner": 1,
         "startDialog": 11401,
         "canTriggerRepeat": false,
-        "preRoleDialogs": -1,
+        "preRoleDialogs": 10028,
         "dialogPlayType": 1,
         "dialogDes": "妈妈再一次提醒迈克喝牛奶",
         "isTrigger": false,
-        "isLocked": false
+        "isLocked": true
     },
     {
         "id": 10030,
@@ -392,6 +392,39 @@
         "preRoleDialogs": 10035,
         "dialogPlayType": 1,
         "dialogDes": "迈克兽性大发，吃掉了朋友，游戏结束",
+        "isTrigger": false,
+        "isLocked": true
+    },
+    {
+        "id": 10037,
+        "owner": 0,
+        "startDialog": 10050,
+        "canTriggerRepeat": true,
+        "preRoleDialogs": -1,
+        "dialogPlayType": 0,
+        "dialogDes": "一些上帝引导,这是玩家不触发bob敲门不让他出门的引导",
+        "isTrigger": false,
+        "isLocked": false
+    },
+    {
+        "id": 10038,
+        "owner": 0,
+        "startDialog": 10550,
+        "canTriggerRepeat": true,
+        "preRoleDialogs": -1,
+        "dialogPlayType": 0,
+        "dialogDes": "一些上帝引导,这是让玩家和Bob在院子中进行探索的引导",
+        "isTrigger": false,
+        "isLocked": false
+    },
+    {
+        "id": 10039,
+        "owner": 0,
+        "startDialog": 11150,
+        "canTriggerRepeat": true,
+        "preRoleDialogs": 10021,
+        "dialogPlayType": 0,
+        "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在院子中进行探索的引导",
         "isTrigger": false,
         "isLocked": true
     }

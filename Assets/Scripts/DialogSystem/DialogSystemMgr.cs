@@ -143,7 +143,7 @@ namespace KNXL.DialogSystem
             }
 
             // 3. 校验触发条件（核心差异点）
-            if (!CheckCanPlayDialog(roleDialogData, playType))
+            if (!CheckCanPlayDialog(roleDialogData))
             {
                 Debug.LogError($"对话无法触发（ID：{dialogID}，类型：{playType}）");
                 return;
@@ -179,12 +179,12 @@ namespace KNXL.DialogSystem
         /// <summary>
         /// 校验对话是否可播放（封装差异条件）
         /// </summary>
-        private bool CheckCanPlayDialog(RoleDialogData data, E_DialogPlayType playType)
+        private bool CheckCanPlayDialog(RoleDialogData data)
         {
             // 通用条件：未锁定
             if (data.isLocked) return false;
 
-            switch (playType)
+            switch (data.dialogPlayType)
             {
                 case E_DialogPlayType.Normal:
                     // 普通对话：未触发 或 已触发但支持重复
@@ -377,16 +377,18 @@ namespace KNXL.DialogSystem
             }
         }
 
-        public bool CheckDialogCanPlay(int dialogID, E_DialogPlayType playType)
+        public bool CheckDialogCanPlay(int dialogID, out E_DialogPlayType type)
         {
             if (!allRoleDialogDataDic.ContainsKey(dialogID))
             {
                 Debug.LogError($"找不到对话数据（ID：{dialogID}）");
+                type = E_DialogPlayType.Plot;
                 return false;
             }
 
             var data = allRoleDialogDataDic[dialogID];
-            return CheckCanPlayDialog(data, playType);
+            type = data.dialogPlayType;
+            return CheckCanPlayDialog(data);
         }
 
         public void HandleItemDialogData(DialogData data) { }
