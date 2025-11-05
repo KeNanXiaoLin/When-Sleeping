@@ -5,7 +5,7 @@ using UnityEngine;
 public class IdleState : BaseState
 {
     private E_Direction lastFace;
-    public IdleState(NPCController npc) : base(npc)
+    public IdleState(AIBase npc) : base(npc)
     {
     }
 

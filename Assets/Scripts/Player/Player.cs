@@ -63,6 +63,20 @@ public class Player : MonoBehaviour
     public bool isFall => roleAnimator.GetBool("isFall");
     #endregion
 
+    #region 战斗场景相关的战斗数值
+    /// <summary>
+    /// 攻击力的大小
+    /// </summary>
+    public int atkSize = 10;
+    /// <summary>
+    /// 攻击的范围，因为进行的是盒装检测，所以实际范围会*2
+    /// </summary>
+    public float atkRange = 0.5f;
+    public int maxHp = 100;
+    private int curHp;
+    public Transform damageCheckPoint;
+    #endregion
+
     #region 村庄场景相关参数
     private float verticalMove;
     private E_Direction last_dir = E_Direction.Right;
@@ -85,11 +99,20 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        curHp = maxHp;
         roleAnimator = this.GetComponent<Animator>();
 
         platformLogic = new PlatformLogic(this);
         statusData = new();
         Init();
+    }
+
+    void Start()
+    {
+        if (damageCheckPoint != null)
+        {
+            damageCheckPoint.localPosition = new Vector3(atkRange, 0, 0);
+        }
     }
 
     private void Init()
@@ -107,6 +130,23 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        GetKeyCheck();
+        switch (moveType)
+        {
+            case E_MoveType.Battle:
+                BattleActionUpdate();
+                break;
+            case E_MoveType.Life:
+                LifeActionUpdate();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 游戏中玩家的按键检测
+    /// </summary>
+    private void GetKeyCheck()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
@@ -126,118 +166,131 @@ public class Player : MonoBehaviour
             {
                 DialogSystemMgr.Instance.StartPlayDialog(curDialogData.id, curDialogData.dialogPlayType);
             }
-
         }
-        if (moveType == E_MoveType.Battle && Input.GetKeyDown(KeyCode.N))
+    }
+
+    /// <summary>
+    /// 战斗场景动作的每帧检测
+    /// </summary>
+    private void BattleActionUpdate()
+    {
+        #region 移动相关逻辑
+        //得到水平方向的输入 一般就是左右键输入
+        //-1  0   1 三个值
+        horizontalMove = Input.GetAxisRaw("Horizontal");
+        //面朝左
+        if (horizontalMove != 0)
         {
-            TimeSystem.Instance.JumpToNextDay();
+            roleAnimator.SetBool("isMove", true);
+            this.transform.Translate(Vector2.right * moveSpeed * Time.deltaTime * horizontalMove);
         }
-        switch (moveType)
+        else
         {
-            case E_MoveType.Battle:
-                #region 移动相关逻辑
-                //得到水平方向的输入 一般就是左右键输入
-                //-1  0   1 三个值
-                horizontalMove = Input.GetAxisRaw("Horizontal");
-                //面朝左
-                if (horizontalMove < 0)
-                {
-                    roleAnimator.SetBool("isMoveRight", false);
-                    roleAnimator.SetBool("isMoveLeft", true);
-                    this.transform.Translate(Vector2.left * moveSpeed * Time.deltaTime);
-                }
-                else if (horizontalMove > 0)
-                {
-                    roleAnimator.SetBool("isMoveRight", true);
-                    roleAnimator.SetBool("isMoveLeft", false);
-                    this.transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
-                }
-                else
-                {
-                    roleAnimator.SetBool("isMoveRight", false);
-                    roleAnimator.SetBool("isMoveLeft", false);
-                }
-                #endregion
-
-                #region 跳跃逻辑
-                //主动下落按键检测
-                //我们没有跳跃没有下落时 才应该响应这个组合键
-                if (canFall && !isJump && !isFall &&
-                     Input.GetKey(KeyCode.S) && Input.GetKeyDown(KeyCode.Space))
-                {
-                    this.Fall();
-                }
-                //组合键的响应 应该和跳跃时互斥的 所以我们使用 if else
-                else if (Input.GetKeyDown(KeyCode.Space) && jumpIndex != 2)
-                {
-                    //跳跃
-                    roleAnimator.SetBool("isJump", true);
-                    //当前Y速度 = 竖直上抛的初始速度
-                    nowYSpeed = initYSpeed;
-                    //二段跳计数 只能连续跳两次
-                    ++jumpIndex;
-                }
-
-                //跳跃状态时 Y 坐标的变化
-                //下落状态时 Y 坐标也需要变化
-                if (isJump || isFall)
-                {
-                    //当我们跳跃或者下落时
-                    //第一帧位移之前 就让当前Y的速度产生变化
-                    //收到重力加速度的影响 每一帧 都去改变当前的移动速度
-                    nowYSpeed -= G * Time.deltaTime;
-                    //位移逻辑
-                    this.transform.Translate(Vector3.up * nowYSpeed * Time.deltaTime);
-
-                    //当竖直方向的速度小于等于0 就应该播放 下落的动画
-                    roleAnimator.SetBool("isFall", nowYSpeed <= 0);
-
-                    //判断是否落在了对应平台上
-                    if (this.transform.position.y <= nowPlatformY)
-                    {
-                        //停止跳跃动画
-                        roleAnimator.SetBool("isJump", false);
-                        roleAnimator.SetBool("isFall", false);
-                        //避免下落时 落到"平台里" 把它拉回来
-                        Vector3 pos = this.transform.position;
-                        pos.y = nowPlatformY;
-                        this.transform.position = pos;
-                        //落地时才去清楚二段跳计数
-                        jumpIndex = 0;
-                    }
-
-                }
-                #endregion
-
-                #region 平台切换相关逻辑
-                platformLogic.UpdateCheck();
-                #endregion
-                break;
-            case E_MoveType.Life:
-                horizontalMove = Input.GetAxisRaw("Horizontal");
-                verticalMove = Input.GetAxisRaw("Vertical");
-                if (horizontalMove > 0 && Mathf.Approximately(verticalMove, 0))
-                    last_dir = E_Direction.Right;
-                else if (horizontalMove < 0 && Mathf.Approximately(verticalMove, 0))
-                    last_dir = E_Direction.Left;
-                else if (verticalMove < 0 && Mathf.Approximately(horizontalMove, 0))
-                    last_dir = E_Direction.Down;
-                else if (verticalMove > 0 && Mathf.Approximately(horizontalMove, 0))
-                    last_dir = E_Direction.Up;
-                else if (horizontalMove > 0 && verticalMove > 0)
-                    last_dir = E_Direction.RightUp;
-                else if (horizontalMove > 0 && verticalMove < 0)
-                    last_dir = E_Direction.RightDown;
-                else if (horizontalMove < 0 && verticalMove > 0)
-                    last_dir = E_Direction.LeftUp;
-                else if (horizontalMove < 0 && verticalMove < 0)
-                    last_dir = E_Direction.LeftDown;
-                transform.Translate(new Vector2(horizontalMove * moveSpeed * Time.deltaTime, verticalMove * moveSpeed * Time.deltaTime));
-                ResetAnimatorParameters();
-                roleAnimator.SetFloat("x", Mathf.Abs(horizontalMove) < 0.1f ? xFaceMinVal : horizontalMove);
-                roleAnimator.SetFloat("y", Mathf.Abs(verticalMove) < 0.1f ? yFaceMinVal : verticalMove);
-                break;
+            roleAnimator.SetBool("isMove", false);
         }
+        //需要改变面朝向
+        if (horizontalMove > 0)
+        {
+            this.transform.localScale = Vector3.one;
+        }
+        else if (horizontalMove < 0)
+        {
+            this.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        #endregion
+
+        #region 跳跃逻辑
+        //主动下落按键检测
+        //我们没有跳跃没有下落时 才应该响应这个组合键
+        if (canFall && !isJump && !isFall &&
+             Input.GetKey(KeyCode.S) && Input.GetKeyDown(KeyCode.Space))
+        {
+            this.Fall();
+        }
+        //组合键的响应 应该和跳跃时互斥的 所以我们使用 if else
+        else if (Input.GetKeyDown(KeyCode.Space) && jumpIndex != 2)
+        {
+            //跳跃
+            roleAnimator.SetBool("isJump", true);
+            //当前Y速度 = 竖直上抛的初始速度
+            nowYSpeed = initYSpeed;
+            //二段跳计数 只能连续跳两次
+            ++jumpIndex;
+        }
+
+        //跳跃状态时 Y 坐标的变化
+        //下落状态时 Y 坐标也需要变化
+        if (isJump || isFall)
+        {
+            //当我们跳跃或者下落时
+            //第一帧位移之前 就让当前Y的速度产生变化
+            //收到重力加速度的影响 每一帧 都去改变当前的移动速度
+            nowYSpeed -= G * Time.deltaTime;
+            //位移逻辑
+            this.transform.Translate(Vector3.up * nowYSpeed * Time.deltaTime);
+
+            //当竖直方向的速度小于等于0 就应该播放 下落的动画
+            roleAnimator.SetBool("isFall", nowYSpeed <= 0);
+
+            //判断是否落在了对应平台上
+            if (this.transform.position.y <= nowPlatformY)
+            {
+                //停止跳跃动画
+                roleAnimator.SetBool("isJump", false);
+                roleAnimator.SetBool("isFall", false);
+                //避免下落时 落到"平台里" 把它拉回来
+                Vector3 pos = this.transform.position;
+                pos.y = nowPlatformY;
+                this.transform.position = pos;
+                //落地时才去清楚二段跳计数
+                jumpIndex = 0;
+            }
+
+        }
+        #endregion
+
+        #region 攻击相关逻辑
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            roleAnimator.SetTrigger("Attack1");
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            roleAnimator.SetTrigger("Attack2");
+        }
+        #endregion
+        #region 平台切换相关逻辑
+        platformLogic.UpdateCheck();
+        #endregion
+    }
+
+    /// <summary>
+    /// 生活场景动作的每帧检测
+    /// </summary>
+    private void LifeActionUpdate()
+    {
+        horizontalMove = Input.GetAxisRaw("Horizontal");
+        verticalMove = Input.GetAxisRaw("Vertical");
+        if (horizontalMove > 0 && Mathf.Approximately(verticalMove, 0))
+            last_dir = E_Direction.Right;
+        else if (horizontalMove < 0 && Mathf.Approximately(verticalMove, 0))
+            last_dir = E_Direction.Left;
+        else if (verticalMove < 0 && Mathf.Approximately(horizontalMove, 0))
+            last_dir = E_Direction.Down;
+        else if (verticalMove > 0 && Mathf.Approximately(horizontalMove, 0))
+            last_dir = E_Direction.Up;
+        else if (horizontalMove > 0 && verticalMove > 0)
+            last_dir = E_Direction.RightUp;
+        else if (horizontalMove > 0 && verticalMove < 0)
+            last_dir = E_Direction.RightDown;
+        else if (horizontalMove < 0 && verticalMove > 0)
+            last_dir = E_Direction.LeftUp;
+        else if (horizontalMove < 0 && verticalMove < 0)
+            last_dir = E_Direction.LeftDown;
+        transform.Translate(new Vector2(horizontalMove * moveSpeed * Time.deltaTime, verticalMove * moveSpeed * Time.deltaTime));
+        ResetAnimatorParameters();
+        roleAnimator.SetFloat("x", Mathf.Abs(horizontalMove) < 0.1f ? xFaceMinVal : horizontalMove);
+        roleAnimator.SetFloat("y", Mathf.Abs(verticalMove) < 0.1f ? yFaceMinVal : verticalMove);
     }
 
     /// <summary>
@@ -471,25 +524,6 @@ public class Player : MonoBehaviour
     public void UpdatePlayerFacing(E_Direction dir)
     {
         last_dir = dir;
-        // switch (dir)
-        // {
-        //     case E_Direction.Left:
-        //         roleAnimator.SetFloat("x", -0.1f);
-        //         roleAnimator.SetFloat("y", 0);
-        //         break;
-        //     case E_Direction.Right:
-        //         roleAnimator.SetFloat("x", 0.1f);
-        //         roleAnimator.SetFloat("y", 0);
-        //         break;
-        //     case E_Direction.Up:
-        //         roleAnimator.SetFloat("x", -0f);
-        //         roleAnimator.SetFloat("y", 0.1f);
-        //         break;
-        //     case E_Direction.Down:
-        //         roleAnimator.SetFloat("x", 0f);
-        //         roleAnimator.SetFloat("y", -0.1f);
-        //         break;
-        // }
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -552,5 +586,55 @@ public class Player : MonoBehaviour
             this.HideHeadTip();
             this.ClearDialogInfo();
         }
+    }
+
+    /// <summary>
+    /// 玩家进行攻击是否能够对敌人造成伤害的检测
+    /// </summary>
+    private void AttackDamageCheckEvent()
+    {
+        //这里进行盒状检测
+        Vector3 center = damageCheckPoint.position;
+        Collider2D col = Physics2D.OverlapBox(center, Vector2.one * atkRange, 0, 1 << LayerMask.NameToLayer("Enemy"));
+        if (col != null)
+        {
+            //得到敌人身上的脚本，进行造成伤害处理
+            if (col.TryGetComponent<EnemyObj>(out EnemyObj enemyObj))
+            {
+                enemyObj.Damage(atkSize);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 受伤
+    /// </summary>
+    /// <param name="damage"></param>
+    public void Damage(int damage)
+    {
+        if (curHp == 0) return;
+        curHp -= damage;
+        roleAnimator.SetTrigger("Damage");
+        if (curHp <= 0)
+        {
+            curHp = 0;
+            Death();
+        }
+    }
+
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    private void Death()
+    {
+        roleAnimator.SetBool("Death", true);
+    }
+
+    /// <summary>
+    /// 死亡动画播放结束触发的事件
+    /// </summary>
+    private void DeathPlayOverEvent()
+    {
+
     }
 }

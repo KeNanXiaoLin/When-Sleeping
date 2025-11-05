@@ -18,4 +18,18 @@ public static class Setting
     public const string AnimationName_MoveLeft = "MoveLeft";
     public const string AnimationName_MoveDown = "MoveDown";
     public const string AnimationName_MoveUp = "MoveUp";
+    public const string AnimationName_Enemy_Idle = "Enemy_Idle";
+    public const string AnimationName_Enemy_Walk = "Enemy_Walk";
+    public const string AnimationName_Enemy_Attack = "Enemy_Attack";
+    public const string AnimationName_Enemy_Damage = "Enemy_Damage";
+    public const string AnimationName_Enemy_Death = "Enemy_Death";
+    public const string LayerName_Player = "Player";
+    public const string LayerName_Enemy = "Enemy";
+    public const string PlayerAnimationParameter_IsMove = "isMove";
+    public const string PlayerAnimationParameter_IsJump = "isJump";
+    public const string PlayerAnimationParameter_IsFall = "isFall";
+    public const string PlayerAnimationParameter_Attack1 = "Attack1";
+    public const string PlayerAnimationParameter_Attack2 = "Attack2";
+    public const string PlayerAnimationParameter_Damage = "Damage";
+    public const string PlayerAnimationParameter_Death = "Death";
 }

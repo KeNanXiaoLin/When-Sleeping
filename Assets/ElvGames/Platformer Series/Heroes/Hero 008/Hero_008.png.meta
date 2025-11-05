@@ -3,7 +3,7 @@ guid: ed42e78892a38d44eb3bcef10543652c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -47,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +64,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -74,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -86,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -98,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -110,6 +116,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1554,77 +1561,76 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hero_008_65: 1704802285
-      Hero_008_23: 312172032
-      Hero_008_9: -214838211
-      Hero_008_21: -1190943005
-      Hero_008_56: -1100801387
-      Hero_008_16: 561962485
-      Hero_008_45: 402359656
-      Hero_008_3: -515946051
-      Hero_008_41: -232777580
-      Hero_008_24: 1838544817
-      Hero_008_13: 722052821
-      Hero_008_60: -2088265648
-      Hero_008_14: -1840495644
-      Hero_008_25: 445114111
-      Hero_008_49: -1634102611
-      Hero_008_30: 36328302
-      Hero_008_2: 264818659
-      Hero_008_51: -972972483
-      Hero_008_43: -576675139
-      Hero_008_22: -1715903213
-      Hero_008_27: -1635994556
-      Hero_008_15: 1969537104
+      Hero_008_0: 208264271
+      Hero_008_1: -1595057507
       Hero_008_10: -1855273125
+      Hero_008_11: -424743954
+      Hero_008_12: 532883400
+      Hero_008_13: 722052821
+      Hero_008_14: -1840495644
+      Hero_008_15: 1969537104
+      Hero_008_16: 561962485
+      Hero_008_17: -691177633
+      Hero_008_18: -176652318
+      Hero_008_19: -1761842740
+      Hero_008_2: 264818659
+      Hero_008_20: -299770478
+      Hero_008_21: -1190943005
+      Hero_008_22: -1715903213
+      Hero_008_23: 312172032
+      Hero_008_24: 1838544817
+      Hero_008_25: 445114111
+      Hero_008_26: -1758767066
+      Hero_008_27: -1635994556
+      Hero_008_28: 477678406
+      Hero_008_29: -241199226
+      Hero_008_3: -515946051
+      Hero_008_30: 36328302
+      Hero_008_31: -1892933594
+      Hero_008_32: 590578705
+      Hero_008_33: 53168376
+      Hero_008_34: 1763500140
+      Hero_008_35: 1887528988
+      Hero_008_36: 1932438894
+      Hero_008_37: -1565931448
+      Hero_008_38: 1793072525
       Hero_008_39: -873704763
-      Hero_008_6: 1381831392
-      Hero_008_53: 1615245347
-      Hero_008_61: -1895466994
+      Hero_008_4: -1488963974
+      Hero_008_40: 243918367
+      Hero_008_41: -232777580
+      Hero_008_42: 1677715596
+      Hero_008_43: -576675139
+      Hero_008_44: -1695354556
+      Hero_008_45: 402359656
+      Hero_008_46: -709204244
+      Hero_008_47: -846621745
+      Hero_008_48: 115886004
+      Hero_008_49: -1634102611
       Hero_008_5: -226593300
+      Hero_008_50: -1667393387
+      Hero_008_51: -972972483
+      Hero_008_52: -365966254
+      Hero_008_53: 1615245347
       Hero_008_54: 1446692308
       Hero_008_55: 138724123
-      Hero_008_4: -1488963974
-      Hero_008_7: 1149091245
-      Hero_008_40: 243918367
-      Hero_008_0: 208264271
-      Hero_008_48: 115886004
-      Hero_008_50: -1667393387
-      Hero_008_63: -186106578
-      Hero_008_34: 1763500140
-      Hero_008_62: -769889882
-      Hero_008_26: -1758767066
-      Hero_008_33: 53168376
-      Hero_008_66: -2020241135
-      Hero_008_18: -176652318
-      Hero_008_28: 477678406
+      Hero_008_56: -1100801387
       Hero_008_57: -37218294
-      Hero_008_59: -1232907153
-      Hero_008_11: -424743954
-      Hero_008_29: -241199226
-      Hero_008_44: -1695354556
-      Hero_008_52: -365966254
-      Hero_008_35: 1887528988
-      Hero_008_38: 1793072525
-      Hero_008_8: 1929213497
-      Hero_008_19: -1761842740
-      Hero_008_47: -846621745
-      Hero_008_42: 1677715596
-      Hero_008_12: 532883400
-      Hero_008_32: 590578705
-      Hero_008_17: -691177633
-      Hero_008_46: -709204244
-      Hero_008_37: -1565931448
-      Hero_008_20: -299770478
-      Hero_008_67: -277128703
-      Hero_008_36: 1932438894
-      Hero_008_1: -1595057507
       Hero_008_58: 834425210
-      Hero_008_31: -1892933594
+      Hero_008_59: -1232907153
+      Hero_008_6: 1381831392
+      Hero_008_60: -2088265648
+      Hero_008_61: -1895466994
+      Hero_008_62: -769889882
+      Hero_008_63: -186106578
       Hero_008_64: 172996841
-  spritePackingTag: 
+      Hero_008_65: 1704802285
+      Hero_008_66: -2020241135
+      Hero_008_67: -277128703
+      Hero_008_7: 1149091245
+      Hero_008_8: 1929213497
+      Hero_008_9: -214838211
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class BaseState
 {
-    protected NPCController owner;
-    public BaseState(NPCController npc)
+    protected AIBase owner;
+    public BaseState(AIBase npc)
     {
         owner = npc;
     }

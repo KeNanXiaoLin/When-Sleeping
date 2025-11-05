@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveState : BaseState
 {
     private E_Direction lastFace;
-    public MoveState(NPCController npc) : base(npc)
+    public MoveState(AIBase npc) : base(npc)
     {
 
     }
@@ -23,7 +23,7 @@ public class MoveState : BaseState
 
     public override void Update()
     {
-        owner.UpdateMovement();
+        (owner as NPCController).UpdateMovement();
         if (lastFace != owner.Facing)
         {
             ChooseFaceAnim();

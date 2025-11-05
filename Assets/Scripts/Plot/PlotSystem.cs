@@ -9,11 +9,11 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     /// <summary>
     /// 在播放剧情的时候需要用到bob
     /// </summary>
-    private NPCController bobController;
+    private AIBase bobController;
     /// <summary>
     /// 在播放剧情的时候需要用到mom
     /// </summary>
-    private NPCController momController;
+    private AIBase momController;
     void Awake()
     {
         // gameStartDialogData = Resources.Load<RoleDialogData>("PlotData/GameStartDialog");
@@ -59,13 +59,13 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 break;
             //旁白提示玩家回家，这个时候可以让Bob回家，可以让玩家正常从院子回家
             case 10014:
-                bobController.BackToHome();
+                (bobController as NPCController).BackToHome();
                 plotData = DialogSystemMgr.Instance.GetPlotByID(10038);
                 DisableNormalRoleDialog(plotData);
                 break;
             //旁白提示玩家回家，这个时候可以让Bob回家，可以让玩家正常从院子回家
             case 10028:
-                bobController.BackToHome();
+                (bobController as NPCController).BackToHome();
                 plotData = DialogSystemMgr.Instance.GetPlotByID(10039);
                 DisableNormalRoleDialog(plotData);
                 break;
@@ -73,7 +73,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
             case 10015:
                 player.UpdatePlayerFacing(E_Direction.Down);
                 SpawnMom(new Vector3(-5, -3, 0));
-                momController.GotoTargetPos(player.transform.position + new Vector3(0, -1, 0));
+                (momController as NPCController).GotoTargetPos(player.transform.position + new Vector3(0, -1, 0));
                 while (Vector2.Distance(player.transform.position, momController.transform.position) > 1f)
                 {
                     yield return null;
@@ -94,9 +94,9 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 });
                 break;
             case 10006:
-                bobController.EnableFollow(GameManager.Instance.player.transform);
+                (bobController as NPCController).EnableFollow(GameManager.Instance.player.transform);
                 break;
-                //这是Mom禁止白天喝牛奶的剧情，结束之后可以去院子
+            //这是Mom禁止白天喝牛奶的剧情，结束之后可以去院子
             case 10020:
                 plotData = DialogSystemMgr.Instance.GetPlotByID(10041);
                 DisableNormalRoleDialog(plotData);
@@ -108,7 +108,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 DisableNormalRoleDialog(plotData);
                 plotData = DialogSystemMgr.Instance.GetPlotByID(10040);
                 DisableNormalRoleDialog(plotData);
-                bobController.EnableFollow(GameManager.Instance.player.transform);
+                (bobController as NPCController).EnableFollow(GameManager.Instance.player.transform);
                 break;
             case 10022:
                 DialogSystemMgr.Instance.StartPlayDialog(10023, E_DialogPlayType.Plot);
@@ -141,13 +141,13 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 if (GameManager.Instance.currentSceneName == Setting.GameScene2)
                 {
                     SpawnMom(new Vector3(-1, -5, 0));
-                    momController.GotoTargetPos(player.transform.position + new Vector3(0, 1, 0));
+                    (momController as NPCController).GotoTargetPos(player.transform.position + new Vector3(0, 1, 0));
                     while (Vector2.Distance(player.transform.position, momController.transform.position) > 1f)
                     {
                         yield return null;
                     }
                     player.UpdatePlayerFacing(E_Direction.Up);
-                    momController.SetNPCFacing(E_Direction.Down);
+                    (momController as NPCController).SetNPCFacing(E_Direction.Down);
                     DialogSystemMgr.Instance.StartPlayDialog(10020, E_DialogPlayType.Plot);
                 }
                 break;
@@ -196,7 +196,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 if (plotData.isTrigger)
                 {
                     SpawnBob(new Vector3(-1, -5f, 0f));
-                    bobController.EnableFollow(player.transform);
+                    (bobController as NPCController).EnableFollow(player.transform);
                     GameObject milkObj = GameObject.Instantiate(Resources.Load<GameObject>("Item/ItemPrefab"));
                     milkObj.transform.position = new Vector3(2.7f, 1.2f, 0);
                     Item milk = milkObj.GetComponent<Item>();
@@ -231,7 +231,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 player.UpdatePlayerFacing(E_Direction.Down);
                 yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
                 SpawnMom(new Vector3(-5, -3, 0));
-                momController.GotoTargetPos(player.transform.position + new Vector3(0, -1, 0));
+                (momController as NPCController).GotoTargetPos(player.transform.position + new Vector3(0, -1, 0));
                 while (Vector2.Distance(player.transform.position, momController.transform.position) > 1f)
                 {
                     yield return null;
@@ -241,7 +241,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 //喂小猫喝牛奶，需要使用牛奶
                 BagManager.Instance.RemoveItem(2);
                 break;
-                //这里是Bob睡不着，出门走走的剧情
+            //这里是Bob睡不着，出门走走的剧情
             case 10031:
                 yield return SimulateBobGoOutSide();
                 break;
@@ -275,7 +275,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         var bobObj = GameObject.Instantiate(BobPrefab, bobPos, Quaternion.identity);
         // bobObj.transform.localPosition = new Vector3(-1, 0, 0);
         bobObj.name = Setting.bobName;
-        bobController = bobObj.GetComponent<NPCController>();
+        bobController = bobObj.GetComponent<AIBase>();
     }
 
     private void SpawnMom(Vector3 momPos)
@@ -283,7 +283,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         GameObject momPrefab = Resources.Load<GameObject>($"NPC/{Setting.momName}");
         var momObj = GameObject.Instantiate(momPrefab, momPos, Quaternion.identity);
         momObj.name = Setting.momName;
-        momController = momObj.GetComponent<NPCController>();
+        momController = momObj.GetComponent<AIBase>();
     }
 
     /// <summary>
@@ -308,24 +308,24 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         player.DisablePlayerInput();
         player.gameObject.SetActive(false);
         SpawnBob(Vector3.zero);
-        bobController.transform.position = bobController.homePos;
+        bobController.transform.position = (bobController as NPCController).homePos;
         //设置相机跟随为bob
         GameManager.Instance.playerCamera.Follow = bobController.transform;
         //模拟Bob踱步
-        Vector3 firstPos = bobController.homePos + Vector2.right * 5;
-        bobController.GotoTargetPos(firstPos);
+        Vector3 firstPos = (bobController as NPCController).homePos + Vector2.right * 5;
+        (bobController as NPCController).GotoTargetPos(firstPos);
         while (Vector2.Distance(firstPos, bobController.transform.position) > 1f)
         {
             yield return null;
         }
-        Vector3 secondPos = bobController.homePos + Vector2.left * 5;
-        bobController.GotoTargetPos(secondPos);
+        Vector3 secondPos = (bobController as NPCController).homePos + Vector2.left * 5;
+        (bobController as NPCController).GotoTargetPos(secondPos);
         while (Vector2.Distance(secondPos, bobController.transform.position) > 1f)
         {
             yield return null;
         }
-        Vector3 thirdPos = bobController.homePos;
-        bobController.GotoTargetPos(thirdPos);
+        Vector3 thirdPos = (bobController as NPCController).homePos;
+        (bobController as NPCController).GotoTargetPos(thirdPos);
         while (Vector2.Distance(thirdPos, bobController.transform.position) > 1f)
         {
             yield return null;
@@ -336,26 +336,26 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
 
     private IEnumerator SimulateBobGoOutSide()
     {
-        Vector3 firstPos = bobController.homePos + Vector2.down * 10;
-        bobController.GotoTargetPos(firstPos);
+        Vector3 firstPos = (bobController as NPCController).homePos + Vector2.down * 10;
+        (bobController as NPCController).GotoTargetPos(firstPos);
         while (Vector2.Distance(firstPos, bobController.transform.position) > 1f)
         {
             yield return null;
         }
         Vector3 secondPos = bobController.transform.position + Vector3.right * 20;
-        bobController.GotoTargetPos(secondPos);
+        (bobController as NPCController).GotoTargetPos(secondPos);
         while (Vector2.Distance(secondPos, bobController.transform.position) > 1f)
         {
             yield return null;
         }
         Vector3 thirdPos = bobController.transform.position + Vector3.up * 10;
-        bobController.GotoTargetPos(thirdPos);
+        (bobController as NPCController).GotoTargetPos(thirdPos);
         while (Vector2.Distance(thirdPos, bobController.transform.position) > 1f)
         {
             yield return null;
         }
     }
-    
+
     private IEnumerator BackToPlayerView()
     {
         Player player = GameManager.Instance.player;
