@@ -19,11 +19,10 @@ public class StateMachine
             Debug.LogWarning($"状态机中不存在名为 {stateName} 的状态");
             return;
         }
-        if (CurrentStateType == stateName)
-        {
-            Debug.Log("当前正处于这个状态，不需要切换");
-            return;
-        }
+        // if (CurrentStateType == stateName)
+        // {
+        //     return;
+        // }
         CurrentStateType = stateName;
 
         // 退出当前状态

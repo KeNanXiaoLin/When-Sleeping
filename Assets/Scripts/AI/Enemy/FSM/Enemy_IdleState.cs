@@ -10,7 +10,7 @@ public class Enemy_IdleState : BaseState
 
     public override void Enter()
     {
-        owner.Animator.Play(Setting.AnimationName_Enemy_Idle);
+        owner.Animator.SetBool(Setting.PlayerAnimationParameter_Enemy_IsMove, false);
     }
 
     public override void Exit()

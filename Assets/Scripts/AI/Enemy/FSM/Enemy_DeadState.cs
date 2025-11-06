@@ -10,7 +10,7 @@ public class Enemy_DeadState : BaseState
 
     public override void Enter()
     {
-        owner.Animator.Play(Setting.AnimationName_Enemy_Death);
+        owner.Animator.SetTrigger(Setting.PlayerAnimationParameter_Enemy_IsDead);
     }
 
     public override void Exit()

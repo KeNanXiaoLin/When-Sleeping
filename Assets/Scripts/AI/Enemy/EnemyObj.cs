@@ -19,6 +19,8 @@ public class EnemyObj : AIBase
     private Coroutine checkEnemyCoroutine;
     private Coroutine chaseEnemyCoroutine;
     private Transform target;
+    [HideInInspector]
+    public bool CanMove = false;
     public Transform damageCheckPoint;
 
     private void Awake()
@@ -41,11 +43,11 @@ public class EnemyObj : AIBase
     {
         patrolCoroutine = StartCoroutine(SimulatorAIBehavior());
         checkEnemyCoroutine = StartCoroutine(SearchEnemy());
-        chaseEnemyCoroutine = StartCoroutine(ChaseEnemy());
-        if (damageCheckPoint != null)
-        {
-            damageCheckPoint.localPosition = new Vector3(atkRange, 0, 0);
-        }
+
+        // if (damageCheckPoint != null)
+        // {
+        //     damageCheckPoint.localPosition = new Vector3(atkRange, 0, 0);
+        // }
     }
 
     /// <summary>
@@ -56,6 +58,7 @@ public class EnemyObj : AIBase
     {
         if (curHp == 0) return;
         curHp -= damage;
+        Debug.Log(name + "受到伤害" + damage);
         m_stateMachine.ChangeState(E_StateType.Battle_Damage);
         if (curHp <= 0)
         {
@@ -153,6 +156,8 @@ public class EnemyObj : AIBase
             if (col != null)
             {
                 target = col.transform;
+                chaseEnemyCoroutine = StartCoroutine(ChaseEnemy());
+                break;
             }
             //控制检测的频率，1s检测一次
             yield return wait1s;
@@ -189,5 +194,19 @@ public class EnemyObj : AIBase
                 yield return null;
             }
         }
+    }
+
+    public bool CanAttackTarget()
+    {
+        if (Vector3.Distance(this.transform.position, target.transform.position) > chaseRange)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void SwitchState(E_StateType type)
+    {
+        m_stateMachine.ChangeState(type);
     }
 }

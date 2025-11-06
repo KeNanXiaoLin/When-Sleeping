@@ -28,14 +28,14 @@ public class PlatformLogic
     {
         //当玩家跳跃时 才会切换平台
         //当玩家下落时 也会切换平台
-        if(obj.isJump || obj.isFall)
+        if (obj.isJump || obj.isFall)
         {
             //让每一次遍历寻找到的平台 是这一瞬间最高的平台 而不是整个跳跃轨迹中的最高平台
             nowPlatform = null;
             for (int i = 0; i < platformData.Count; i++)
             {
                 //不停的判断玩家是否处于落在某个平台的条件下
-                if( platformData[i].CheckObjFallOnMe(obj.transform.position) &&
+                if (platformData[i].CheckObjFallOnMe(obj.transform.position) &&
                     (nowPlatform == null || nowPlatform.Y < platformData[i].Y))
                 {
                     //记录当前平台
@@ -48,14 +48,10 @@ public class PlatformLogic
 
 
         //只会检测当前所在平台 是否满足了下平台的条件
-        if( !obj.isJump && !obj.isFall &&
+        if (!obj.isJump && !obj.isFall &&
             nowPlatform != null && nowPlatform.canFall &&
             !nowPlatform.CheckObjFallOnMe(obj.transform.position))
         {
-            Debug.Log($"我是否在平台之上{obj.transform.position.y >= nowPlatform.Y}");
-            Debug.Log($"这一帧我的位置{obj.transform.position.y}，这一帧平台的位置{nowPlatform.Y}");
-            Debug.Log($"我是否超出了平台的左边界{obj.transform.position.x <= nowPlatform.Left}");
-            Debug.Log($"我是否超出了平台的右边界{obj.transform.position.x >= nowPlatform.Right}");
             obj.Fall();
         }
     }

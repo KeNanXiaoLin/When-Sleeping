@@ -72,9 +72,11 @@ public class Player : MonoBehaviour
     /// 攻击的范围，因为进行的是盒装检测，所以实际范围会*2
     /// </summary>
     public float atkRange = 0.5f;
+    public float atkInterval = 1f;
     public int maxHp = 100;
     private int curHp;
     public Transform damageCheckPoint;
+    private float atkTime = 0;
     #endregion
 
     #region 村庄场景相关参数
@@ -250,13 +252,16 @@ public class Player : MonoBehaviour
         #endregion
 
         #region 攻击相关逻辑
-        if (Input.GetKeyDown(KeyCode.J))
+        atkTime += Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.J) && atkTime > atkInterval)
         {
             roleAnimator.SetTrigger("Attack1");
+            atkTime = 0;
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && atkTime > atkInterval)
         {
             roleAnimator.SetTrigger("Attack2");
+            atkTime = 0;
         }
         #endregion
         #region 平台切换相关逻辑
@@ -614,6 +619,7 @@ public class Player : MonoBehaviour
     {
         if (curHp == 0) return;
         curHp -= damage;
+        Debug.Log(name + "受到伤害" + damage);
         roleAnimator.SetTrigger("Damage");
         if (curHp <= 0)
         {
@@ -635,6 +641,6 @@ public class Player : MonoBehaviour
     /// </summary>
     private void DeathPlayOverEvent()
     {
-
+        Destroy(this.gameObject);
     }
 }

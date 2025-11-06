@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d25877bfa0244d43a124c90f0cd5cb4, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: 
-  atkSize: 5
-  atkRange: 0.5
+  atkSize: 50
+  atkRange: 2
   hp: 30
   moveSpeed: 2
   searchRange: 2
-  chaseRange: 0.3
-  atkInterval: 1
+  chaseRange: 1
+  atkInterval: 3

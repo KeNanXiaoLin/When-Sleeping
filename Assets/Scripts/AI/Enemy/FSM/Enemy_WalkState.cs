@@ -10,7 +10,7 @@ public class Enemy_WalkState : BaseState
 
     public override void Enter()
     {
-        owner.Animator.Play(Setting.AnimationName_Enemy_Walk);
+        owner.Animator.SetBool(Setting.PlayerAnimationParameter_Enemy_IsMove, true);
     }
 
     public override void Exit()
