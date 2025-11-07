@@ -56,4 +56,8 @@ public enum E_EventType
     /// 背包新增物品事件
     /// </summary>
     E_BagAddItem,
+    /// <summary>
+    /// 血量更新事件
+    /// </summary>
+    E_UpdateHp,
 }

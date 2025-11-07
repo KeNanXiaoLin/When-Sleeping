@@ -2915,7 +2915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4928660721873491900, guid: 7e2abdab301725348bd42ec54b853c60, type: 3}
       propertyPath: targetScenePos.y
-      value: 5
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 5276272916279679059, guid: 7e2abdab301725348bd42ec54b853c60, type: 3}
       propertyPath: m_Name
@@ -3000,7 +3000,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 23
+    m_Bits: 471
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

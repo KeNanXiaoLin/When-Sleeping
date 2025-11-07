@@ -86,8 +86,8 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                         panel.AddOKEvent(() =>
                         {
                             //这里应该是切换到战斗场景，但是先把剧情做完，所以这里直接到第二天的剧情
-                            // SceneLoadManager.Instance.LoadScene("BattleScene", sceneFaderBefore: player.InitBattleInfo);
-                            DialogSystemMgr.Instance.StartPlayDialog(10018, E_DialogPlayType.Plot);
+                            SceneLoadManager.Instance.LoadScene(Setting.BattleScene, sceneFaderBefore: player.InitBattleInfo);
+                            // DialogSystemMgr.Instance.StartPlayDialog(10018, E_DialogPlayType.Plot);
                         });
                     })
                     ;
@@ -203,6 +203,9 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                     milk.Init(BagManager.Instance.GetBagItemByItemID(2));
                 }
                 break;
+            case Setting.BattleScene:
+                DialogSystemMgr.Instance.StartPlayDialog(10017, E_DialogPlayType.Plot);
+                break;
         }
     }
 
@@ -222,9 +225,19 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 MusicManager.Instance.PlaySound("按门铃音效6");
                 break;
             case 10015:
-            case 10018:
-                //切换到场景3
                 yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
+                break;
+            case 10018:
+
+                //切换到场景3
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: () =>
+                {
+                    UIManager.Instance.HidePanel<BattleUI>();
+                    UIManager.Instance.ShowPanel<GameUI>();
+                    // 这是从战斗场景切换到生活场景
+                    player.EnableLifeAction();
+                    GameManager.Instance.BackToInitPos();
+                });
                 break;
             case 10029:
                 //切换到场景3

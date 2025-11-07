@@ -42,13 +42,16 @@ public class SceneLoadManager : SingletonAutoMono<SceneLoadManager>
 
         // 根据当前透明度、最终透明度和淡入淡出持续时间，计算 CanvasGroup 的淡入淡出速度
         float fadeSpeed = Mathf.Abs(faderCanvasGroup.alpha - finalAlpha) / fadeDuration;
-
+        float origin = faderCanvasGroup.alpha;
+        float t = 0;
         // 当 CanvasGroup 的透明度还未达到最终透明度时
         while (!Mathf.Approximately(faderCanvasGroup.alpha, finalAlpha))
         {
             // 逐步将透明度调整到目标值
-            faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, finalAlpha,
-                fadeSpeed * Time.deltaTime);
+            // faderCanvasGroup.alpha = Mathf.MoveTowards(faderCanvasGroup.alpha, finalAlpha,
+            //     fadeSpeed * Time.deltaTime);
+            t += Time.deltaTime * fadeSpeed;
+            faderCanvasGroup.alpha = Mathf.Lerp(origin, finalAlpha, t);
 
             // 等待一帧后继续执行
             yield return null;
@@ -69,15 +72,18 @@ public class SceneLoadManager : SingletonAutoMono<SceneLoadManager>
     /// <returns>协程迭代器</returns>
     private IEnumerator FadeAndSwitchScenes(string sceneName, Func<IEnumerator> sceneFaderBeforeCoroutine = null, UnityAction sceneFaderBefore = null, UnityAction sceneAfterLoad = null)
     {
+        Debug.Log("切换到指定场景" + sceneName);
         // 开始淡入到黑屏，并等待淡入完成
-        yield return StartCoroutine(Fade(1f));
+        yield return Fade(1f);
         // 开始加载指定场景，并等待加载完成
-        yield return StartCoroutine(LoadSceneAndSetActive(sceneName));
+        yield return LoadSceneAndSetActive(sceneName);
         //淡出完成前做的事情，可以播放转场动画
         yield return sceneFaderBeforeCoroutine;
         sceneFaderBefore?.Invoke();
+        if (sceneName == Setting.BattleScene)
+            yield return new WaitForSeconds(0.1f);
         // 开始淡出黑屏，并等待淡出完成
-        yield return StartCoroutine(Fade(0f));
+        yield return Fade(0f);
 
         //销毁淡入面板
         UIManager.Instance.HidePanel<FaderPanel>();

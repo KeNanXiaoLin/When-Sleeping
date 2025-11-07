@@ -133,6 +133,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            UIManager.Instance.ShowPanel<CheatPanel>();
+        }
+        if (disableInput) return;
         GetKeyCheck();
         switch (moveType)
         {
@@ -150,11 +155,6 @@ public class Player : MonoBehaviour
     /// </summary>
     private void GetKeyCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            UIManager.Instance.ShowPanel<CheatPanel>();
-        }
-        if (disableInput) return;
         CheckBagItemUse();
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -253,16 +253,23 @@ public class Player : MonoBehaviour
 
         #region 攻击相关逻辑
         atkTime += Time.deltaTime;
-        if (Input.GetKeyDown(KeyCode.J) && atkTime > atkInterval)
+        //只有在待机动作下可以攻击
+        if (!roleAnimator.GetBool(Setting.PlayerAnimationParameter_IsMove) &&
+            !roleAnimator.GetBool(Setting.PlayerAnimationParameter_IsFall) &&
+            !roleAnimator.GetBool(Setting.PlayerAnimationParameter_IsJump))
         {
-            roleAnimator.SetTrigger("Attack1");
-            atkTime = 0;
+            if (Input.GetKeyDown(KeyCode.J) && atkTime > atkInterval)
+            {
+                roleAnimator.SetTrigger("Attack1");
+                atkTime = 0;
+            }
+            if (Input.GetKeyDown(KeyCode.K) && atkTime > atkInterval)
+            {
+                roleAnimator.SetTrigger("Attack2");
+                atkTime = 0;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.K) && atkTime > atkInterval)
-        {
-            roleAnimator.SetTrigger("Attack2");
-            atkTime = 0;
-        }
+
         #endregion
         #region 平台切换相关逻辑
         platformLogic.UpdateCheck();
@@ -336,6 +343,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void DisablePlayerInput()
     {
+        Debug.Log("玩家的输入被禁用");
         ResetAnimatorParameters();
         disableInput = true;
         roleAnimator.SetFloat("x", xFaceMinVal);
@@ -387,6 +395,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void EnablePlayerInput()
     {
+        Debug.Log("启用玩家的输入");
         disableInput = false;
     }
 
@@ -487,6 +496,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public void EnableLifeAction()
     {
+        this.transform.localScale = Vector3.one;
         moveType = E_MoveType.Life;
         roleAnimator.runtimeAnimatorController = liftAnimator;
     }
@@ -517,10 +527,11 @@ public class Player : MonoBehaviour
     public void InitBattleInfo()
     {
         MusicManager.Instance.PlayBKMusic("战斗时激昂的小曲1");
-        this.transform.position = new Vector3(-16, -3.6f, 0);
+        this.transform.position = new Vector3(-12, -3f, 0);
         this.EnableBattleAction();
         GameManager.Instance.InitCameraValues();
         UIManager.Instance.HidePanel<GameUI>();
+        UIManager.Instance.ShowPanel<BattleUI>();
     }
 
     /// <summary>
@@ -619,6 +630,7 @@ public class Player : MonoBehaviour
     {
         if (curHp == 0) return;
         curHp -= damage;
+        EventCenter.Instance.EventTrigger<float>(E_EventType.E_UpdateHp, (float)curHp / maxHp);
         Debug.Log(name + "受到伤害" + damage);
         roleAnimator.SetTrigger("Damage");
         if (curHp <= 0)

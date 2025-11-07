@@ -18,13 +18,14 @@ public class Test : MonoBehaviour
     }
     void Start()
     {
-        GameObject playerObj = Instantiate(Resources.Load<GameObject>("Player/Player"), spawnPos, Quaternion.identity);
-        GameObject playerCamera = Instantiate(Resources.Load<GameObject>("Player/PlayerCamera"));
-        CinemachineVirtualCamera camera = playerCamera.GetComponent<CinemachineVirtualCamera>();
-        camera.Follow = playerObj.transform;
-        CinemachineConfiner confiner = camera.GetComponent<CinemachineConfiner>();
-        confiner.m_BoundingShape2D = GameObject.Find("ViewLimit").GetComponent<PolygonCollider2D>();
-        UIManager.Instance.ShowPanel<GameUI>();
+        // GameObject playerObj = Instantiate(Resources.Load<GameObject>("Player/Player"), spawnPos, Quaternion.identity);
+        // GameObject playerCamera = Instantiate(Resources.Load<GameObject>("Player/PlayerCamera"));
+        // CinemachineVirtualCamera camera = playerCamera.GetComponent<CinemachineVirtualCamera>();
+        // camera.Follow = playerObj.transform;
+        // CinemachineConfiner confiner = camera.GetComponent<CinemachineConfiner>();
+        // confiner.m_BoundingShape2D = GameObject.Find("ViewLimit").GetComponent<PolygonCollider2D>();
+        // UIManager.Instance.ShowPanel<GameUI>();
+        UIManager.Instance.ShowPanel<BattleUI>();
 
     }
 
