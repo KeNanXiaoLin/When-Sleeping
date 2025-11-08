@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 4493512966785006870}
   - component: {fileID: 5639315473338908776}
   - component: {fileID: 3704221728468200767}
-  - component: {fileID: 2217843489327314647}
+  - component: {fileID: 7721952930513942429}
   m_Layer: 5
   m_Name: LosePanel
   m_TagString: Untagged
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2217843489327314647
+--- !u!114 &7721952930513942429
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -310,10 +310,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3646857218378341589}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdd0424635d52a44d88bba1485077a6d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e6301fa03966490eac892ff596e8aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 0}
 --- !u!1 &4353753509715893921
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,13 +506,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

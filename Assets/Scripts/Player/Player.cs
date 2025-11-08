@@ -40,12 +40,14 @@ public class Player : MonoBehaviour
     //跳跃当中 实时的速度是多少
     private float nowYSpeed;
     //当前平台的 Y 值
+    [SerializeField]
     private float nowPlatformY = -999f;
 
     //是否可以主动下落
     private bool canFall;
 
     //二段跳计数
+    [SerializeField]
     private int jumpIndex;
 
 
@@ -527,6 +529,10 @@ public class Player : MonoBehaviour
     public void InitBattleInfo()
     {
         MusicManager.Instance.PlayBKMusic("战斗时激昂的小曲1");
+        //回复玩家的血量
+        curHp = maxHp;
+        jumpIndex = 0;
+        nowPlatformY = -999f;
         this.transform.position = new Vector3(-12, -3f, 0);
         this.EnableBattleAction();
         GameManager.Instance.InitCameraValues();
@@ -654,5 +660,6 @@ public class Player : MonoBehaviour
     private void DeathPlayOverEvent()
     {
         Destroy(this.gameObject);
+        UIManager.Instance.ShowPanel<LosePanel>();
     }
 }

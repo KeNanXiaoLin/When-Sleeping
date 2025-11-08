@@ -77,8 +77,11 @@ public class SceneLoadManager : SingletonAutoMono<SceneLoadManager>
         yield return Fade(1f);
         // 开始加载指定场景，并等待加载完成
         yield return LoadSceneAndSetActive(sceneName);
-        //淡出完成前做的事情，可以播放转场动画
-        yield return sceneFaderBeforeCoroutine;
+        if (sceneFaderBeforeCoroutine != null)
+        {
+            //淡出完成前做的事情，可以播放转场动画
+            yield return StartCoroutine(sceneFaderBeforeCoroutine());
+        }
         sceneFaderBefore?.Invoke();
         if (sceneName == Setting.BattleScene)
             yield return new WaitForSeconds(0.1f);

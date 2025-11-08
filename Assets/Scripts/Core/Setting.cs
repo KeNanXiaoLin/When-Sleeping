@@ -8,6 +8,7 @@ public static class Setting
     public const string GameScene2 = "GameScene2";
     public const string GameScene3 = "GameScene3";
     public const string BattleScene = "BattleScene";
+    public const string StartScene = "StartScene";
     public const string momName = "Mom";
     public const string bobName = "Bob";
     public const string AnimationName_IdleRight = "IdleRight";

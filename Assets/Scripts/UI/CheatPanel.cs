@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using KNXL.DialogSystem;
 using UnityEngine;
 
 public class CheatPanel : UIPanelBase
@@ -19,19 +20,28 @@ public class CheatPanel : UIPanelBase
         switch (btnName)
         {
             case "1":
-                TimeSystem.Instance.SpeedUpOneHour();
+                //击杀场景中所有的敌人
+                for (int i = 0; i < 6; i++)
+                {
+                    GameManager.Instance.MinusEnemyCount();
+                }
                 UIManager.Instance.HidePanel<CheatPanel>();
                 break;
             case "2":
-                TimeSystem.Instance.SpeedUpThreeHour();
+                //直接切换到第一天晚上剧情
+                DialogSystemMgr.Instance.UnLockedID(10015);
+                DialogSystemMgr.Instance.StartPlayDialog(10015,E_DialogPlayType.Plot);
                 UIManager.Instance.HidePanel<CheatPanel>();
                 break;
             case "3":
-                TimeSystem.Instance.SpeedUpOneDay();
+                //直接切换到第二天晚上剧情
+                DialogSystemMgr.Instance.UnLockedID(10029);
+                DialogSystemMgr.Instance.StartPlayDialog(10029,E_DialogPlayType.Plot);
                 UIManager.Instance.HidePanel<CheatPanel>();
                 break;
             case "4":
-                BagManager.Instance.AddItem(2);
+                //玩家减少10点血量
+                GameManager.Instance.player.Damage(10);
                 UIManager.Instance.HidePanel<CheatPanel>();
                 break;
             case "5":

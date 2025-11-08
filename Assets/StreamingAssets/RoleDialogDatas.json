@@ -345,11 +345,11 @@
         "owner": 0,
         "startDialog": 2401,
         "canTriggerRepeat": false,
-        "preRoleDialogs": 10031,
+        "preRoleDialogs": -1,
         "dialogPlayType": 1,
-        "dialogDes": "迈克再次进入“梦世界”",
+        "dialogDes": "迈克再次进入“梦世界”的自言自语",
         "isTrigger": false,
-        "isLocked": true
+        "isLocked": false
     },
     {
         "id": 10033,
@@ -358,9 +358,9 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": -1,
         "dialogPlayType": 1,
-        "dialogDes": "迈克艰难逃脱后",
+        "dialogDes": "迈克大杀四方后发现自己击杀了Bob",
         "isTrigger": false,
-        "isLocked": true
+        "isLocked": false
     },
     {
         "id": 10034,
@@ -389,11 +389,11 @@
         "owner": 0,
         "startDialog": 11801,
         "canTriggerRepeat": false,
-        "preRoleDialogs": 10035,
+        "preRoleDialogs": -1,
         "dialogPlayType": 1,
         "dialogDes": "迈克兽性大发，吃掉了朋友，游戏结束",
         "isTrigger": false,
-        "isLocked": true
+        "isLocked": false
     },
     {
         "id": 10037,
@@ -449,5 +449,16 @@
         "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在客厅里喝牛奶，不要让玩家到院子去的引导",
         "isTrigger": false,
         "isLocked": true
+    },
+    {
+        "id": 10042,
+        "owner": 0,
+        "startDialog": 2501,
+        "canTriggerRepeat": false,
+        "preRoleDialogs": -1,
+        "dialogPlayType": 1,
+        "dialogDes": "玩家击杀战斗场景所有敌人后，触发鲍勃的惊恐声音",
+        "isTrigger": false,
+        "isLocked": false
     }
 ]

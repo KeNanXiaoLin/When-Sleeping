@@ -339,10 +339,17 @@ namespace KNXL.DialogSystem
                 case E_DialogType.Effect:
                     UIManager.Instance.ShowPanel<TipPanel>((panel) =>
                     {
-                        panel.UpdateInfo(data.tipInfoText);
+                        
                         // 仅第一次触发时改变San值（通用逻辑）
                         if (!currentRoleDialogData.isTrigger)
+                        {
                             GameManager.Instance.player.statusData.ChangeSan(data.effectSize);
+                            panel.UpdateInfo(data.tipInfoText);
+                        }
+                        else
+                        {
+                            panel.UpdateInfo("并不会发生什么事情了");
+                        }
                     });
                     break;
                 case E_DialogType.Info:
@@ -392,5 +399,19 @@ namespace KNXL.DialogSystem
         }
 
         public void HandleItemDialogData(DialogData data) { }
+
+        public void UnLockedID(int id)
+        {
+            if (!allRoleDialogDataDic.ContainsKey(id))
+                return;
+            RoleDialogData data = allRoleDialogDataDic[id];
+            data.isLocked = false;
+            int preID = data.preRoleDialogs;
+            if (!allRoleDialogDataDic.ContainsKey(preID))
+                return;
+            RoleDialogData preData = allRoleDialogDataDic[preID];
+            preData.isTrigger = true;
+            UnLockedID(preID);
+        }
     }
 }

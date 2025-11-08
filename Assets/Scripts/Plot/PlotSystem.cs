@@ -25,6 +25,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         EventCenter.Instance.AddCoroutineListener<int>(E_EventType.E_PlotDialogStart, CheckPlotStartCanDoSomething);
         EventCenter.Instance.AddCoroutineListener<int>(E_EventType.E_SpecialDialogPlay, CheckSpecialDialogPlayCanDoSomething);
         EventCenter.Instance.AddCoroutineListener<int>(E_EventType.E_BagAddItem, CheckPlotCanPlayByItemID);
+        EventCenter.Instance.AddEventListener(E_EventType.E_EnemyZero,TriggerEnemyZeroEvent);
     }
 
     void OnDisable()
@@ -34,6 +35,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         EventCenter.Instance.RemoveCoroutineListener<int>(E_EventType.E_PlotDialogStart, CheckPlotStartCanDoSomething);
         EventCenter.Instance.RemoveCoroutineListener<int>(E_EventType.E_SpecialDialogPlay, CheckSpecialDialogPlayCanDoSomething);
         EventCenter.Instance.RemoveCoroutineListener<int>(E_EventType.E_BagAddItem, CheckPlotCanPlayByItemID);
+        EventCenter.Instance.RemoveEventListener(E_EventType.E_EnemyZero,TriggerEnemyZeroEvent);
     }
 
     public void PlayGameStartDialog()
@@ -114,18 +116,63 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 DialogSystemMgr.Instance.StartPlayDialog(10023, E_DialogPlayType.Plot);
                 break;
             //这个时候播放完毕Mike和Mom的对话，应该切换到Bob视角
+            //现在的设计是让玩家再次进入战斗场景，这次需要打败所有的敌人
             case 10029:
-                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene1);
-                yield return SimulateBobAction();
+                // yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene1);
+                // yield return SimulateBobAction();
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.BattleScene,sceneFaderBefore:() =>
+                {
+                    player.InitBattleInfo();
+                    GameManager.Instance.UpdateEnemyCount();
+                    UIManager.Instance.ShowPanel<RagePanel>();
+                    UIManager.Instance.ShowPanel<BattleUI>();
+                    UIManager.Instance.HidePanel<GameUI>();
+                });
+                
+                DialogSystemMgr.Instance.StartPlayDialog(10032,E_DialogPlayType.Plot);
                 break;
             case 10030:
                 DialogSystemMgr.Instance.StartPlayDialog(10031, E_DialogPlayType.Plot);
                 yield return null;
                 break;
-            //播放完Bob视角，回到主角视角
+            //播放完Bob视角，回到主角视角，播放主角击杀Bob的剧情
             case 10031:
-                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
-                yield return BackToPlayerView();
+                // yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
+                // yield return BackToPlayerView();
+                //首先要把玩家给禁用了
+                player.transform.position = bobController.transform.position + Vector3.up;
+                player.UpdatePlayerFacing(E_Direction.Down);
+                player.EnableLifeAction();
+                RagePanel rp = UIManager.Instance.GetPanel<RagePanel>();
+                rp.FLighting();
+                player.gameObject.SetActive(true);
+                DialogSystemMgr.Instance.StartPlayDialog(10036, E_DialogPlayType.Plot);
+                break;
+            //主角听到Bob的惨叫，恢复神智
+            case 10042:
+                //屏幕开始闪烁
+                rp = UIManager.Instance.GetPanel<RagePanel>();
+                rp.FLighting();
+                DialogSystemMgr.Instance.StartPlayDialog(10033,E_DialogPlayType.Plot);
+                break;
+            //主角恢复神智，切换到Bob视角，看清楚发生什么事情
+            case 10033:
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene1,sceneFaderBefore:() =>
+                {
+                    //首先要把玩家给禁用了
+                    Player player = GameManager.Instance.player;
+                    GameManager.Instance.InitCameraValues();
+                    player.DisablePlayerInput();
+                    player.gameObject.SetActive(false);
+                    UIManager.Instance.HidePanel<BattleUI>();
+                });
+                yield return SimulateBobAction();
+                break;
+            //出现结局CG
+            case 10036:
+                yield return CGManager.Instance.PlayChiRenCGAnim(3f);
+                // yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.StartScene);
+                UIManager.Instance.ShowPanel<EndPanel>();
                 break;
         }
     }
@@ -225,7 +272,8 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 MusicManager.Instance.PlaySound("按门铃音效6");
                 break;
             case 10015:
-                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
+                //播放时钟转场动画
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3,sceneFaderBeforeCoroutine:CGManager.Instance.PlayClockAnim, sceneFaderBefore: GameManager.Instance.BackToInitPos);
                 break;
             case 10018:
 
@@ -234,15 +282,18 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
                 {
                     UIManager.Instance.HidePanel<BattleUI>();
                     UIManager.Instance.ShowPanel<GameUI>();
+                    //清空所有平台数据
+                    PlatformDataMgr.Instance.ClearData();
                     // 这是从战斗场景切换到生活场景
                     player.EnableLifeAction();
                     GameManager.Instance.BackToInitPos();
+                    BackToLifeScene();
                 });
                 break;
             case 10029:
                 //切换到场景3
                 player.UpdatePlayerFacing(E_Direction.Down);
-                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3, sceneFaderBefore: GameManager.Instance.BackToInitPos);
+                yield return SceneLoadManager.Instance.FadeAndLoadScene(Setting.GameScene3,sceneFaderBeforeCoroutine:CGManager.Instance.PlayClockAnim, sceneFaderBefore: GameManager.Instance.BackToInitPos);
                 SpawnMom(new Vector3(-5, -3, 0));
                 (momController as NPCController).GotoTargetPos(player.transform.position + new Vector3(0, -1, 0));
                 while (Vector2.Distance(player.transform.position, momController.transform.position) > 1f)
@@ -258,6 +309,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
             case 10031:
                 yield return SimulateBobGoOutSide();
                 break;
+            
         }
     }
 
@@ -282,6 +334,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     /// </summary>
     private void SpawnBob(Vector3 bobPos)
     {
+        Debug.Log("实例化Bob被调用");
         //实例化一个Bob出来和玩家模拟对话
         GameObject BobPrefab = Resources.Load<GameObject>($"NPC/{Setting.bobName}");
         // GameObject.Instantiate(BobPrefab,new Vector3(-3,15.8f,0f),Quaternion.identity);
@@ -315,11 +368,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     /// <returns></returns>
     private IEnumerator SimulateBobAction()
     {
-        //首先要把玩家给禁用了
-        Player player = GameManager.Instance.player;
-        GameManager.Instance.InitCameraValues();
-        player.DisablePlayerInput();
-        player.gameObject.SetActive(false);
+        
         SpawnBob(Vector3.zero);
         bobController.transform.position = (bobController as NPCController).homePos;
         //设置相机跟随为bob
@@ -349,19 +398,19 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
 
     private IEnumerator SimulateBobGoOutSide()
     {
-        Vector3 firstPos = (bobController as NPCController).homePos + Vector2.down * 10;
+        Vector3 firstPos = new Vector3(-30, -1, 0);
         (bobController as NPCController).GotoTargetPos(firstPos);
         while (Vector2.Distance(firstPos, bobController.transform.position) > 1f)
         {
             yield return null;
         }
-        Vector3 secondPos = bobController.transform.position + Vector3.right * 20;
+        Vector3 secondPos = new Vector3(0, -1, 0);
         (bobController as NPCController).GotoTargetPos(secondPos);
         while (Vector2.Distance(secondPos, bobController.transform.position) > 1f)
         {
             yield return null;
         }
-        Vector3 thirdPos = bobController.transform.position + Vector3.up * 10;
+        Vector3 thirdPos = new Vector3(0, 8, 0);
         (bobController as NPCController).GotoTargetPos(thirdPos);
         while (Vector2.Distance(thirdPos, bobController.transform.position) > 1f)
         {
@@ -376,6 +425,16 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         GameManager.Instance.InitPlayerPos();
         player.EnablePlayerInput();
         yield return null;
+    }
+
+    private void BackToLifeScene()
+    {
+        MusicManager.Instance.PlayBKMusic("轻松小曲1");
+    }
+
+    private void TriggerEnemyZeroEvent()
+    {
+        DialogSystemMgr.Instance.StartPlayDialog(10042,E_DialogPlayType.Plot);
     }
 }
 

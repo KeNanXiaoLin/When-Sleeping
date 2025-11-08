@@ -60,4 +60,12 @@ public enum E_EventType
     /// 血量更新事件
     /// </summary>
     E_UpdateHp,
+    /// <summary>
+    /// 狂暴值增加
+    /// </summary>
+    E_RageAdd,
+    /// <summary>
+    /// 敌人数量变为0触发的事件
+    /// </summary>
+    E_EnemyZero,
 }

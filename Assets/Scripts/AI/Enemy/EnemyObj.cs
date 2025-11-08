@@ -73,6 +73,8 @@ public class EnemyObj : AIBase
     private void Death()
     {
         m_stateMachine.ChangeState(E_StateType.Battle_Death);
+        GameManager.Instance.MinusEnemyCount();
+        EventCenter.Instance.EventTrigger<float>(E_EventType.E_RageAdd, 0.25f);
     }
 
     /// <summary>

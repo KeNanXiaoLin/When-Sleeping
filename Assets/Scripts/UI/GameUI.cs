@@ -26,17 +26,29 @@ public class GameUI : UIPanelBase
         }
     }
 
-    public override void ShowMe()
+    void OnEnable()
     {
         // EventCenter.Instance.AddEventListener<string>(E_EventType.E_UpdateTime, UpdateTime);
         EventCenter.Instance.AddEventListener<List<BagData>>(E_EventType.E_UpdateBag, UpdateBagInfo);
         EventCenter.Instance.AddEventListener<int>(E_EventType.E_SanChange, UpdateSanValue);
     }
-    public override void HideMe()
+
+    void OnDisable()
     {
         // EventCenter.Instance.RemoveEventListener<string>(E_EventType.E_UpdateTime, UpdateTime);
         EventCenter.Instance.RemoveEventListener<List<BagData>>(E_EventType.E_UpdateBag, UpdateBagInfo);
         EventCenter.Instance.RemoveEventListener<int>(E_EventType.E_SanChange, UpdateSanValue);
+    }
+
+    public override void ShowMe()
+    {
+        
+        
+    }
+    public override void HideMe()
+    {
+        
+        
     }
 
 

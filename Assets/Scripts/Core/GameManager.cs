@@ -29,6 +29,10 @@ public class GameManager : BaseManager<GameManager>
     /// 当前玩家所在的场景的名字
     /// </summary>
     public string currentSceneName;
+    /// <summary>
+    /// 因为第一次进入场景是不需要消灭所有敌人的，并且没有更新敌人的数量，所以给一个比较大的初始值即可
+    /// </summary>
+    private int enemyCount = 10;
 
     private GameManager()
     {
@@ -136,6 +140,19 @@ public class GameManager : BaseManager<GameManager>
                 AStarMgr.Instance.currentMapNode = aStarMapNode;
                 break;
         }
+    }
 
+    public void UpdateEnemyCount()
+    {
+        enemyCount = 6;
+    }
+
+    public void MinusEnemyCount()
+    {
+        enemyCount--;
+        if(enemyCount == 0)
+        {
+            EventCenter.Instance.EventTrigger(E_EventType.E_EnemyZero);
+        }
     }
 }
