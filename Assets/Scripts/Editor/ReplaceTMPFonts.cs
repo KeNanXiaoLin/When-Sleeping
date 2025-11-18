@@ -22,6 +22,7 @@ public class ReplaceTMPFonts
             {
                 item.font = fontAsset;
             }
+            Debug.Log($"替换{prefab.name}中的字体资源完成");
 
             // var serializedObj = new SerializedObject(prefab);
             // var propertyIterator = serializedObj.GetIterator();
@@ -34,6 +35,7 @@ public class ReplaceTMPFonts
             //     }
             // }
             // serializedObj.ApplyModifiedProperties();
+            EditorUtility.SetDirty(prefab);
             AssetDatabase.SaveAssetIfDirty(prefab); // 保存预制体修改
         }
     }

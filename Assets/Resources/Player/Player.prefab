@@ -99,9 +99,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press <color=green>E</color> to interact
+  m_text: "\u6309<color=green>E</color>\u8FDB\u884C\u4EA4\u4E92"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a27f656dee8f87547b30fd3541741bbb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
   m_sharedMaterial: {fileID: 2942736305579552490, guid: a27f656dee8f87547b30fd3541741bbb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -168,7 +168,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_renderer: {fileID: 4959672751768264456}
   m_maskType: 0
 --- !u!1 &3416661808916898005
@@ -321,8 +321,11 @@ MonoBehaviour:
   initYSpeed: 7
   G: 9.8
   jumpMaxH: 5
+  nowPlatformY: -999
+  jumpIndex: 0
   atkSize: 10
   atkRange: 0.5
+  atkInterval: 1
   maxHp: 100
   damageCheckPoint: {fileID: 193892505299727768}
   headTip: {fileID: 6411680088279905088}
