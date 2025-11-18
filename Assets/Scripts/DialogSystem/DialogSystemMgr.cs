@@ -50,7 +50,7 @@ namespace KNXL.DialogSystem
                 }
                 else
                 {
-                    Debug.LogWarning("存在id相同的数据，请检查配置文件");
+                    Debug.LogWarning("存在id相同的数据，请检查配置文件" + item.id);
                 }
             }
 
@@ -339,7 +339,7 @@ namespace KNXL.DialogSystem
                 case E_DialogType.Effect:
                     UIManager.Instance.ShowPanel<TipPanel>((panel) =>
                     {
-                        
+
                         // 仅第一次触发时改变San值（通用逻辑）
                         if (!currentRoleDialogData.isTrigger)
                         {

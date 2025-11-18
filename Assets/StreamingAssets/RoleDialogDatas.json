@@ -453,7 +453,7 @@
     {
         "id": 10042,
         "owner": 0,
-        "startDialog": 2501,
+        "startDialog": 2551,
         "canTriggerRepeat": false,
         "preRoleDialogs": -1,
         "dialogPlayType": 1,
