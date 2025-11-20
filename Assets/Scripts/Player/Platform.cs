@@ -19,7 +19,7 @@ public class Platform : MonoBehaviour
     //平台的右边界
     public float Right => this.transform.position.x + width / 2;
     // 1. 定义浮点误差容忍值（一般取0.01f即可，可根据项目精度调整）
-    float epsilon = 0.01f;
+    float epsilon = 0.001f;
 
     private void Start()
     {
@@ -38,7 +38,7 @@ public class Platform : MonoBehaviour
         // 水平方向：玩家X在平台左右边界之间（同样加入误差，避免边缘检测失效）
         bool isYValid = pos.y >= Y - epsilon;
         bool isXValid = pos.x >= Left - epsilon && pos.x <= Right + epsilon;
-        
+
         return isYValid && isXValid;
     }
 

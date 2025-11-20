@@ -204,7 +204,7 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": 10018,
         "dialogPlayType": 1,
-        "dialogDes": "迈克在首次离开梦世界后，与鲍勃的分享梦世界的对话",
+        "dialogDes": "迈克在首次离开梦世界后,与鲍勃的分享梦世界的对话",
         "isTrigger": false,
         "isLocked": true
     },
@@ -215,7 +215,7 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": 10019,
         "dialogPlayType": 1,
-        "dialogDes": "迈克尝试在白天喝牛奶，遭到妈妈的制止",
+        "dialogDes": "迈克尝试在白天喝牛奶,遭到妈妈的制止",
         "isTrigger": false,
         "isLocked": true
     },
@@ -226,7 +226,7 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": 10020,
         "dialogPlayType": 1,
-        "dialogDes": "在被制止后，两人商量给猫来一瓶牛奶试试",
+        "dialogDes": "在被制止后,两人商量给猫来一瓶牛奶试试",
         "isTrigger": false,
         "isLocked": true
     },
@@ -248,7 +248,7 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": 10022,
         "dialogPlayType": 1,
-        "dialogDes": "在猫睡着后，两人拿走了猫的铃铛",
+        "dialogDes": "在猫睡着后,两人拿走了猫的铃铛",
         "isTrigger": false,
         "isLocked": true
     },
@@ -259,7 +259,7 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": 10023,
         "dialogPlayType": 1,
-        "dialogDes": "充满疑问的迈克闻讯了路人甲关于牛奶的问题，但只能得到摸棱两可的回答",
+        "dialogDes": "充满疑问的迈克闻讯了路人甲关于牛奶的问题,但只能得到摸棱两可的回答",
         "isTrigger": false,
         "isLocked": true
     },
@@ -336,7 +336,7 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": 10030,
         "dialogPlayType": 1,
-        "dialogDes": "鲍勃未喝牛奶难入眠，出门遭遇了怪物",
+        "dialogDes": "鲍勃未喝牛奶难入眠,出门遭遇了怪物",
         "isTrigger": false,
         "isLocked": true
     },
@@ -391,7 +391,7 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": -1,
         "dialogPlayType": 1,
-        "dialogDes": "迈克兽性大发，吃掉了朋友，游戏结束",
+        "dialogDes": "迈克兽性大发,吃掉了朋友,游戏结束",
         "isTrigger": false,
         "isLocked": false
     },
@@ -435,7 +435,7 @@
         "canTriggerRepeat": true,
         "preRoleDialogs": 10019,
         "dialogPlayType": 0,
-        "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在客厅里喝牛奶，不要让玩家到卧室去的引导",
+        "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在客厅里喝牛奶,不要让玩家到卧室去的引导",
         "isTrigger": false,
         "isLocked": true
     },
@@ -446,7 +446,7 @@
         "canTriggerRepeat": true,
         "preRoleDialogs": 10019,
         "dialogPlayType": 0,
-        "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在客厅里喝牛奶，不要让玩家到院子去的引导",
+        "dialogDes": "一些上帝引导,这是第二天让玩家和Bob在客厅里喝牛奶,不要让玩家到院子去的引导",
         "isTrigger": false,
         "isLocked": true
     },
@@ -457,7 +457,7 @@
         "canTriggerRepeat": false,
         "preRoleDialogs": -1,
         "dialogPlayType": 1,
-        "dialogDes": "玩家击杀战斗场景所有敌人后，触发鲍勃的惊恐声音",
+        "dialogDes": "玩家击杀战斗场景所有敌人后,触发鲍勃的惊恐声音",
         "isTrigger": false,
         "isLocked": false
     }

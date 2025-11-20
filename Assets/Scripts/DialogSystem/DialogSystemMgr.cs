@@ -30,9 +30,15 @@ namespace KNXL.DialogSystem
         private UnityAction dialogPlayEndAction;
         // 记录当前对话类型（区分普通/剧情）
         private E_DialogPlayType currentPlayType;
+        // 拿到当前对话系统的一些设置
+        private DialogSetting config;
+        public bool isOpenAnim => config.isOpenDialogPlayAnim;
+        private WaitForSeconds wordIntervalTime;
+
 
         private void Awake()
         {
+            config = Resources.Load<DialogSetting>("DialogSetting/DialogSetting");
             string content = File.ReadAllText(Application.streamingAssetsPath + "/DialogDatas.json");
             List<DialogData> datas = JsonConvert.DeserializeObject<List<DialogData>>(content);
             content = File.ReadAllText(Application.streamingAssetsPath + "/RoleDialogDatas.json");
@@ -67,7 +73,10 @@ namespace KNXL.DialogSystem
             }
         }
 
-        public void Init() { }
+        public void Init()
+        {
+            wordIntervalTime = new WaitForSeconds(config.wordIntervalTime);
+        }
 
         // 保留原有查询方法（无修改）
         public RoleDialogData GetPlotByID(int id)
@@ -108,8 +117,7 @@ namespace KNXL.DialogSystem
             }
             currentSingleDialogData = data;
             yield return EventCenter.Instance.TriggerCoroutineAndWait<int>(E_EventType.E_SpecialDialogPlay, data.id);
-            ShowDialogUI(data.dialogType, currentSingleDialogData);
-            yield return null;
+            yield return ShowDialogUI(data.dialogType, currentSingleDialogData);
         }
 
         public IEnumerator TriggerDialog(int id)
@@ -307,7 +315,7 @@ namespace KNXL.DialogSystem
             UIManager.Instance.HidePanel<DialogInfoPanel>();
         }
 
-        private void ShowDialogUI(E_DialogType type, DialogData data = null, UnityAction action = null)
+        private IEnumerator ShowDialogUI(E_DialogType type, DialogData data = null, UnityAction action = null)
         {
             // 标记是否是剧情对话（通过当前播放类型判断）
             bool isPlot = currentPlayType == E_DialogPlayType.Plot;
@@ -316,12 +324,18 @@ namespace KNXL.DialogSystem
             {
                 case E_DialogType.Normal:
                 case E_DialogType.Task:
-                    UIManager.Instance.ShowPanel<DialogUI>((panel) =>
+                    UIManager.Instance.ShowPanel<DialogUI>();
+                    DialogUI panel = UIManager.Instance.GetPanel<DialogUI>();
+                    panel.IsPlot = isPlot;
+                    if (isOpenAnim)
                     {
-                        panel.IsPlot = isPlot;
+                        yield return panel.DialogPlayAnimCoroutine(data, wordIntervalTime);
+                    }
+                    else
+                    {
                         panel.ShowDialog(data);
                         action?.Invoke();
-                    });
+                    }
                     break;
                 case E_DialogType.Item:
                     UIManager.Instance.ShowPanel<TipPanel>((panel) =>
