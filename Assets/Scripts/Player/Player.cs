@@ -31,12 +31,12 @@ public class Player : MonoBehaviour
     public RuntimeAnimatorController battleAnimator;
     #region 战斗场景移动相关数值
     //移动速度
-    public float moveSpeed = 5;
+    public float moveSpeed => statusData.moveSpeed;
     //初始跳跃时的 竖直上抛速度
-    public float initYSpeed = 10;
+    public float initYSpeed => statusData.initYSpeed;
     //重力加速度
-    public float G = 9.8f;
-    public float jumpMaxH = 5;
+    public float G => statusData.G;
+    // public float jumpMaxH => statusData.jumpMaxH;
     //跳跃当中 实时的速度是多少
     private float nowYSpeed;
     //当前平台的 Y 值
@@ -49,6 +49,10 @@ public class Player : MonoBehaviour
     //二段跳计数
     [SerializeField]
     private int jumpIndex;
+    /// <summary>
+    /// 最大跳跃次数
+    /// </summary>
+    public int maxJumpTimes => statusData.maxJumpTimes;
 
 
     //动画控制相关组件
@@ -69,13 +73,13 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 攻击力的大小
     /// </summary>
-    public int atkSize = 10;
+    public int atkSize => statusData.atkSize;
     /// <summary>
     /// 攻击的范围，因为进行的是盒装检测，所以实际范围会*2
     /// </summary>
-    public float atkRange = 0.5f;
-    public float atkInterval = 1f;
-    public int maxHp = 100;
+    public float atkRange => statusData.atkRange;
+    public float atkInterval => statusData.atkInterval;
+    public int maxHp => statusData.maxHp;
     private int curHp;
     public Transform damageCheckPoint;
     private float atkTime = 0;
@@ -212,7 +216,7 @@ public class Player : MonoBehaviour
             this.Fall();
         }
         //组合键的响应 应该和跳跃时互斥的 所以我们使用 if else
-        else if (Input.GetKeyDown(KeyCode.Space) && jumpIndex != 2)
+        else if (Input.GetKeyDown(KeyCode.Space) && jumpIndex != maxJumpTimes)
         {
             //跳跃
             roleAnimator.SetBool("isJump", true);

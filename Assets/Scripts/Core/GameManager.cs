@@ -88,6 +88,7 @@ public class GameManager : BaseManager<GameManager>
         {
             TimeSystem.Instance.JumpToNextDay();
         }
+        
         #endregion
     }
 

@@ -40,7 +40,21 @@ public class MusicManager:SingletonAutoMono<MusicManager>
         bkMusicMute = PlayerPrefs.GetInt(bkMusicMuteStr, 0) == 1 ? true : false;
         soundValue = PlayerPrefs.GetFloat(soundValueStr, 1.0f);
         soundMute = PlayerPrefs.GetInt(soundMuteStr, 0) == 1 ? true : false;
-        
+    }
+
+    void Update()
+    {
+        if(soundList != null && soundList.Count > 0)
+        {
+            for (int i = soundList.Count-1; i >= 0; i++)
+            {
+                Debug.Log(soundList[i].isPlaying);
+                if(!soundList[i].isPlaying)
+                {
+                    StopSound(soundList[i]);
+                }
+            }
+        }
     }
 
 

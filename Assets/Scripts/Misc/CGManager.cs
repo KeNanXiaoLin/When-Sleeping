@@ -11,9 +11,8 @@ public class CGManager : SingletonAutoMono<CGManager>
     public IEnumerator PlayKaiTouCG()
     {
         MusicManager.Instance.PlayBKMusic("阴森的小曲1");
-        MusicManager.Instance.PlaySound("心跳声");
+        MusicManager.Instance.PlaySound("怪物出现的音效4");
         yield return PlayKaiTouCGAnim(3f);
-        MusicManager.Instance.ClearSound();
         MusicManager.Instance.PlayBKMusic("轻松小曲1");
     }
 

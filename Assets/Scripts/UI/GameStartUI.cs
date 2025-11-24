@@ -18,12 +18,17 @@ public class GameStartUI : UIPanelBase
 
     public override void ShowMe()
     {
+        Button btnContinue = GetControl<Button>("Continue");
+        btnContinue.gameObject.SetActive(SaveSystemMgr.Instance.IsHaveSaveFile);
     }
 
     protected override void ClickBtn(string btnName)
     {
         switch (btnName)
         {
+            //继续游戏，恢复玩家的数据
+            case "Continue":
+                break;
             case "Start":
                 //切换场景到游戏场景
                 SceneLoadManager.Instance.LoadScene(Setting.GameScene3, CGManager.Instance.PlayKaiTouCG, sceneFaderBefore: InitNewSceneObj, sceneAfterLoad: PlayGameStartPlot);

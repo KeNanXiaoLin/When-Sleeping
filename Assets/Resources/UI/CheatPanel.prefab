@@ -186,7 +186,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: gain one rose
+  m_text: "\u4FEE\u6539\u73A9\u5BB6\u6570\u636E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
   m_sharedMaterial: {fileID: -7461752595176092273, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
@@ -1493,7 +1493,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: gain one Medal
+  m_text: "\u4FEE\u6539\u654C\u4EBA\u6570\u636E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
   m_sharedMaterial: {fileID: -7461752595176092273, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}

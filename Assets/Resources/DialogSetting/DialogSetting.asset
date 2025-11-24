@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4eb6e23826ffc428c85da7e2880ca2e1, type: 3}
   m_Name: DialogSetting
   m_EditorClassIdentifier: 
+  isOpenDialogPlayAnim: 0
+  wordIntervalTime: 0.1

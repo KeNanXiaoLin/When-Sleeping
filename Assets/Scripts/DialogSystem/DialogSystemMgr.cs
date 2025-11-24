@@ -35,7 +35,6 @@ namespace KNXL.DialogSystem
         public bool isOpenAnim => config.isOpenDialogPlayAnim;
         private WaitForSeconds wordIntervalTime;
 
-
         private void Awake()
         {
             config = Resources.Load<DialogSetting>("DialogSetting/DialogSetting");
