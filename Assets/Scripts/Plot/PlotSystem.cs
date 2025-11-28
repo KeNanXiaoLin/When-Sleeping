@@ -38,6 +38,11 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
         EventCenter.Instance.RemoveEventListener(E_EventType.E_EnemyZero,TriggerEnemyZeroEvent);
     }
 
+    public void Init()
+    {
+        
+    }
+
     public void PlayGameStartDialog()
     {
         DialogSystemMgr.Instance.StartPlayDialog(10001, E_DialogPlayType.Plot, GameManager.Instance.EnablePlayerInput);

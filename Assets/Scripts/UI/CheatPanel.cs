@@ -45,11 +45,11 @@ public class CheatPanel : UIPanelBase
                 UIManager.Instance.HidePanel<CheatPanel>();
                 break;
             case "5":
-                BagManager.Instance.AddItem(3);
+                UIManager.Instance.ShowPanel<ChangePlayerDataPanel>();
                 UIManager.Instance.HidePanel<CheatPanel>();
                 break;
             case "6":
-                BagManager.Instance.AddItem(1);
+                // UIManager.Instance.ShowPanel<ChangePlayerDataPanel>();
                 UIManager.Instance.HidePanel<CheatPanel>();
                 break;
             case "Close":

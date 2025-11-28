@@ -1,0 +1,13 @@
+{
+    "maxSan": 100,
+    "moveSpeed": 3.0,
+    "initYSpeed": 10.0,
+    "G": 9.8,
+    "maxJumpTimes": 2,
+    "atkSize": 10,
+    "atkRange": 0.5,
+    "atkInterval": 1.0,
+    "maxHp": 100,
+    "curHp": 0,
+    "isDebug": false
+}

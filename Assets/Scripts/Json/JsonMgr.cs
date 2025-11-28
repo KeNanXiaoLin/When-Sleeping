@@ -88,4 +88,84 @@ public class JsonMgr:BaseManager<JsonMgr>
         //把对象返回出去
         return data;
     }
+
+    /// <summary>
+    /// 把数据存储到指定路径的文件中
+    /// </summary>
+    /// <param name="data">要存储的数据</param>
+    /// <param name="filePath">要存储的文件路径</param>
+    /// <param name="type">使用哪种Json序列化方案</param>
+    public void SaveDataToFilePath(object data,string filePath, JsonType type = JsonType.NewtonsoftJson)
+    {
+        //确定存储路径
+        if(string.IsNullOrEmpty(filePath))
+        {
+            Debug.LogError("文件路径不能为空");
+            return;
+        }
+        //如果没有添加后缀，默认添加.json
+        if(!filePath.Contains(".json"))
+            filePath += ".json";
+        Debug.Log("存储位置"+filePath);
+        //序列化 得到Json字符串
+        string jsonStr = "";
+        switch (type)
+        {
+            case JsonType.JsonUtlity:
+                jsonStr = JsonUtility.ToJson(data);
+                break;
+            case JsonType.LitJson:
+                jsonStr = JsonMapper.ToJson(data);
+                break;
+            case JsonType.NewtonsoftJson:
+                jsonStr = JsonConvert.SerializeObject(data);
+                break;
+        }
+        //把序列化的Json字符串 存储到指定路径的文件中
+        File.WriteAllText(filePath, jsonStr);
+    }
+
+    /// <summary>
+    /// 从指定路径的文件中读取Json数据 反序列化
+    /// </summary>
+    /// <typeparam name="T">要反序列化的数据类型</typeparam>
+    /// <param name="filePath">要读取的文件路径</param>
+    /// <param name="type">使用哪种Json序列化方案</param>
+    /// <returns>反序列化后的数据对象</returns>
+    public T LoadDataFromFilePath<T>(string filePath, JsonType type = JsonType.NewtonsoftJson) where T : new()
+    {
+        //确定存储路径
+        if(string.IsNullOrEmpty(filePath))
+        {
+            Debug.LogError("文件路径不能为空");
+            return default(T);
+        }
+        //如果没有添加后缀，默认添加.json
+        if(!filePath.Contains(".json"))
+            filePath += ".json";
+        //如果不存在filePath
+        if(!File.Exists(filePath))
+        {
+            Debug.LogError("文件路径不存在,请检查文件是否存在"+filePath);
+            return default(T);
+        }
+        //进行反序列化
+        string jsonStr = File.ReadAllText(filePath);
+        //数据对象
+        T data = default(T);
+        switch (type)
+        {
+            case JsonType.JsonUtlity:
+                data = JsonUtility.FromJson<T>(jsonStr);
+                break;
+            case JsonType.LitJson:
+                data = JsonMapper.ToObject<T>(jsonStr);
+                break;
+            case JsonType.NewtonsoftJson:
+                data = JsonConvert.DeserializeObject<T>(jsonStr);
+                break;
+        }
+        //把对象返回出去
+        return data;
+    }
 }

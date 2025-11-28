@@ -46,9 +46,8 @@ public class MusicManager:SingletonAutoMono<MusicManager>
     {
         if(soundList != null && soundList.Count > 0)
         {
-            for (int i = soundList.Count-1; i >= 0; i++)
+            for (int i = soundList.Count-1; i >= 0; i--)
             {
-                Debug.Log(soundList[i].isPlaying);
                 if(!soundList[i].isPlaying)
                 {
                     StopSound(soundList[i]);

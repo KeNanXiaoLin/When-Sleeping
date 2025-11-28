@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cancel
+  m_text: "\u53D6\u6D88"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
   m_sharedMaterial: {fileID: -7461752595176092273, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OK
+  m_text: "\u786E\u5B9A"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
   m_sharedMaterial: {fileID: -7461752595176092273, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
@@ -529,7 +529,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TIps
+  m_text: "\u63D0\u793A"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
   m_sharedMaterial: {fileID: -7461752595176092273, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
@@ -632,8 +632,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 0, y: 6.0497}
+  m_SizeDelta: {x: 600, y: 287.9006}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5850140949042828307
 CanvasRenderer:
@@ -663,7 +663,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Get A Milk
+  m_text: "\u83B7\u5F97\u4E00\u676F\u725B\u5976"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
   m_sharedMaterial: {fileID: -7461752595176092273, guid: a6dddf52dc5bf40b0b39b28541abec34, type: 2}
@@ -726,7 +726,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -201.03748, y: -118.59314, z: -199.76941, w: -126.86719}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -798,7 +798,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 300
   m_TargetDisplay: 0
 --- !u!114 &8973155697864158350
 MonoBehaviour:

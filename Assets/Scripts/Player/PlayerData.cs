@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
-public class PlayerStatusData
+public class PlayerData
 {
     /// <summary>
     /// 最大San值
@@ -47,11 +44,15 @@ public class PlayerStatusData
     /// </summary>
     public int maxHp = 100;
     /// <summary>
+    /// 当前生命值
+    /// </summary>
+    public int curHp;
+    /// <summary>
     /// 是否开启Debug模式
     /// </summary>
     public bool isDebug = false;
 
-    public PlayerStatusData()
+    public PlayerData()
     {
         curSan = maxSan;
     }

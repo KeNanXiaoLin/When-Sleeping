@@ -24,18 +24,18 @@ public enum E_Direction
 
 public class Player : MonoBehaviour
 {
-    public PlayerStatusData statusData;
-    public int Max_San => statusData.maxSan;
+    public PlayerData playerData;
+    public int Max_San => playerData.maxSan;
     public E_MoveType moveType = E_MoveType.Battle;
     public RuntimeAnimatorController liftAnimator;
     public RuntimeAnimatorController battleAnimator;
     #region 战斗场景移动相关数值
     //移动速度
-    public float moveSpeed => statusData.moveSpeed;
+    public float moveSpeed { get => playerData.moveSpeed; set => playerData.moveSpeed = value; }
     //初始跳跃时的 竖直上抛速度
-    public float initYSpeed => statusData.initYSpeed;
+    public float initYSpeed { get => playerData.initYSpeed; set => playerData.initYSpeed = value; }
     //重力加速度
-    public float G => statusData.G;
+    public float G { get => playerData.G; set => playerData.G = value; }
     // public float jumpMaxH => statusData.jumpMaxH;
     //跳跃当中 实时的速度是多少
     private float nowYSpeed;
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 最大跳跃次数
     /// </summary>
-    public int maxJumpTimes => statusData.maxJumpTimes;
+    public int maxJumpTimes { get => playerData.maxJumpTimes; set => playerData.maxJumpTimes = value; }
 
 
     //动画控制相关组件
@@ -73,14 +73,14 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 攻击力的大小
     /// </summary>
-    public int atkSize => statusData.atkSize;
+    public int atkSize { get => playerData.atkSize; set => playerData.atkSize = value; }
     /// <summary>
     /// 攻击的范围，因为进行的是盒装检测，所以实际范围会*2
     /// </summary>
-    public float atkRange => statusData.atkRange;
-    public float atkInterval => statusData.atkInterval;
-    public int maxHp => statusData.maxHp;
-    private int curHp;
+    public float atkRange { get => playerData.atkRange; set => playerData.atkRange = value; }
+    public float atkInterval { get => playerData.atkInterval; set => playerData.atkInterval = value; }
+    public int maxHp { get => playerData.maxHp; set => playerData.maxHp = value; }
+    private int curHp { get => playerData.curHp; set => playerData.curHp = value; }
     public Transform damageCheckPoint;
     private float atkTime = 0;
     #endregion
@@ -107,11 +107,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        curHp = maxHp;
         roleAnimator = this.GetComponent<Animator>();
 
         platformLogic = new PlatformLogic(this);
-        statusData = new();
+        ResetPlayerData();
         Init();
     }
 
@@ -306,6 +305,7 @@ public class Player : MonoBehaviour
         else if (horizontalMove < 0 && verticalMove < 0)
             last_dir = E_Direction.LeftDown;
         transform.Translate(new Vector2(horizontalMove * moveSpeed * Time.deltaTime, verticalMove * moveSpeed * Time.deltaTime));
+        GameManager.Instance.playerPos = transform.position;
         ResetAnimatorParameters();
         roleAnimator.SetFloat("x", Mathf.Abs(horizontalMove) < 0.1f ? xFaceMinVal : horizontalMove);
         roleAnimator.SetFloat("y", Mathf.Abs(verticalMove) < 0.1f ? yFaceMinVal : verticalMove);
@@ -349,7 +349,6 @@ public class Player : MonoBehaviour
     /// </summary>
     public void DisablePlayerInput()
     {
-        Debug.Log("玩家的输入被禁用");
         ResetAnimatorParameters();
         disableInput = true;
         roleAnimator.SetFloat("x", xFaceMinVal);
@@ -401,7 +400,6 @@ public class Player : MonoBehaviour
     /// </summary>
     public void EnablePlayerInput()
     {
-        Debug.Log("启用玩家的输入");
         disableInput = false;
     }
 
@@ -665,5 +663,10 @@ public class Player : MonoBehaviour
     {
         Destroy(this.gameObject);
         UIManager.Instance.ShowPanel<LosePanel>();
+    }
+
+    public void ResetPlayerData()
+    {
+        playerData = SaveSystemMgr.Instance.saveData.playerData;
     }
 }

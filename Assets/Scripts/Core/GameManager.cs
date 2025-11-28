@@ -1,4 +1,5 @@
 using Cinemachine;
+using KNXL.DialogSystem;
 using UnityEngine;
 
 public class GameManager : BaseManager<GameManager>
@@ -15,8 +16,12 @@ public class GameManager : BaseManager<GameManager>
     /// 并且这里很重要的一点，这个场景加载后处理的时机必须要是玩家实例化出来之后
     /// 否则GameManager中的player记录值是空，会报空引用异常
     /// </summary>
-    public Vector3 initPos = new Vector3(-5, 3, 0);
-    public Vector3 playerPos;
+    public Vector3 initPos => gameData.playerPos;
+    /// <summary>
+    /// 记录玩家进入下一个场景的位置
+    /// </summary>
+    public Vector3 nextPos;
+    public Vector3 playerPos { get { return gameData.playerPos; } set { gameData.playerPos.Set(value); } }
     /// <summary>
     /// 记录Player
     /// </summary>
@@ -28,16 +33,17 @@ public class GameManager : BaseManager<GameManager>
     /// <summary>
     /// 当前玩家所在的场景的名字
     /// </summary>
-    public string currentSceneName;
+    public string currentSceneName { get { return gameData.curSceneName; } set { gameData.curSceneName = value; } }
     /// <summary>
     /// 因为第一次进入场景是不需要消灭所有敌人的，并且没有更新敌人的数量，所以给一个比较大的初始值即可
     /// </summary>
     private int enemyCount = 10;
+    public GameData gameData;
 
     private GameManager()
     {
-        // pData = Resources.Load<PlayerData>("PlayerData/PlayerData");
-        playerPos = initPos;
+        ResetGameData();
+        nextPos = initPos;
         EventCenter.Instance.AddEventListener<string>(E_EventType.E_SceneLoad, BindMapNodeInfo);
     }
 
@@ -62,9 +68,10 @@ public class GameManager : BaseManager<GameManager>
     /// </summary>
     public void InitPlayerData()
     {
-        player.transform.position = playerPos;
-        Debug.Log("上一次记录的玩家位置是" + playerPos);
+        player.transform.position = nextPos;
+        Debug.Log("上一次记录的玩家位置是" + nextPos);
     }
+
 
     /// <summary>
     /// 测试
@@ -94,7 +101,7 @@ public class GameManager : BaseManager<GameManager>
 
     public void InitPlayerPos()
     {
-        playerPos = initPos;
+        nextPos = initPos;
     }
 
     public void DestroyObj()
@@ -129,6 +136,7 @@ public class GameManager : BaseManager<GameManager>
 
     private void BindMapNodeInfo(string sceneName)
     {
+        Debug.Log("当前场景是" + sceneName);
         currentSceneName = sceneName;
         switch (sceneName)
         {
@@ -155,5 +163,10 @@ public class GameManager : BaseManager<GameManager>
         {
             EventCenter.Instance.EventTrigger(E_EventType.E_EnemyZero);
         }
+    }
+
+    public void ResetGameData()
+    {
+        gameData = SaveSystemMgr.Instance.saveData.gameData;
     }
 }

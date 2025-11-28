@@ -20,7 +20,7 @@ public class TransportObj : MonoBehaviour
             //禁用玩家的输入
             player.DisablePlayerInput();
             //记录玩家进入下一个场景的位置
-            GameManager.Instance.playerPos = targetScenePos;
+            GameManager.Instance.nextPos = targetScenePos;
             //切换场景
             SceneLoadManager.Instance.LoadScene(targetSceneName,sceneFaderBefore:InitPlayerInfo,sceneAfterLoad:GameManager.Instance.EnablePlayerInput);
         }
@@ -28,7 +28,7 @@ public class TransportObj : MonoBehaviour
 
     private void InitPlayerInfo()
     {
-        GameManager.Instance.playerPos = targetScenePos;
+        GameManager.Instance.nextPos = targetScenePos;
         //初始化玩家位置信息，摄像机信息
         GameManager.Instance.InitPlayerData();
         GameManager.Instance.InitCameraValues();

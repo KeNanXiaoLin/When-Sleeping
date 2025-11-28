@@ -19,9 +19,9 @@ namespace KNXL.DialogSystem
         public Transform parentTransform;
 
         // 存储所有的对话数据
-        private Dictionary<int, DialogData> allDialogDataDic;
+        public Dictionary<int, DialogData> allDialogDataDic;
         // 存储所有角色的对话数据
-        private Dictionary<int, RoleDialogData> allRoleDialogDataDic;
+        public Dictionary<int, RoleDialogData> allRoleDialogDataDic;
         // 记录当前对话数据（合并普通/剧情的当前数据）
         private RoleDialogData currentRoleDialogData;
         // 记录当前正在播放的单条对话数据
@@ -37,44 +37,16 @@ namespace KNXL.DialogSystem
 
         private void Awake()
         {
-            config = Resources.Load<DialogSetting>("DialogSetting/DialogSetting");
-            string content = File.ReadAllText(Application.streamingAssetsPath + "/DialogDatas.json");
-            List<DialogData> datas = JsonConvert.DeserializeObject<List<DialogData>>(content);
-            content = File.ReadAllText(Application.streamingAssetsPath + "/RoleDialogDatas.json");
-            List<RoleDialogData> datas1 = JsonConvert.DeserializeObject<List<RoleDialogData>>(content);
-            Debug.Log(JsonConvert.SerializeObject(datas1));
-
-            allDialogDataDic = new();
-            allRoleDialogDataDic = new();
-
-            foreach (var item in datas)
-            {
-                if (!allDialogDataDic.ContainsKey(item.id))
-                {
-                    allDialogDataDic.Add(item.id, item);
-                }
-                else
-                {
-                    Debug.LogWarning("存在id相同的数据，请检查配置文件" + item.id);
-                }
-            }
-
-            foreach (var item in datas1)
-            {
-                if (!allRoleDialogDataDic.ContainsKey(item.id))
-                {
-                    allRoleDialogDataDic.Add(item.id, item);
-                }
-                else
-                {
-                    Debug.LogWarning("存在id相同的数据，请检查配置文件");
-                }
-            }
+            
+            
         }
 
         public void Init()
         {
+            config = Resources.Load<DialogSetting>("DialogSetting/DialogSetting");
             wordIntervalTime = new WaitForSeconds(config.wordIntervalTime);
+            allDialogDataDic = SaveSystemMgr.Instance.saveData.plotDialogData.allDialogDataDic;
+            allRoleDialogDataDic = SaveSystemMgr.Instance.saveData.plotDialogData.allRoleDialogDataDic;
         }
 
         // 保留原有查询方法（无修改）
@@ -356,7 +328,7 @@ namespace KNXL.DialogSystem
                         // 仅第一次触发时改变San值（通用逻辑）
                         if (!currentRoleDialogData.isTrigger)
                         {
-                            GameManager.Instance.player.statusData.ChangeSan(data.effectSize);
+                            GameManager.Instance.player.playerData.ChangeSan(data.effectSize);
                             panel.UpdateInfo(data.tipInfoText);
                         }
                         else

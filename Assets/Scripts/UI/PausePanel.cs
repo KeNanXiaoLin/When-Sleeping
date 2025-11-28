@@ -26,14 +26,46 @@ public class PausePanel : UIPanelBase
                 //恢复玩家移动
                 GameManager.Instance.player.EnablePlayerInput();
                 break;
+            case "Save":
+                //保存游戏数据
+                SaveSystemMgr.Instance.Save();
+                break;
             case "Quit":
-                Application.Quit();
+                //给玩家一个提示，保存游戏
+                UIManager.Instance.ShowPanel<UsePanel>((panel) =>
+                {
+                    panel.UpdateInfo("退出游戏会丢失所有进度，请先保存游戏，是否确认回到主菜单?");
+                    panel.RegisterOKAction(() =>
+                    {
+                        //玩家确认退出游戏
+                        Application.Quit();
+                    });
+                    panel.RegisterCancelAction(() =>
+                    {
+                        //玩家确认取消退出游戏
+                        UIManager.Instance.HidePanel<UsePanel>();
+                    });
+                });
                 break;
             case "BackToMenu":
-                GameManager.Instance.DestroyObj();
-                UIManager.Instance.HidePanel<PausePanel>();
-                UIManager.Instance.HidePanel<GameUI>();
-                SceneLoadManager.Instance.LoadScene("StartScene");
+                //给玩家一个提示，保存游戏
+                UIManager.Instance.ShowPanel<UsePanel>((panel) =>
+                {
+                    panel.UpdateInfo("退出游戏会丢失所有进度，请先保存游戏，是否确认回到主菜单?");
+                    panel.RegisterOKAction(() =>
+                    {
+                        //玩家确认回到主菜单
+                        GameManager.Instance.DestroyObj();
+                        UIManager.Instance.HidePanel<PausePanel>();
+                        UIManager.Instance.HidePanel<GameUI>();
+                        SceneLoadManager.Instance.LoadScene("StartScene");
+                    });
+                    panel.RegisterCancelAction(() =>
+                    {
+                        //玩家确认取消回到主菜单
+                        UIManager.Instance.HidePanel<UsePanel>();
+                    });
+                });
                 break;
         }
     }

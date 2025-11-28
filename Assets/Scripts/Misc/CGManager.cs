@@ -13,6 +13,7 @@ public class CGManager : SingletonAutoMono<CGManager>
         MusicManager.Instance.PlayBKMusic("阴森的小曲1");
         MusicManager.Instance.PlaySound("怪物出现的音效4");
         yield return PlayKaiTouCGAnim(3f);
+        MusicManager.Instance.ClearSound();
         MusicManager.Instance.PlayBKMusic("轻松小曲1");
     }
 
