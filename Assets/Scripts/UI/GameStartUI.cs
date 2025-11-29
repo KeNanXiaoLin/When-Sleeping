@@ -32,7 +32,8 @@ public class GameStartUI : UIPanelBase
             //继续游戏，恢复玩家的数据
             case "Continue":
                 SaveSystemMgr.Instance.Load();
-                GameManager.Instance.ResetGameData();
+                GameManager.Instance.ResetData();
+                
                 DialogSystemMgr.Instance.Init();
                 PlotSystem.Instance.Init();
                 //恢复上次游戏数据
@@ -56,8 +57,8 @@ public class GameStartUI : UIPanelBase
 
     public void InitNewSceneObj()
     {
-        
-        Vector3 spawnPos = GameManager.Instance.initPos;
+        //如果是第一次进入场景，使用初始位置
+        Vector3 spawnPos = GameManager.Instance.gameData.playerPos;
         GameObject playerObj = Instantiate(Resources.Load<GameObject>("Player/Player"), spawnPos, Quaternion.identity);
         GameObject playerCamera = Instantiate(Resources.Load<GameObject>("Player/PlayerCamera"));
         DontDestroyOnLoad(playerObj);
@@ -87,6 +88,7 @@ public class GameStartUI : UIPanelBase
     private void ContinueGame()
     {
         player.EnablePlayerInput();
+        GameManager.Instance.RestoreScene();
     }
 
 

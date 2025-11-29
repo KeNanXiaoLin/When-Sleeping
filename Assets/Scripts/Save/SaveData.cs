@@ -19,6 +19,10 @@ public class SaveData
     /// 游戏数据
     /// </summary>
     public GameData gameData = new();
+    /// <summary>
+    /// 场景数据
+    /// </summary>
+    public SceneData sceneData = new();
 
     /// <summary>
     /// 如果调用构造函数，就是想要使用默认数据

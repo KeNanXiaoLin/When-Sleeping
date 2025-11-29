@@ -11,6 +11,7 @@ public class IdleState : BaseState
 
     public override void Enter()
     {
+        (owner as NPCController).isMoving = false;
         lastFace = owner.Facing;
         ChooseFaceAnim();
     }

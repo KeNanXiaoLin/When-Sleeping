@@ -28,7 +28,22 @@ public class PausePanel : UIPanelBase
                 break;
             case "Save":
                 //保存游戏数据
-                SaveSystemMgr.Instance.Save();
+                //只允许玩家在生活场景中保存游戏
+                if(GameManager.Instance.currentSceneName == Setting.BattleScene)
+                {
+                    UIManager.Instance.ShowPanel<TipPanel>((panel)=>
+                    {
+                        panel.UpdateInfo("只能在生活场景中保存游戏");
+                    });
+                }
+                else
+                {
+                    SaveSystemMgr.Instance.Save();
+                    UIManager.Instance.ShowPanel<TipPanel>((panel)=>
+                    {
+                        panel.UpdateInfo("游戏已保存");
+                    });
+                }
                 break;
             case "Quit":
                 //给玩家一个提示，保存游戏
@@ -58,7 +73,9 @@ public class PausePanel : UIPanelBase
                         GameManager.Instance.DestroyObj();
                         UIManager.Instance.HidePanel<PausePanel>();
                         UIManager.Instance.HidePanel<GameUI>();
+                        AStarMgr.Instance.Clear();
                         SceneLoadManager.Instance.LoadScene("StartScene");
+
                     });
                     panel.RegisterCancelAction(() =>
                     {

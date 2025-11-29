@@ -142,6 +142,10 @@ public class Player : MonoBehaviour
         {
             UIManager.Instance.ShowPanel<CheatPanel>();
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIManager.Instance.ShowPanel<PausePanel>();
+        }
         if (disableInput) return;
         GetKeyCheck();
         switch (moveType)

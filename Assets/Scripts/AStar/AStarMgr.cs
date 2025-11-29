@@ -28,6 +28,8 @@ public class AStarMgr : BaseManager<AStarMgr>
     // 寻路入口：从世界坐标到世界坐标
     public List<Vector3> FindPath(Vector3 startWorldPos, Vector3 targetWorldPos)
     {
+        if (currentMapNode == null)
+            return null;
         Node startNode = currentMapNode.GetNodeFromWorldPos(startWorldPos);
         Node targetNode = currentMapNode.GetNodeFromWorldPos(targetWorldPos);
 
@@ -118,53 +120,12 @@ public class AStarMgr : BaseManager<AStarMgr>
         return 10 * (dstX + dstY);
     }
 
-    // /// <summary>
-    // /// 添加地图信息，第一次初始化地图的时候调用
-    // /// </summary>
-    // /// <param name="sceneName">当前场景的名字</param>
-    // /// <param name="mapNode">地图信息</param>
-    // public void AddMapNodeInfo(string sceneName, AStarMapNode mapNode)
-    // {
-    //     if (!allMapNodes.ContainsKey(sceneName))
-    //     {
-    //         allMapNodes.Add(sceneName, mapNode);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("已经存在地图信息了，不要重复添加，如果需要请更新，调用UpdateMapNodeInfo");
-    //     }
-    // }
+    /// <summary>
+    /// 清楚当前地图的A*寻路地图信息，在退出游戏时调用
+    /// </summary>
+    public void Clear()
+    {
+        currentMapNode = null;
+    }
 
-    // /// <summary>
-    // /// 更新地图信息，比如场景中普通格子变成了障碍格子，或者格子的移动花费发生变化
-    // /// </summary>
-    // /// <param name="sceneName">当前场景的名字</param>
-    // /// <param name="mapNode">地图信息</param>
-    // public void UpdateMapNodeInfo(string sceneName, AStarMapNode mapNode)
-    // {
-    //     if (allMapNodes.ContainsKey(sceneName))
-    //     {
-    //         allMapNodes[sceneName] = mapNode;
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("不存在对应地图信息，请先添加地图信息，调用AddMapNodeInfo");
-    //     }
-    // }
-
-    // /// <summary>
-    // /// 移除对应地图的信息
-    // /// </summary>
-    // /// <param name="sceneName">当前场景的名字</param>
-    // public void RemoveMapNodeInfo(string sceneName)
-    // {
-    //     if (allMapNodes.ContainsKey(sceneName))
-    //     {
-    //         allMapNodes.Remove(sceneName);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogWarning("不存在对应地图信息，移除失败");
-    //     }
-    // }
 }

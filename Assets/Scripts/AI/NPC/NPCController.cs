@@ -29,40 +29,84 @@ public class NPCController : AIBase
     /// <summary>
     /// 是否处于移动状态
     /// </summary>
-    private bool isMoving = false;
+    public bool isMoving {get{return npcData.isMoving;} set{npcData.isMoving = value;}}
     #endregion
     /// <summary>
     /// 每个NPC应该有一个家的位置，如果没有，不用赋值即可
     /// </summary>
-    public Vector2 homePos;
+    public Vector3 homePos {get{return npcData.homePos;} set{npcData.homePos.Set(value);}}
     /// <summary>
     /// NPC的移动速度
     /// </summary>
-    public float moveSpeed = 3f;
+    public float moveSpeed {get{return npcData.moveSpeed;} set{npcData.moveSpeed = value;}}
     /// <summary>
     /// 跟随保持的距离
     /// </summary>
-    public float followDis = 1f;
+    public float followDis {get{return npcData.followDis;} set{npcData.followDis = value;}}
+    /// <summary>
+    /// NPC的类型
+    /// </summary>
+    public E_NPCType npcType {get{return npcData.npcType;} set{npcData.npcType = value;}}
+    /// <summary>
+    /// NPC的位置
+    /// </summary>
+    public Vector3 pos {get{return npcData.pos;} set{npcData.pos.Set(value);}}
+    /// <summary>
+    /// 是否跟随玩家，因为在游戏里，NPC只会跟随玩家
+    /// </summary>
+    public bool isFollowPlayer {get{return npcData.isFollowPlayer;} set{npcData.isFollowPlayer = value;}}
+    public NPCData npcData; 
 
 
     void Awake()
     {
         m_animator = GetComponent<Animator>();
-        m_stateMachine = new StateMachine();
-        m_stateMachine.AddState(E_StateType.Idle, new IdleState(this));
-        m_stateMachine.AddState(E_StateType.Move, new MoveState(this));
-        m_stateMachine.ChangeState(E_StateType.Idle);
-        aStarCalInterval = new WaitForSeconds(0.2f);
+        //按理说在这个场景，这个场景的数据就不可能为空，但是为了保险起见，还是判断一下
+        var sceneData = SaveSystemMgr.Instance.saveData.sceneData.GetSceneData(GameManager.Instance.currentSceneName);
+        if (sceneData != null)
+        {
+            npcData = sceneData.GetNPCData(npcData.npcType);
+        }
+        //兜底
+        else
+        {
+            npcData = new NPCData();
+        }
     }
 
     void Start()
     {
-
+        
     }
 
     void Update()
     {
+        
         m_stateMachine?.Update();
+    }
+
+    // public void Init(E_NPCType npcType,Vector3 pos,Vector3 homePos)
+    // {
+    //     this.npcType = npcType;
+    //     this.pos = pos;
+    //     this.homePos = homePos;
+    // }
+
+    public void Init(NPCData npcData)
+    {
+        this.npcData = npcData;
+        //初始化状态机
+        m_stateMachine = new StateMachine();
+        m_stateMachine.AddState(E_StateType.Idle, new IdleState(this));
+        m_stateMachine.AddState(E_StateType.Move, new MoveState(this));
+        if(isMoving)
+            m_stateMachine.ChangeState(E_StateType.Move);
+        else
+            m_stateMachine.ChangeState(E_StateType.Idle);
+        //初始化跟随目标状态
+        if(isFollowPlayer)
+            EnableFollow(GameManager.Instance.player.transform);
+        aStarCalInterval = new WaitForSeconds(0.2f);
     }
 
     public void ChangeDir(E_Direction dir)
@@ -72,12 +116,14 @@ public class NPCController : AIBase
 
     public void EnableFollow(Transform target)
     {
+        isFollowPlayer = true;
         this.target = target;
         followCoroutine = StartCoroutine(FollowTarget());
     }
 
     public void DisableFollow()
     {
+        isFollowPlayer = false;
         target = null;
         currentPath.Clear();
         currentPathIndex = 0;
@@ -93,6 +139,9 @@ public class NPCController : AIBase
             if (lastTargetPos != target.position)
             {
                 List<Vector3> newPath = AStarMgr.Instance.FindPath(transform.position, target.position);
+                // 如果返回空，证明这个时候A*寻路网格还没有找到，等下一次循环再试
+                if (newPath == null)
+                    yield return null;
                 // 更新当前路径（清除旧路径，添加新路径）
                 currentPath.Clear();
                 if (newPath != null && newPath.Count > 0)
@@ -142,6 +191,7 @@ public class NPCController : AIBase
         Vector3 direction = (targetPoint - transform.position).normalized;
         // 每帧移动一小段距离（基于速度和deltaTime）
         transform.position += direction * moveSpeed * Time.deltaTime;
+        this.pos = transform.position;
 
         // 计算与目标点的距离（忽略Y轴，2D游戏可简化）
         float distance = Vector2.Distance(new Vector2(transform.position.x, transform.position.y),
@@ -170,7 +220,7 @@ public class NPCController : AIBase
     {
         //首先禁用跟随
         DisableFollow();
-        if (homePos == Vector2.zero)
+        if (homePos == Vector3.zero)
         {
             Debug.LogWarning("请初始化家的位置");
             return;

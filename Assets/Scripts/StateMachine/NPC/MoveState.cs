@@ -12,6 +12,7 @@ public class MoveState : BaseState
 
     public override void Enter()
     {
+        (owner as NPCController).isMoving = true;
         lastFace = owner.Facing;
         ChooseFaceAnim();
     }
