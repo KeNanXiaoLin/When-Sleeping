@@ -26,6 +26,10 @@ public class PausePanel : UIPanelBase
                 //恢复玩家移动
                 GameManager.Instance.player.EnablePlayerInput();
                 break;
+            case "Setting":
+                //打开设置面板
+                UIManager.Instance.ShowPanel<SettingPanelUI>();
+                break;
             case "Save":
                 //保存游戏数据
                 //只允许玩家在生活场景中保存游戏

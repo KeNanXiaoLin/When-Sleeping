@@ -32,7 +32,7 @@ namespace KNXL.DialogSystem
         private E_DialogPlayType currentPlayType;
         // 拿到当前对话系统的一些设置
         private DialogSetting config;
-        public bool isOpenAnim => config.isOpenDialogPlayAnim;
+        public bool isOpenAnim {get => config.isOpenDialogPlayAnim;set => config.isOpenDialogPlayAnim = value;}
         private WaitForSeconds wordIntervalTime;
 
         private void Awake()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using KNXL.DialogSystem;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +14,11 @@ public class SettingPanelUI : UIPanelBase
     public override void ShowMe()
     {
         //读取MusicManager中的音量信息对UI进行赋值
-        GetControl<Slider>("MusicSli").value = MusicManager.Instance.BkMusicValue;
-        GetControl<Slider>("SoundSli").value = MusicManager.Instance.SoundValue;
-        GetControl<Toggle>("MusicTog").isOn = MusicManager.Instance.BkMusicMute;
-        GetControl<Toggle>("SoundTog").isOn = MusicManager.Instance.SoundIsMute;
+        GetControl<Slider>("MusicSli").value = MusicManager.Instance.musicData.bkMusicValue;
+        GetControl<Slider>("SoundSli").value = MusicManager.Instance.musicData.soundValue;
+        GetControl<Toggle>("MusicTog").isOn = !MusicManager.Instance.musicData.bkMusicMute;
+        GetControl<Toggle>("SoundTog").isOn = !MusicManager.Instance.musicData.soundMute;
+        GetControl<Toggle>("DialogTog").isOn = DialogSystemMgr.Instance.isOpenAnim;
 
     }
 
@@ -40,10 +42,13 @@ public class SettingPanelUI : UIPanelBase
         switch (sliderName)
         {
             case "MusicTog":
-                MusicManager.Instance.ChangeBKMusicMute(value);
+                MusicManager.Instance.ChangeBKMusicMute(!value);
                 break;
             case "SoundTog":
-                MusicManager.Instance.ChangeSoundMute(value);
+                MusicManager.Instance.ChangeSoundMute(!value);
+                break;
+            case "DialogTog":
+                DialogSystemMgr.Instance.isOpenAnim = value;
                 break;
         }
     }

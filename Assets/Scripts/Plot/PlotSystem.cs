@@ -14,9 +14,9 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     /// 在播放剧情的时候需要用到mom
     /// </summary>
     public AIBase momController;
-    private readonly Vector3 bobHomePos = new Vector3(-30, 5, 0);
+    private readonly Vector3 bobHomePos = new Vector3(-14.5f, 0.5f, 0);
     void Awake()
-    {
+{
         // gameStartDialogData = Resources.Load<RoleDialogData>("PlotData/GameStartDialog");
     }
     private void OnEnable()

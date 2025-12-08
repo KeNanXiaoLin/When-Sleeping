@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,34 +13,26 @@ public class MusicManager:SingletonAutoMono<MusicManager>
     //背景音乐播放组件
     private AudioSource bkMusic = null;
 
-    //背景音乐大小
-    private float bkMusicValue = 0.1f;
-    public const string bkMusicValueStr = "bkMusicValue";
-    private bool bkMusicMute = false;
-    public const string bkMusicMuteStr = "bkMusicMute";
-
     //管理正在播放的音效
     private List<AudioSource> soundList = new List<AudioSource>();
-    //音效音量大小
-    private float soundValue = 0.1f;
-    public const string soundValueStr = "soundValue";
-    private bool soundMute = false;
-    public const string soundMuteStr = "soundMute";
     //音效是否在播放
     private bool soundIsPlay = true;
-
-    public float BkMusicValue { get => bkMusicValue; }
-    public float SoundValue { get => soundValue;  }
-    public bool BkMusicMute { get => bkMusicMute; }
-    public bool SoundIsMute { get => soundMute; }
+    public MusicData musicData;
 
     private void Awake()
     {
-        //读取本地存储的音量和音效数据
-        bkMusicValue = PlayerPrefs.GetFloat(bkMusicValueStr, 1.0f);
-        bkMusicMute = PlayerPrefs.GetInt(bkMusicMuteStr, 0) == 1 ? true : false;
-        soundValue = PlayerPrefs.GetFloat(soundValueStr, 1.0f);
-        soundMute = PlayerPrefs.GetInt(soundMuteStr, 0) == 1 ? true : false;
+        string path = Application.persistentDataPath + "/MusicData.json";
+        //如果文件不存在 则创建一个新文件
+        if(!File.Exists(path))
+        {
+            musicData = new MusicData();
+        }
+        else
+        {
+            //从文件中读取数据
+            musicData = JsonMgr.Instance.LoadDataFromFilePath<MusicData>(path);
+        }
+        
     }
 
     void Update()
@@ -74,7 +67,8 @@ public class MusicManager:SingletonAutoMono<MusicManager>
         {
             bkMusic.clip = clip;
             bkMusic.loop = true;
-            bkMusic.volume = bkMusicValue;
+            bkMusic.volume = musicData.bkMusicValue;
+            bkMusic.mute = musicData.bkMusicMute;
             bkMusic.Play();
         }
         else
@@ -102,10 +96,10 @@ public class MusicManager:SingletonAutoMono<MusicManager>
     //设置背景音乐大小
     public void ChangeBKMusicValue(float v)
     {
-        bkMusicValue = v;
+        musicData.bkMusicValue = v;
         if (bkMusic == null)
             return;
-        bkMusic.volume = bkMusicValue;
+        bkMusic.volume = musicData.bkMusicValue;
     }
 
     /// <summary>
@@ -114,10 +108,10 @@ public class MusicManager:SingletonAutoMono<MusicManager>
     /// <param name="mute"></param>
     public void ChangeBKMusicMute(bool mute)
     {
-        bkMusicMute = mute;
+        musicData.bkMusicMute = mute;
         if (bkMusic == null)
             return;
-        bkMusic.mute = bkMusicMute;
+        bkMusic.mute = musicData.bkMusicMute;
     }
 
     /// <summary>
@@ -140,7 +134,7 @@ public class MusicManager:SingletonAutoMono<MusicManager>
             //播放音效
             source.clip = clip;
             source.loop = isLoop;
-            source.volume = soundValue;
+            source.volume = musicData.soundValue;
             source.Play();
         }
         else
@@ -174,10 +168,10 @@ public class MusicManager:SingletonAutoMono<MusicManager>
     /// <param name="v"></param>
     public void ChangeSoundValue(float v)
     {
-        soundValue = v;
+        musicData.soundValue = v;
         for (int i = 0; i < soundList.Count; i++)
         {
-            soundList[i].volume = v;
+            soundList[i].volume = musicData.soundValue;
         }
     }
     
@@ -187,10 +181,10 @@ public class MusicManager:SingletonAutoMono<MusicManager>
     /// <param name="mute"></param>
     public void ChangeSoundMute(bool mute)
     {
-        soundMute = mute;
+        musicData.soundMute = mute;
         for (int i = 0; i < soundList.Count; i++)
         {
-            soundList[i].mute = soundMute;
+            soundList[i].mute = musicData.soundMute;
         }
     }
 
@@ -231,11 +225,7 @@ public class MusicManager:SingletonAutoMono<MusicManager>
     /// </summary>
     internal void SaveMusicData()
     {
-        Debug.Log("存储音乐数据到本地,背景音乐大小"+bkMusicValue);
-        PlayerPrefs.SetFloat(bkMusicValueStr, bkMusicValue);
-        PlayerPrefs.SetInt(bkMusicMuteStr, bkMusicMute ? 1 : 0);
-        PlayerPrefs.SetFloat(soundValueStr, soundValue);
-        PlayerPrefs.SetInt(soundMuteStr, soundMute ? 1 : 0);
-        PlayerPrefs.Save();
+        string path = Application.persistentDataPath + "/MusicData.json";
+        JsonMgr.Instance.SaveDataToFilePath(musicData, path);
     }
 }
