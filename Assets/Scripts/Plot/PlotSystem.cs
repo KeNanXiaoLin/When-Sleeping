@@ -349,6 +349,7 @@ public class PlotSystem : SingletonAutoMono<PlotSystem>
     {
         if (GameManager.Instance.TryGetNPCDataInCurrentScene(E_NPCType.Bob, out NPCData bobData))
         {
+            bobData.pos.Set(bobPos);
             bobController = NPCFactory.Instance.CreateNPC(E_NPCType.Bob, bobData);
         }
         else
